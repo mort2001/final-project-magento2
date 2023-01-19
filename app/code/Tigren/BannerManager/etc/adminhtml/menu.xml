@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Tigren_BannerManager::bannermanager"
+            title="Banner Manager"
+            module="Tigren_BannerManager"
+            sortOrder="0"
+            parent="Tigren_Core::tigren" resource="Tigren_BannerManager::bannermanager"
+        />
+        <add
+            id="Tigren_BannerManager::block"
+            title="Blocks"
+            module="Tigren_BannerManager"
+            sortOrder="10"
+            parent="Tigren_BannerManager::bannermanager"
+            action="bannersmanager/block"
+            resource="Tigren_BannerManager::block"
+        />
+        <add
+            id="Tigren_BannerManager::banner"
+            title="Banners"
+            module="Tigren_BannerManager"
+            sortOrder="20"
+            parent="Tigren_BannerManager::bannermanager"
+            action="bannersmanager/banners"
+            resource="Tigren_BannerManager::banner"
+        />
+    </menu>
+</config>

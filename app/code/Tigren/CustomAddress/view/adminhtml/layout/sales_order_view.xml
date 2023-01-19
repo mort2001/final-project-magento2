@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_transactions_grid_block" />
+    <body>
+        <referenceContainer name="order_additional_info">
+            <block class="Magento\Sales\Block\Adminhtml\Order\View" name="sales_order_view_invoices"
+                   template="Tigren_CustomAddress::order/view/invoice.phtml" />
+        </referenceContainer>
+    </body>
+</page>

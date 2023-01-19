@@ -1,0 +1,100 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+?>
+<div class="mb-login-popup" style="display:none;">
+    <div class="mb-ajaxsuite-popup-border mb-ajaxlogin-popup mb-ajaxlogin-login">
+        <div class="block block-customer-login">
+            <div class="block-title">
+                <strong id="block-customer-login-heading" role="heading"
+                        aria-level="2"><?= $block->escapeHtml(__('Account Login')) ?></strong>
+            </div>
+            <form class="form form-login"
+                  method="post"
+                  id="ajax-login-form"
+                  enctype="multipart/form-data" autocomplete="off">
+                <?= $block->getBlockHtml('formkey'); ?>
+                <fieldset class="fieldset login" data-hasrequired="<?= __('* Required Fields') ?>">
+                    <div class="field email required">
+                        <label class="label" for="email"><span><?= __('Email') ?></span></label>
+                        <div class="control">
+                            <input name="username"
+                                   value="<?= $block->escapeHtml($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?>
+                                   id="ajaxlogin-email" type="email" class="input-text" title="<?= __('Email') ?>"
+                                   data-validate="{required:true, 'validate-email':true}">
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <label for="pass" class="label"><span><?= __('Password') ?></span></label>
+                        <div class="control">
+                            <input name="password"
+                                   type="password" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?>
+                                   class="input-text" id="ajaxlogin-pass" title="<?= __('Password') ?>"
+                                   data-validate="{required:true, 'validate-password':true}">
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="actions">
+                    <div class="primary">
+                        <button type="submit" class="action submit primary" name="login" id="login">
+                            <span><?= __('Login') ?></span>
+                        </button>
+                    </div>
+                </div>
+                <?php if ($block->isEnableSocialLogin() && !$block->isLoggedIn()): ?>
+                    <div id="social-login">
+                        <div class="primary">
+                            <?php if ($this->helper('Tigren\Ajaxlogin\Helper\Data')->getScopeConfig('ajaxlogin/social_login/facebook_appid')) {
+    ?>
+                                <button id="facebook-login-btn" type="button" class="action social-login-btn primary">
+                                    <span><?= __('Facebook Login') ?></span>
+                                </button>
+                                <?php
+} ?>
+                            <?php if ($this->helper('Tigren\Ajaxlogin\Helper\Data')->getScopeConfig('ajaxlogin/social_login/googleplus_clientid')) {
+        ?>
+                                <button id="ggplus-login-btn" type="button" class="action social-login-btn primary">
+                                    <span><?= __('Google+ Login') ?></span>
+                                </button>
+                                <?php
+    } ?>
+                            <?php if ($this->helper('Tigren\Ajaxlogin\Helper\Data')->getScopeConfig('ajaxlogin/social_login/twitter_consumer_key')
+                                && $this->helper('Tigren\Ajaxlogin\Helper\Data')->getScopeConfig('ajaxlogin/social_login/twitter_consumer_secret')
+                            ) {
+        ?>
+                                <button id="twitter-login-btn" type="button" class="action social-login-btn primary">
+                                    <span><?= __('Twitter Login') ?></span>
+                                </button>
+                                <?php
+    } ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="actions">
+                    <div class="secondary">
+                        <a class="action forgot" href="<?= $block->getForgotPasswordUrl() ?>">
+                            <span><?= __('Forgot Your Password?') ?></span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="block block-new-customer">
+            <div class="block-title">
+                <strong><?= $block->escapeHtml(__('Register Now')) ?></strong>
+            </div>
+            <div class="block-content" aria-labelledby="block-new-customer-heading">
+                <p><?= $block->escapeHtml(__('Creating an account has many benefits: check out faster, keep more than one address, track orders and more.')) ?></p>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <a href="<?= $block->getUrl('customer/account/create'); ?>"
+                           class="action create primary"><span><?= $block->escapeHtml(__('Create an Account')) ?></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+{
+    "name": "tigrensolutions/module-custom-address",
+    "description": "Custom Address Module for Magento 2",
+    "type": "magento2-module",
+    "version": "1.1.0",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Tigren Solutions",
+            "email": "info@tigren.com"
+        },
+        {
+            "email": "kai@tigren.com",
+            "name": "Kai Do"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Tigren\\CustomAddress\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

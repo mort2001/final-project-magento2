@@ -1,0 +1,24 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+$successHeader = $this->helper(Tigren\Ajaxlogin\Helper\Data::class)->getSuccessHeaderAjaxLogin();
+?>
+<div class="mb-login-popup-title center" style="background-color: #4a84ff">
+    <span class="mb-login-popup-title-success">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <strong><?= $successHeader ?></strong>
+</div>
+<div class="mb-ajaxsuite-popup-border mb-ajaxlogin-popup mb-ajaxlogin-message-success">
+    <div class="mb-login-container-login">
+        <div class="block-content" aria-labelledby="block-customer-login-heading">
+            <div class="mb-successful-message">
+                <div class="mb-loading">
+                    <h4 class="mb-message-successs"><?= __('Register Successfully!'); ?></h4>
+                    <p class="message"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

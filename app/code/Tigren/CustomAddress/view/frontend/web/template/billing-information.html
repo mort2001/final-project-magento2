@@ -1,0 +1,17 @@
+<!-- ko if: (isMoveBilling() === true) -->
+<!-- ko if: (isVisible()) -->
+<div class="billing-information">
+    <div class="billing-information-title">
+        <span data-bind="i18n: 'Full Tax Invoice'"></span>
+        <button class="action action-edit" data-bind="click: back">
+            <span data-bind="i18n: 'edit'"></span>
+        </button>
+    </div>
+    <div class="billing-information-content">
+        <!-- ko foreach: getRegion('billing-information-content') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </div>
+</div>
+<!--/ko-->
+<!--/ko-->

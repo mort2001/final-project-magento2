@@ -1,0 +1,37 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+?>
+<?php $_product = $block->getProduct(); ?>
+<div class="mb-login-popup-title center">
+    <strong><?= __('Error'); ?></strong>
+</div>
+<div class="mb-ajaxsuite-popup-border ajaxcart-success-box">
+    <div class="error-content">
+        <p class="error-message"></p>
+        <h2 class="product-name"><?= $_product->getName() ?></h2>
+        <?= $block->getChildHtml('product_option'); ?>
+        <?= $block->getChildHtml('product_image'); ?>
+    </div>
+    <div class="ajaxcart-buttons ajaxsuite-buttons">
+        <button type="button" id="ajaxcart_cancel" class="action primary mb-ajaxsuite-close"
+                title="<?= __('Continue Shopping') ?>">
+            <span><?= __('Continue Shopping ') ?></span>
+            <?php
+            if ($popupTTL = $this->helper('Tigren\Ajaxsuite\Helper\Data')->getTTLAjaxSuite()) {
+                ?>
+                (<span class="ajaxsuite-autoclose-countdown"><?= $popupTTL ?></span>)
+                <?php
+            }
+            ?>
+        </button>
+        <button type="button" id="ajaxcart_checkout" class="action focus primary"
+                title="<?= __('View Cart') ?>"
+                onClick="window.location = '<?= $block->getUrl('checkout/cart'); ?>'">
+            <span><?= __('View Cart') ?></span>
+        </button>
+    </div>
+</div>

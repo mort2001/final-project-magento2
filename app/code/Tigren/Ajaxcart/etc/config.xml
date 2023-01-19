@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ajaxcart>
+            <general>
+                <enabled>1</enabled>
+                <message>You have recently added this product to your Cart</message>
+                <addtocart_btn_class>tocart</addtocart_btn_class>
+                <show_cart_info>1</show_cart_info>
+                <show_related_products>1</show_related_products>
+                <ajax_update_cart_page>1</ajax_update_cart_page>
+                <ajax_update_qty>0</ajax_update_qty>
+                <enabled_success_header>1</enabled_success_header>
+                <header_success>Add to cart successfully!</header_success>
+            </general>
+        </ajaxcart>
+    </default>
+</config>

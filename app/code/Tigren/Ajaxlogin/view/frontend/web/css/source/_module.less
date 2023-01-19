@@ -1,0 +1,261 @@
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+//
+//  Variables
+//  ---------------------------------------------
+@import 'module/_variables.less';
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .mb-ajaxsuite-popup-wrapper {
+        .mb-ajaxlogin-message-success {
+            text-align: center;
+
+            .mb-message-successs {
+                color: lighten(@color-dark-green1, 10%);
+                font-weight: bold;
+            }
+        }
+
+        .mb-ajaxlogin-message-error {
+            text-align: center;
+
+            .mb-message-error {
+                color: @color-red10;
+                font-weight: bold;
+            }
+        }
+
+        .block-customer-login, .block-new-customer, .mb-ajaxlogin-register, .mb-ajaxlogin-forgotpassword {
+            .block-title {
+                margin-bottom: 15px;
+
+                strong {
+                    .lib-font-size(20);
+                }
+            }
+        }
+
+        .mb-login-popup, .mb-register-popup, .mb-forgetpassword-popup {
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        form.mb-login-form-register {
+            fieldset.info,
+            fieldset.account {
+                margin: 0 0 20px;
+
+                .legend {
+                    margin: 0 0 10px;
+                }
+            }
+
+            .mb-style-actions {
+                clear: both;
+            }
+        }
+
+        .mb-ajaxlogin-register {
+            min-height: 300px;
+        }
+
+        a.action.back {
+            display: block;
+        }
+
+        .mb-login-popup-title {
+            padding: @indent__s 0;
+            text-align: center;
+            .lib-font-size(18);
+            text-transform: uppercase;
+        }
+
+        .actions {
+            text-align: center;
+
+            .action.submit.primary {
+                margin-bottom: 10px;
+                display: block;
+                width: 100%;
+            }
+
+            > * {
+                display: inline-block;
+            }
+        }
+
+        .block-customer-login, .block-new-customer {
+            .primary {
+                width: 100%;
+                display: block;
+            }
+
+            .actions-toolbar {
+                .action.primary {
+                    width: 100%;
+                    display: block;
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+
+    /******** SOCIAL LOGIN *********/
+
+    #social-login {
+        clear: both;
+    }
+
+    #social-login .social-login-btn {
+        display: block;
+        width: 100%;
+        margin-bottom: @indent__s;
+        padding: 8px 0;
+        position: relative;
+
+        span {
+            padding-left: @indent__m;
+            color: @color-white;
+            position: relative;
+
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 50%;
+                width: 20px;
+                height: 20px;
+                display: block;
+                margin-top: -10px;
+            }
+        }
+    }
+
+    #facebook-login-btn {
+        background-color: #3a5ba0 !important;
+        border-color: #3a5ba0 !important;
+
+        span {
+            &:before {
+                background: transparent url('@{baseDir}Tigren_Ajaxlogin/images/facebook.png') top left no-repeat;
+            }
+        }
+    }
+
+    #ggplus-login-btn {
+        background-color: #e02f2f !important;
+        border-color: #e02f2f !important;
+
+        span {
+            &:before {
+                background: transparent url('@{baseDir}Tigren_Ajaxlogin/images/ggplus.png') top left no-repeat;
+            }
+        }
+    }
+
+    #twitter-login-btn {
+        background-color: #00abf1 !important;
+        border-color: #00abf1 !important;
+
+        span {
+            &:before {
+                background: transparent url('@{baseDir}Tigren_Ajaxlogin/images/twitter.png') top left no-repeat;
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .mb-ajaxsuite-popup-wrapper {
+        .block-customer-login, .block-new-customer {
+            margin: 0;
+            width: 50%;
+
+            .block-title {
+                margin-bottom: 15px;
+
+                strong {
+                    .lib-font-size(20);
+                }
+            }
+        }
+
+        .block-customer-login {
+            float: left;
+            padding-right: 20px;
+            position: relative;
+            width: 50%;
+
+            .form.form-login {
+                .fieldset {
+                    margin: 0 0 20px;
+                }
+            }
+
+            &:after {
+                content: "";
+                width: 1px;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: @color-gray91;
+                display: block;
+            }
+        }
+
+        .block-new-customer {
+            padding-right: 0px;
+            float: right;
+            width: 46%;
+        }
+
+        form.mb-login-form-register {
+            fieldset.info, fieldset.account {
+                float: left;
+                width: 50%;
+            }
+
+            fieldset.info {
+                padding-right: 30px;
+                position: relative;
+                float: left;
+                width: 41%;
+            }
+
+            fieldset.account {
+                padding-left: 30px;
+                position: relative;
+                float: right;
+                width: 50%;
+
+                &:before {
+                    content: "";
+                    margin: 0;
+                    width: 1px;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background: @color-gray91;
+                    display: block;
+                }
+            }
+
+            .mb-style-actions {
+                clear: both;
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<div class="form-container" id="address-form-container" style="display: none">
+    <form class="address-form shipping-address-form"
+          data-bind="attr: {'data-hasrequired': $t('* Required Fields')}"
+          enctype="multipart/form-data">
+        <div class="step-title" data-role="title" id="shipping-address-title">
+            <span data-bind="i18n: 'Shipping Address'"></span>
+        </div>
+        <!-- ko foreach: getRegion('shipping-address-edit-fieldsets') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </form>
+
+    <form class="address-form billing-address-form"
+          data-bind="attr: {'data-hasrequired': $t('* Required Fields')}"
+          enctype="multipart/form-data">
+        <div class="step-title" data-role="title" id="billing-address-title">
+            <span data-bind="i18n: 'Billing Address'"></span>
+        </div>
+        <!-- ko foreach: getRegion('billing-address-edit-fieldsets') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+    </form>
+</div>

@@ -1,0 +1,19 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+$count = $block->getItemsCount();
+$qty = $block->getItemsQty();
+$subTotal = $block->getSubTotal();
+?>
+<div class="ajaxcart-message-cartinfo">
+    <p>
+        <?= __('There are ') ?>
+        <a href="<?= $block->getUrl('checkout/cart') ?>"><?= $qty . __(' items') ?></a>
+        <?= __(' in your cart.') ?>
+    </p>
+    <p><?= __('Cart Subtotal: %1 ', $this->helper('Magento\Checkout\Helper\Data')->formatPrice($subTotal)) ?></p>
+</div>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <events>
+            <general_setting>
+                <view_mode>calendar-grid</view_mode>
+                <show_url_in_header_link>1</show_url_in_header_link>
+                <allow_filter_by_cat>1</allow_filter_by_cat>
+                <show_num_participants>1</show_num_participants>
+                <show_social_share>1</show_social_share>
+                <show_upcoming_events>1</show_upcoming_events>
+                <allow_send_invitation>1</allow_send_invitation>
+                <invitation_email>events_general_setting_invitation_email</invitation_email>
+                <is_send_registered_email>1</is_send_registered_email>
+                <registered_email>events_general_setting_registered_email</registered_email>
+            </general_setting>
+            <calendar_setting>
+                <page_title>Event Calendar</page_title>
+                <default_view_mode>month</default_view_mode>
+                <show_event_color>1</show_event_color>
+                <language>en</language>
+            </calendar_setting>
+        </events>
+    </default>
+</config>

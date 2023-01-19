@@ -1,0 +1,17 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<?php
+$event = $block->getEvent();
+?>
+<?php if ($event->getId()): ?>
+    <div class="event-image">
+        <img src="<?= $block->getAvatarUrl() ?>" alt="<?= $event->getTitle(); ?>"/>
+        <?php if (!($event->getPrice() > 0)) {
+    ?>
+            <div class="free-tag">
+                <img src="<?= $block->getViewFileUrl('Tigren_Events::images/free-tag.png'); ?>"
+                     height="100" width="100"/>
+            </div>
+            <?php
+} ?>
+    </div>
+<?php endif; ?>

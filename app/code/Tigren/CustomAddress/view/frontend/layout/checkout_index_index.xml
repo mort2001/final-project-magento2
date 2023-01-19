@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="header.container" />
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="template" xsi:type="string">Tigren_CustomAddress/sidebar</item>
+                                    </item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-information" xsi:type="array">
+                                            <item name="component" xsi:type="string">Tigren_CustomAddress/js/view/billing-information</item>
+                                            <item name="displayArea" xsi:type="string">billing-information</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="template" xsi:type="string">Tigren_CustomAddress/billing-information</item>
+                                            </item>
+                                            <item name="children" xsi:type="array">
+                                                <item name="billing-detail" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Tigren_CustomAddress/js/view/billing-information/list</item>
+                                                    <item name="displayArea" xsi:type="string">billing-information-content</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

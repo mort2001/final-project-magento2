@@ -1,0 +1,37 @@
+<div class="choice item">
+    <div class="option">
+        <input data-bind="
+                    event: {change : $parents[1].toggleTypeBranch.bind($parents[1], 'head')},
+                    attr : {
+                        name: inputName,
+                        class: 'radio',
+                        id: 'head',
+                        value: 'head',
+                        checked: !$parents[1].isBranch()
+                    }"
+               type="radio" />
+        <label class="label" data-bind="
+                        i18n: 'Head Office/Personal',
+                        attr : {
+                            for: 'head'
+                        }"></label>
+    </div>
+    <div class="option">
+        <input data-bind="
+                    event: {change : $parents[1].toggleTypeBranch.bind($parents[1], 'branch')},
+                    attr : {
+                        name: inputName,
+                        class: 'radio',
+                        id: 'branch',
+                        value: 'branch',
+                        checked: $parents[1].isBranch()
+                    }"
+               type="radio" />
+        <label class="label" data-bind="i18n: 'Branch'" for="branch"></label>
+    </div>
+    <input class="input-text"
+           data-bind="value: $parents[1].branchName() ,enable: (!$parents[1].headOffice() && $parents[1].branch())"
+           id="more-info"
+           name="more_info"
+           type="text" />
+</div>

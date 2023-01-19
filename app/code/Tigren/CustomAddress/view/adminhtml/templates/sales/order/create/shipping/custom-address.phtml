@@ -1,0 +1,23 @@
+<?php /*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/** @var \Tigren\CustomAddress\Block\Adminhtml\Sales\Order\Create\Shipping\CustomAddress $block */
+?>
+<div id="shipping-custom-address-edit-form" data-bind="scope:'shipping-custom-address-edit-form'"
+     class="form-container">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#shipping-custom-address-edit-form": {
+                "Magento_Ui/js/core/app": <?= $block->getJsLayout() ?>
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        window.getAddressesDataUrl = '<?= $block->getAddressesDataUrl() ?>';
+        window.updateAddressesDataUrl = '<?= $block->updateAddressesDataUrl() ?>';
+    </script>
+</div>

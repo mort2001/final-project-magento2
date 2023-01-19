@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="tigren" translate="label" sortOrder="9000">
+            <label>Tigren</label>
+        </tab>
+        <section id="events" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Event Calendar</label>
+            <tab>tigren</tab>
+            <resource>Tigren_Events::events_config</resource>
+            <group id="general_setting" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
+                <label>General Setting</label>
+                <field id="view_mode" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>View Mode</label>
+                    <source_model>Tigren\Events\Model\Config\Source\ViewMode</source_model>
+                </field>
+                <field id="show_url_in_header_link" translate="label" type="select" sortOrder="2" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Calendar Url in Header Link</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allow_filter_by_cat" translate="label" type="select" sortOrder="3" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Allow to Filter Events by Category</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_num_participants" translate="label" type="select" sortOrder="4" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Number of Participants</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_social_share" translate="label" type="select" sortOrder="5" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Social Share Buttons</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_upcoming_events" translate="label" type="select" sortOrder="6" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Upcoming Events in Sidebar</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="default_image" translate="label comment" type="image" sortOrder="8" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Default Avatar for All Events</label>
+                    <comment><![CDATA[Used when event image is not available (allowed jpg, jpeg, gif, png).]]></comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">tigren/events</upload_dir>
+                    <base_url type="media" scope_info="1">tigren/events</base_url>
+                </field>
+                <field id="allow_send_invitation" translate="label" type="select" sortOrder="9" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Allow to send event invitation email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="invitation_email" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Choose Event Invitation Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="is_send_registered_email" translate="label" type="select" sortOrder="11" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Send email to participants after they registered</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="registered_email" translate="label" type="select" sortOrder="12" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Choose Confirmation Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+
+            <group id="calendar_setting" translate="label" type="text" sortOrder="20" showInDefault="1"
+                   showInWebsite="0" showInStore="0">
+                <label>Calendar Setting</label>
+                <field id="page_title" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Calendar Page Title</label>
+                </field>
+                <field id="default_view_mode" translate="label" type="select" sortOrder="2" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Default View Mode</label>
+                    <source_model>Tigren\Events\Model\Config\Source\CalendarViewMode</source_model>
+                </field>
+                <field id="language" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="0"
+                       showInStore="0">
+                    <label>Calendar Language</label>
+                    <source_model>Tigren\Events\Model\Config\Source\CalendarLanguage</source_model>
+                </field>
+                <field id="show_event_color" translate="label" type="select" sortOrder="3" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Event Colors</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

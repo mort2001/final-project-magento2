@@ -1,0 +1,42 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+// @codingStandardsIgnoreFile
+
+use Tigren\CustomAddress\Block\Customer\Address\Edit;
+
+/**
+ * @var $block Edit
+ */
+?>
+<div id="customer-address-edit-form" data-bind="scope:'customer-address-edit-form'" class="form-container">
+    <div id="customer-address-edit-form-loader" data-role="customer-address-edit-form-loader" class="loading-mask"
+         data-mage-init='{"addressEditFormLoader": {}}'>
+        <div class="loader">
+            <img src="<?= $block->getViewFileUrl('images/loader-1.gif') ?>"
+                 alt="<?= __('Loading...') ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#customer-address-edit-form": {
+                "Magento_Ui/js/core/app": <?= $block->getJsLayout() ?>
+            }
+        }
+    </script>
+    <script>
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function (url, blockLoader) {
+            blockLoader("<?= $block->getViewFileUrl('images/loader-1.gif') ?>");
+            return url.setBaseUrl('<?= $block->getBaseUrl() ?>');
+        });
+    </script>
+</div>

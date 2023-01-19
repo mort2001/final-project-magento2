@@ -1,0 +1,105 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<fieldset data-bind="attr: { class: 'field admin__control-fields required ' + additionalClass }">
+    <legend class="admin__form-field-label">
+        <span data-bind="i18n: $data.label"></span>
+    </legend>
+    <div class="control">
+        <div
+                class="admin__action-multiselect-wrap action-select-wrap"
+                data-bind="
+        attr: {
+            id: uid
+        },
+        css: {
+            _active: listVisible,
+            'admin__action-multiselect-tree': isTree()
+        },
+        event: {
+            focusin: onFocusIn,
+            focusout: onFocusOut,
+            keydown: keydownSwitcher
+        },
+        outerClick: outerClick.bind($data)
+"
+                tabindex="0">
+            <div
+                    class="action-select admin__action-multiselect"
+                    data-bind="
+            css: {_active: multiselectFocus},
+            click: function(data, event) {
+                toggleListVisible(data, event)
+            }
+    "
+                    data-role="advanced-select">
+                <div class="admin__action-multiselect-text"
+                     data-bind="text: setCaption()"
+                     data-role="selected-option">
+                </div>
+            </div>
+            <div class="action-menu"
+                 data-bind="css: { _active: listVisible }
+    ">
+                <!-- ko if: filterOptions -->
+                <div class="admin__action-multiselect-search-wrap">
+                    <input
+                            class="admin__control-text admin__action-multiselect-search"
+                            data-bind="
+                event: {
+                    keydown: filterOptionsKeydown
+                },
+                attr: {id: uid+2},
+                valueUpdate: 'keyup',
+                value: filterInputValue,
+                hasFocus: filterOptionsFocus
+                "
+                            data-role="advanced-select-text"
+                            type="text">
+                    <label
+                            class="admin__action-multiselect-search-label"
+                            data-action="advanced-select-search"
+                            data-bind="attr: {for: uid+2}
+            ">
+                    </label>
+                </div>
+                <!-- /ko -->
+                <ul class="admin__action-multiselect-menu-inner _root"
+                    data-bind="
+                event: {
+                    mousemove: function(data, event){onMousemove($data, $index(), event)}
+                }
+            ">
+                    <!-- ko foreach: { data: options, as: 'option'}  -->
+                    <li class="admin__action-multiselect-menu-inner-item _root"
+                        data-bind="css: { _parent: $data.optgroup }"
+                        data-role="option-group">
+                        <div class="action-menu-item"
+                             data-bind="
+                        css: {
+                            _selected: $parent.isSelected(option.value),
+                            _hover: $parent.isHovered(option, $element),
+                            _expended: $parent.getLevelVisibility($data),
+                            _unclickable: $parent.isLabelDecoration($data),
+                            _last: $parent.addLastElement($data),
+                            '_with-checkbox': $parent.showCheckbox
+                        },
+                        click: function(data, event){
+                            $parent.toggleOptionSelected($data, $index(), event);
+                        },
+                        clickBubble: false
+                ">
+                            <label class="admin__action-multiselect-label">
+                                <span data-bind="text: option.label"></span>
+                            </label>
+                        </div>
+                    </li>
+                    <!-- /ko -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</fieldset>

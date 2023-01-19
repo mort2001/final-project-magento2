@@ -1,0 +1,71 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/**
+ * @var \Magento\Sales\Model\Order $order
+ * @var \Magento\Sales\Block\Adminhtml\Order\View $block
+ */
+$order = $block->getOrder();
+$billingAddress = $order->getBillingAddress();
+?>
+<?php if ($billingAddress->getData('is_full_invoice')): ?>
+    <section class="admin__page-section order-view-account-information">
+        <div class="admin__page-section-title">
+            <span class="title"><?= $block->escapeHtml(__('Full Invoice')) ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div class="admin__page-section-item" style="width: 49%;">
+
+                <table class="admin__table-secondary">
+                    <?php if ($billingAddress->getInvoiceType()) : ?>
+                        <?php if ($billingAddress->getInvoiceType() === 'personal') : ?>
+                            <tr>
+                                <td><?= __('Invoice Type') ?></td>
+                                <td style="text-align: right;"><?= __($billingAddress->getInvoiceType()) ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('First Name') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getPersonalFirstname() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Tax Identification Number') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getTaxIdentificationNumber() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Last Name') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getPersonalLastname() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Phone Number') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getTelephone() ?></td>
+                            </tr>
+                        <?php else: ?>
+                            <tr>
+                                <td><?= __('Company Name') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getCompany() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Tax Identification Number') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getTaxIdentificationNumber() ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Branch Type') ?></td>
+                                <td style="text-align: right;"><?= ($billingAddress->getBranchOffice()) ? __('Sub Branch') . ': ' . $billingAddress->getBranchOffice() : __('Head office') ?></td>
+                            </tr>
+                            <tr>
+                                <td><?= __('Phone Number') ?></td>
+                                <td style="text-align: right;"><?= $billingAddress->getTelephone() ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <span id="no-invoice">No invoice needed</span>
+                    <?php endif; ?>
+                </table>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

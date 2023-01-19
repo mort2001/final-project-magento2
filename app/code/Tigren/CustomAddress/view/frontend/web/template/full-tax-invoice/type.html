@@ -1,0 +1,33 @@
+<div class="choice item">
+    <div class="option">
+        <input data-bind="
+                    event: {change : $parents[1].toggleInvoiceType.bind($parents[1], 'personal')},
+                    attr : {
+                        name: 'invoice_type',
+                        class: 'radio',
+                        id: 'invoice_type_personal',
+                        value: 'personal',
+                        checked: $parents[1].isUsePersonal()
+                    }"
+               type="radio" />
+        <label class="label" data-bind="
+                        i18n: 'Personal',
+                        attr : {
+                            for: 'invoice_type_personal'
+                        }"></label>
+    </div>
+    <div class="option">
+        <input data-bind="
+                    event: {change : $parents[1].toggleInvoiceType.bind($parents[1], 'corporate')},
+                    attr : {
+                        name: 'invoice_type',
+                        class: 'radio',
+                        id: 'invoice_type_corporate',
+                        value: 'corporate',
+                        checked: !$parents[1].isUsePersonal()
+                    }"
+               type="radio" />
+        <label class="label" data-bind="i18n: 'Corporate'" for="invoice_type_corporate"></label>
+    </div>
+    <span data-bind="afterRender: $parents[1].initTaxInvoice.bind($parents[1])"></span>
+</div>

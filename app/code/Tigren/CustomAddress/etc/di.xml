@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Model\Data\Address"
+                type="Tigren\CustomAddress\Override\Magento\Customer\Model\Data\Address" />
+    <preference for="Tigren\CustomAddress\Api\Data\CityInterface" type="Tigren\CustomAddress\Model\Data\City" />
+    <preference for="Tigren\CustomAddress\Api\Data\SubdistrictInterface"
+                type="Tigren\CustomAddress\Model\Data\Subdistrict" />
+    <preference for="Magento\Customer\Model\Address\Mapper"
+                type="Tigren\CustomAddress\Override\Magento\Customer\Model\Address\Mapper" />
+
+    <preference for="Magento\Customer\Model\Address\AbstractAddress"
+                type="Tigren\CustomAddress\Plugin\Magento\Customer\Model\Address\AbstractAddress" />
+
+    <preference for="Magento\Checkout\Model\ShippingInformationManagement"
+                type="Tigren\CustomAddress\Override\Magento\Checkout\Model\ShippingInformationManagement" />
+
+    <preference for="Magento\Checkout\Model\PaymentInformationManagement"
+                type="Tigren\CustomAddress\Override\Magento\Checkout\Model\PaymentInformationManagement" />
+    <preference for="Magento\Checkout\Model\GuestPaymentInformationManagement"
+                type="Tigren\CustomAddress\Override\Magento\Checkout\Model\GuestPaymentInformationManagement" />
+
+    <preference for="Magento\Quote\Model\BillingAddressManagement"
+                type="Tigren\CustomAddress\Override\Magento\Quote\Model\BillingAddressManagement" />
+
+    <type name="Magento\Customer\Api\AddressRepositoryInterface">
+        <plugin name="Tigren_CustomAddress_Plugin_AddressRepositoryInterface"
+                type="Tigren\CustomAddress\Plugin\AddressRepositoryInterface" />
+    </type>
+    <type name="Magento\Customer\Api\Data\AddressInterface">
+        <plugin name="Tigren_CustomAddress_Plugin_FixGetExtensionAttributes"
+                type="Tigren\CustomAddress\Plugin\FixGetExtensionAttributes" />
+    </type>
+    <type name="Magento\Customer\Model\Address">
+        <plugin name="Tigren_CustomAddress_Plugin_Magento_Customer_Model_Address" sortOrder="0"
+                type="Tigren\CustomAddress\Plugin\Magento\Customer\Model\Address" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="Tigren_CustomAddress_Plugin_Magento_Quote_Model_Quote_Address" sortOrder="0"
+                type="Tigren\CustomAddress\Plugin\Magento\Quote\Model\Quote\Address" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address\ToOrderAddress">
+        <plugin name="Tigren_CustomAddress_Plugin_Magento_Quote_Model_Quote_Address_ToOrderAddress"
+                type="Tigren\CustomAddress\Plugin\Magento\Quote\Model\Quote\Address\ToOrderAddress" />
+    </type>
+    <type name="Magento\Checkout\Model\DefaultConfigProvider">
+        <plugin name="Tigren_CustomAddress_Plugin_Magento_Checkout_Model_DefaultConfigProvider" sortOrder="0"
+                type="Tigren\CustomAddress\Plugin\Magento\Checkout\Model\DefaultConfigProvider" />
+    </type>
+    <type name="Magento\Customer\Block\Address\Renderer\DefaultRenderer">
+        <plugin name="Tigren_CustomAddress_Plugin_Magento_Customer_Block_Address_Renderer_DefaultRenderer"
+                type="Tigren\CustomAddress\Plugin\Magento\Customer\Block\Address\Renderer\DefaultRenderer" />
+    </type>
+
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form"
+                type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form"/>
+
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form\Address" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form\Account" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form\Account" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Address\Form" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Address\Form" />
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="custom_region" xsi:type="string">Tigren_CustomAddress</item>
+                <item name="custom_city" xsi:type="string">Tigren_CustomAddress</item>
+                <item name="custom_subdistrict_and_zipcode" xsi:type="string">Tigren_CustomAddress</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

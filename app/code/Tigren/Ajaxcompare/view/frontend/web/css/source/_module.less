@@ -1,0 +1,35 @@
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+& when (@media-common = true) {
+    #mb-ajaxcompare-wrapper {
+        .ajaxcompare-success-box {
+            text-align: center;
+
+            .product-name {
+                font-weight: bold;
+            }
+
+            img.image {
+                max-width: 100%;
+            }
+        }
+
+        .ajaxcompare-buttons {
+            margin: @indent__s 0;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    #mb-ajaxcompare-wrapper {
+        .ajaxcompare-success-box {
+            img.image {
+                max-width: 30%;
+            }
+        }
+    }
+}

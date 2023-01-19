@@ -1,0 +1,37 @@
+<form class="form-address-edit"
+      data-bind="attr: {'data-hasrequired': $t('* Required Fields')}"
+      enctype="multipart/form-data">
+    <fieldset class="fieldset" id="address-form">
+        <div class="fieldset info">
+            <div class="label-title" data-bind="i18n: 'Information'"></div>
+            <!-- ko foreach: getRegion('address-contact-fieldsets') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="fieldset address">
+            <div class="label-title" data-bind="i18n: 'Address'"></div>
+            <!-- ko foreach: getRegion('address-edit-fieldsets') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+    </fieldset>
+
+    <!-- ko foreach: getRegion('messages') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+
+    <div class="actions-toolbar" id="edit-form-buttons-container">
+        <div class="primary">
+            <button class="button action back" data-bind="click: backToAddressList"
+                    type="button">
+                <span translate="'Back to previous'"></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <button class="button action continue primary" data-bind="click: saveAddress" data-role="save-address"
+                    type="submit">
+                <span translate="'Submit'"></span>
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+use Tigren\Ajaxcart\Block\Product\Renderer\Configurable;
+
+?>
+<?php /** @var $block Configurable */ ?>
+<link rel="stylesheet" type="text/css" href="<?= $block->getViewFileUrl('Magento_Swatches::css/swatches.css') ?>"/>
+
+<div class="swatch-opt" data-role="swatch-options"></div>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/mage',
+        'tigren/swatchRenderer'
+    ], function ($) {
+        $('[data-role=swatch-options]').SwatchRenderer({
+            "jsonConfig": <?= $swatchOptions = $block->getJsonConfig(); ?>,
+            "jsonSwatchConfig": <?= $swatchOptions = $block->getJsonSwatchConfig(); ?>,
+            "selectorProduct": '#mb-ajaxcart-wrapper',
+            "mediaCallback": "<?= $block->getMediaCallback() ?>",
+            "onlyMainImg": <?= $block->getVar(
+                'change_only_base_image',
+                'Magento_Swatches'
+            ) ?: 'false'; ?>
+        });
+    });
+
+</script>

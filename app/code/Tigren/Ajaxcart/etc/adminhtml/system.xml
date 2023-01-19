@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="tigren" translate="label" sortOrder="9000">
+            <label>Tigren</label>
+        </tab>
+        <section id="ajaxcart" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Ajaxcart</label>
+            <tab>tigren</tab>
+            <resource>Tigren_Ajaxcart::config_ajaxcart</resource>
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General Options</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable Ajax Add to Cart</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="message" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Message After Adding Products to Cart</label>
+                </field>
+                <field id="addtocart_btn_class" translate="label" type="text" sortOrder="3" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Add to Cart Button Class</label>
+                </field>
+                <field id="show_cart_info" translate="label" type="select" sortOrder="4" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Show Cart Information in Success Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="show_related_products" translate="label" type="select" sortOrder="5" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Show Related Products in Success Popup</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ajax_update_cart_page" translate="label" type="select" sortOrder="6" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Ajax Update in Shopping Cart Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="ajax_update_qty" translate="label" type="select" sortOrder="6" showInDefault="1"
+                       showInWebsite="1"
+                       showInStore="1">
+                    <label>Ajax autoload qty if change</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enabled_success_header" translate="label" type="select" sortOrder="80" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable the custom success header</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set 'Yes' to enable the successful header in success popup.</comment>
+                </field>
+                <field id="header_success" translate="label" type="text" sortOrder="90" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Successful header</label>
+                    <depends>
+                        <field id="enabled_success_header">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

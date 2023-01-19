@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="bannersmanager" class="Tigren\BannerManager\Block\Widget\Instance" ttl="0"
+            placeholder_image="Tigren_BannerManager::images/widget_block.png">
+        <label translate="true">Tigren Banner Manager</label>
+        <description translate="true">Tigren Banner Manager</description>
+        <parameters>
+
+            <parameter name="unique_id" xsi:type="text" visible="false" required="true" sort_order="0">
+                <label translate="true">Banner ID</label>
+            </parameter>
+
+            <parameter name="template" xsi:type="select" visible="true" required="true" sort_order="10">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="Tigren_BannerManager::banner.phtml" selected="true">
+                        <label translate="true">Banner Manager Default Template</label>
+                    </option>
+                    <option name="custom" value="0">
+                        <label translate="true">Custom Template</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="custom_template" xsi:type="text" required="false" visible="true" sort_order="20">
+                <label translate="true">Custom Template</label>
+                <description translate="true">Used, when template value is set to 'Custom'</description>
+                <!-- <depends> Commented because it break depends rules at the widget_instance page
+                    <parameter name="template" value="0"/>
+                </depends> -->
+            </parameter>
+
+            <parameter name="banner_id" xsi:type="block" visible="true" required="true" sort_order="30">
+                <label translate="true">Select Banners</label>
+                <block class="Tigren\BannerManager\Block\Adminhtml\Banner\Widget\Chooser" />
+            </parameter>
+
+            <parameter name="additional_class" xsi:type="text" visible="true" required="false" sort_order="35">
+                <label translate="true">Additional Class</label>
+            </parameter>
+
+            <parameter name="customer_group" xsi:type="multiselect" visible="true" required="true"
+                       source_model="Tigren\BannerManager\Model\Config\Source\CustomerGroup" sort_order="40">
+                <label translate="true">Customer Groups</label>
+            </parameter>
+
+            <parameter name="display_type" xsi:type="select" visible="true" required="true"
+                       source_model="Tigren\BannerManager\Model\Config\Source\DisplayType" sort_order="50">
+                <label translate="true">Display Type</label>
+            </parameter>
+
+            <parameter name="min_items" xsi:type="text" required="true" visible="true" sort_order="60">
+                <label translate="true">Min Images</label>
+                <description>
+                    Minimum number of carousel items that should be visible. Items will resize fluidly when below this.
+                </description>
+                <depends>
+                    <parameter name="display_type" value="6" />
+                </depends>
+                <value>1</value>
+            </parameter>
+
+            <parameter name="max_items" xsi:type="text" required="true" visible="true" sort_order="70">
+                <label translate="true">Max Images</label>
+                <description>
+                    Maxmimum number of carousel items that should be visible. Items will resize fluidly when above this
+                    limit.
+                </description>
+                <depends>
+                    <parameter name="display_type" value="6" />
+                </depends>
+                <value>1</value>
+            </parameter>
+
+            <parameter name="is_active" xsi:type="select" visible="true" required="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="80">
+                <label translate="true">Is Active</label>
+            </parameter>
+
+        </parameters>
+    </widget>
+
+    <widget id="custom-bannersmanager" class="Tigren\BannerManager\Block\Widget\Block" ttl="0"
+            placeholder_image="Tigren_BannerManager::images/widget_block.png">
+        <label translate="true">Tigren Block Manager</label>
+        <description translate="true">Tigren Block Manager</description>
+        <parameters>
+
+            <parameter name="unique_id" xsi:type="text" visible="false" required="true" sort_order="0">
+                <label translate="true">Block ID</label>
+            </parameter>
+
+            <parameter name="template" xsi:type="select" visible="true" required="true" sort_order="10">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="Tigren_BannerManager::type/all_image.phtml" selected="true">
+                        <label translate="true">Banner Manager Default Template</label>
+                    </option>
+                    <option name="custom" value="0">
+                        <label translate="true">Custom Template</label>
+                    </option>
+                </options>
+            </parameter>
+
+            <parameter name="custom_template" xsi:type="text" required="false" visible="true" sort_order="20">
+                <label translate="true">Custom Template</label>
+                <description translate="true">Used, when template value is set to 'Custom'</description>
+                <!-- <depends> Commented because it break depends rules at the widget_instance page
+                    <parameter name="template" value="0"/>
+                </depends> -->
+            </parameter>
+
+            <parameter name="block_id" xsi:type="block" visible="true" required="true" sort_order="30">
+                <label translate="true">Select Blocks</label>
+                <block class="Tigren\BannerManager\Block\Adminhtml\Block\Widget\Chooser" />
+            </parameter>
+
+            <parameter name="additional_class" xsi:type="text" visible="true" required="false" sort_order="35">
+                <label translate="true">Additional Class</label>
+            </parameter>
+
+            <parameter name="customer_group" xsi:type="multiselect" visible="true" required="true"
+                       source_model="Tigren\BannerManager\Model\Config\Source\CustomerGroup" sort_order="40">
+                <label translate="true">Customer Groups</label>
+            </parameter>
+
+            <parameter name="is_active" xsi:type="select" visible="true" required="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="50">
+                <label translate="true">Is Active</label>
+            </parameter>
+
+        </parameters>
+    </widget>
+</widgets>

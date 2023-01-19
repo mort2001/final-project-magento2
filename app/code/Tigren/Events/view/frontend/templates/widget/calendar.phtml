@@ -1,0 +1,247 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<?php
+$helper = $this->helper('Tigren\Events\Helper\Data');
+$eventsJson = $block->getEventJson();
+$events = $block->getPagedEvents();
+?>
+<div class="event-index page-events">
+    <script type='text/javascript'>
+        function viewmode(mode) {
+            var url = '<?= $block->getUrl('events/index/index'); ?>';
+            url = url + 'mode/' + mode;
+            window.location.href = url;
+        }
+    </script>
+
+    <?php
+    $eventCategories = $block->getEventCategories();
+    $viewMode = $block->getRequest()->getParam('mode', false);
+    $currentModeArr = [];
+    if ($viewMode) {
+        $currentModeArr = ['mode' => $viewMode];
+    }
+    ?>
+    <!--Filter-->
+    <div class="box-filter">
+        <form id="top-filter" method="post" action="<?php echo $this->getUrl('events/index/index', $currentModeArr) ?>">
+            <input type="text" name="event" placeholder="Enter Event Name" class="event-search control"
+                   value="<?= $block->getEventSearch(); ?>"/>
+            <input type="text" name="location" placeholder="Enter Location (Street or City)"
+                   class="location-search control" value="<?= $block->getLocationSearch(); ?>"/>
+            <?php if ($block->getScopeConfig('events/general_setting/allow_filter_by_cat') && count($eventCategories)) {
+                ?>
+                <?php $filterCatId = $block->getFilterCatId(); ?>
+                <select name="category" class="category-filter control">
+                    <option value=""><?= __('All Events'); ?></option>
+                    <?php foreach ($eventCategories as $category) {
+                        $catId = $category->getId(); ?>
+                        <option value="<?= $catId; ?>"
+                                <?php if ($filterCatId == $catId): ?>selected<?php endif; ?>><?= $category->getCategoryTitle(); ?></option>
+                        <?php
+                    } ?>
+                </select>
+                <?php
+            } ?>
+            <button class="search-button action primary" type="submit"
+                    title="Search"><?= __('Search'); ?></button>
+        </form>
+    </div>
+
+    <!--View Mode Select-->
+    <?php
+    $configViewMode = $block->getScopeConfig('events/general_setting/view_mode');
+    if ($configViewMode == 'grid-calendar' || $configViewMode == 'calendar-grid') {
+        ?>
+        <div class="view-mode">
+            <label for="category-filter"><?= __('View Mode'); ?></label>
+            <select name="viewmode" class="viewmode-grid control" onchange="viewmode(this.value)">
+                <option
+                    value="calendar" <?php if ($block->getCurrentMode() == 'calendar') {
+                    ?> selected <?php
+                } ?>><?= __('Calendar'); ?></option>
+                <option
+                    value="grid" <?php if ($block->getCurrentMode() == 'grid') {
+                    ?> selected <?php
+                } ?>><?= __('Grid'); ?></option>
+            </select>
+        </div>
+        <?php
+    } ?>
+
+    <?php if (count($events)) {
+        ?>
+        <?php if ($block->getCurrentMode() == 'calendar') {
+        ?>
+        <!--  calendar mode -->
+        <div class="class-calendar" id="calendar">
+            <!--Quickview-->
+            <?php
+            foreach ($events as $event) {
+                $event->load($event->getId()); ?>
+                <div class="event-quickview" data-event_id="<?= $event->getId() ?>">
+                    <div class="event-image">
+                        <a href="<?= $event->getEventUrl(); ?>" title="<?= $event->getTitle(); ?>">
+                            <img src="<?= $block->getAvatarUrl($event); ?>"
+                                 alt="<?= $event->getTitle(); ?>"/>
+                        </a>
+                    </div>
+                    <div class="event-info">
+                        <p class="event-title">
+                            <a href="<?= $event->getEventUrl(); ?>"
+                               title="<?= $event->getTitle(); ?>"><?= $event->getTitle(); ?></a>
+                        </p>
+                        <div class="desc">
+                            <div class="event-time">
+                                <label><?= __('Time: ') ?></label>
+                                <?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?>
+                            </div>
+                            <div class="event-location">
+                                <label><?= __('Location: ') ?></label>
+                                <?= $event->getLocation(); ?>
+                            </div>
+                            <div class="event-desc std">
+                                <label><?= __('Description: ') ?></label>
+                                <?= $block->getShortDescription($event); ?>
+                            </div>
+                        </div>
+                        <div class="link-see-more">
+                            <a href="<?= $event->getEventUrl(); ?>"
+                               title="<?= $event->getTitle(); ?>"
+                               class="link-learn"><?= __('See More') ?></a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } ?>
+        </div>
+
+        <!--JS for calendar-->
+    <?php $locale = $block->getScopeConfig('events/calendar_setting/language'); ?>
+        <script type='text/javascript'>
+
+            require(['jquery', 'fullcalendar', 'moment'<?php if ($locale != 'en') {
+                ?>, 'locale_all'<?php
+                } ?>], function ($) {
+                var $j = $.noConflict();
+                $(document).ready(function () {
+                    var date = new Date();
+                    var d = date.getDate();
+                    var m = date.getMonth();
+                    var y = date.getFullYear();
+                    var calendar_mode = '';
+                    var defaultMode = '<?= $block->getScopeConfig('events/calendar_setting/default_view_mode'); ?>';
+                    var events = <?= $eventsJson; ?>;
+                    $('#calendar').fullCalendar({
+                        <?php if ($locale != 'en') {
+                        ?>
+                        locale: "<?= $locale; ?>",
+                        <?php
+                        } ?>
+                        editable: true,
+                        displayEventEnd: true,
+                        disableDragging: true,
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: calendar_mode
+                        },
+                        defaultView: defaultMode,
+                        eventTextColor: 'white',
+                        timeFormat: 'H:mm',
+                        events: events,
+                        eventMouseover: eventMouseoverFunc,
+                        eventMouseout: eventMouseoutFunc
+                    });
+
+                    function eventMouseoverFunc(event, jsEvent, view) {
+                        var rightDistance = $(window).width() - jsEvent.clientX;
+                        var quickviewWidth = $('.event-quickview[data-event_id="' + event.id + '"]').width();
+                        if (rightDistance > quickviewWidth) {
+                            $('.event-quickview[data-event_id="' + event.id + '"]').css({
+                                left: jsEvent.clientX,
+                                top: jsEvent.clientY
+                            }).show();
+                        } else {
+                            var leftPos = $(window).width() - quickviewWidth;
+                            $('.event-quickview[data-event_id="' + event.id + '"]').css({
+                                left: leftPos,
+                                top: jsEvent.clientY
+                            }).show();
+                        }
+
+                    }
+
+                    function eventMouseoutFunc(event, jsEvent, view) {
+                        $('.event-quickview[data-event_id="' + event.id + '"]').hide();
+                    }
+
+                    $('.event-quickview').hover(function () {
+                        $(this).show()
+                    }, function () {
+                        $(this).hide()
+                    });
+                });
+            });
+        </script>
+    <?php
+    } else {
+    ?>
+        <!-- grid mode -->
+        <div class="toolbar"><?= $block->getPagerHtml(); ?></div>
+        <div class="events wrapper grid events-grid events-list">
+            <ol class="events list items event-items" id="events-list">
+                <?php foreach ($events as $event) {
+                    ?>
+                    <li class="item event event-item">
+                        <div class="event-item-info" data-container="event-grid">
+                            <a href="<?= $event->getEventUrl(); ?>"
+                               class="event photo event-item-photo" title="<?= $event->getTitle(); ?>">
+                                    <span class="event-image-container" style="width:240px;">
+                                        <span class="event-image-wrapper" style="padding-bottom: 75%;">
+                                            <img src="<?= $block->getAvatarUrl($event); ?>"
+                                                 class="event-image-photo" alt="<?= $event->getTitle(); ?>"/>
+                                        </span>
+                                    </span>
+                            </a>
+                            <div class="event details event-item-details">
+                                <h3 class="event-title">
+                                    <a href="<?= $event->getEventUrl(); ?>"
+                                       title="<?= $event->getTitle(); ?>"><?= $event->getTitle(); ?></a>
+                                </h3>
+                                <div class="desc">
+                                    <div class="event-time">
+                                        <label><?= __('Time: ') ?></label>
+                                        <?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?>
+                                    </div>
+                                    <div class="event-location">
+                                        <label><?= __('Location: ') ?></label>
+                                        <?= $event->getLocation(); ?>
+                                    </div>
+                                    <div class="event-desc std">
+                                        <label><?= __('Description: ') ?></label>
+                                        <?= $block->getShortDescription($event); ?>
+                                    </div>
+                                </div>
+                                <div class="link-see-more">
+                                    <a href="<?= $event->getEventUrl(); ?>"
+                                       title="<?= $event->getTitle(); ?>"
+                                       class="link-learn"><?= __('See More') ?></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <?php
+                } ?>
+            </ol>
+        </div>
+        <div class="toolbar"><?= $block->getPagerHtml(); ?></div>
+    <?php
+    } ?>
+    <?php
+    } else {
+    ?>
+        <p class="note-msg" style="margin:20px 0;"><?= __('There are no events matching the selection.'); ?></p>
+        <?php
+    } ?>
+</div>
+

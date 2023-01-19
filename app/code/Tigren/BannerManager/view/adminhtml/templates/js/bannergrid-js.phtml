@@ -1,0 +1,30 @@
+<script>
+    require
+    ([
+        'jquery'
+    ], function ($) {
+        $(document).ready(function () {
+            console.log('aaa');
+            var values = $('[name=banners]').val();
+            if (values) {
+                values = unserialize(values);
+                $('.checkbox').prop('checked', false);
+                $('[name=position]').prop('disable', true);
+                $.each(values, function (key, value) {
+                    $('#id_' + key).click();
+                });
+            }
+        });
+
+        function unserialize(serialize) {
+            var obj = {};
+            serialize = serialize.split('&');
+            for (var i = 0; i < serialize.length; i++) {
+                var thisItem = [];
+                thisItem = serialize[i].split('=');
+                obj[decodeURIComponent(thisItem[0])] = decodeURIComponent(thisItem[1]);
+            }
+            return obj;
+        }
+    });
+</script>

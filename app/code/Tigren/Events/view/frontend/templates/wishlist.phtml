@@ -1,0 +1,114 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<div id="event-wishlist">
+    <?php
+    if ($block->getCustomerId()) {
+        $events = $block->getPagedEvents();
+        if (count($events) > 0) {
+            ?>
+            <div class="toolbar"><?= $block->getPagerHtml(); ?></div>
+            <div class="events-list table-wrapper">
+                <table class="event-wishlist-table table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="col no"><?= __('No.') ?></th>
+                        <th scope="col" class="col event"><?= __('Image') ?></th>
+                        <th scope="col" class="col event"><?= __('Event') ?></th>
+                        <th scope="col" class="col description"><?= __('Description') ?></th>
+                        <th scope="col" class="col status"><?= __('Status') ?></th>
+                        <th scope="col" class="col action" colspan="3"><?= __('Action') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $no = 0;
+
+            foreach ($events as $event) {
+                $event->load($event->getId());
+                $no++;
+                $eventId = $event->getId();
+                $description = $block->getShortDescription($event);
+                $status = ucfirst($event->getProgressStatus()); ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('No.')) ?>" class="col no">
+                                <?= $no; ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Image')) ?>" class="col image">
+
+                                <img src="<?= $block->getAvatarUrl($event); ?>" width="100px" height="100px"/>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Event')) ?>" class="col event">
+                                <span><strong><?= $event->getTitle(); ?></strong></span>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Description')) ?>" class="col description">
+                                <?= $description; ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <?= $status; ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Action')) ?>" class="col action"
+                                style="display: table-cell">
+                                <a href="<?= $block->getUrl('events/index/view', ['event_id' => $eventId]); ?>"
+                                   title="<?= __('View'); ?>">
+                                    <?= __('View'); ?>
+                                </a>
+                            </td>
+                            <td style="display: table-cell">
+                                <?php
+                                if ($event->isAllowRegisterEvent()) {
+                                    if ($event->getPrice() > 0) {
+                                        ?>
+                                        <a href="<?= $event->getAddToCartUrl(); ?>"
+                                           title="<?= __('Buy Ticket'); ?>">
+                                            <?= __('Buy Ticket') ?>
+                                        </a>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <a href="<?= $event->getRegisterUrl() ?>"
+                                           title="<?= __('Register'); ?>">
+                                            <?= __('Register'); ?>
+                                        </a>
+                                        <?php
+                                    }
+                                } ?>
+                            </td>
+                            <td style="display: table-cell">
+                                <a class="delete"
+                                   href="<?= $block->getUrl(
+                                       'events/wishlist/delete',
+                                       ['event_id' => $eventId]
+                                   ); ?>"
+                                   title="<?= __('Delete'); ?>">
+                                    <?= __('Delete'); ?>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+            } ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="toolbar"><?= $block->getPagerHtml(); ?></div>
+            <?php
+        } else {
+            ?>
+            <h3>There are no event in your wishlist</h3>
+            <?php
+        }
+    } else {
+        ?>
+        <h3>You haven't logged in.</h3>
+        <?php
+    }
+    ?>
+</div>
+
+<script type="text/javascript">
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+            $('.delete').click(function () {
+                return confirm('Are you sure to delete this event from wishlist?');
+            });
+        });
+    });
+</script>

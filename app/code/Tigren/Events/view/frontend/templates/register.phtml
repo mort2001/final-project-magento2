@@ -1,0 +1,56 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<?php
+$event = $block->getEvent();
+if ($event) {
+    ?>
+    <div class="content">
+        <div class="registration-note"><?= __("Register for Event: ") . $event->getTitle(); ?></div>
+
+        <form action="<?= $block->getPostActionUrl() ?>" method="post" id="event-registration"
+              data-hasrequired="<?= __('* Required Fields') ?>" data-mage-init='{"validation":{}}'>
+            <input type="hidden" name="event_id" value="<?= $event->getId() ?>" id="event_id"/>
+            <div class="fieldset">
+                <h2 class="legend"><?= __('Contact Information') ?></h2>
+                <div class="fields">
+                    <div class="field required">
+                        <label for="fullname" class="label"><?= __('Full Name') ?></label>
+                        <div class="input-box">
+                            <input name="fullname" id="fullname" title="<?= __('Full Name') ?>"
+                                   class="input-text required-entry" type="text" data-validate="{required:true}"/>
+                        </div>
+                    </div>
+                    <div class="field required">
+                        <label for="email" class="label"><?= __('Email') ?></label>
+                        <div class="input-box">
+                            <input name="email" id="email" title="<?= __('Email') ?>"
+                                   class="input-text required-entry validate-email" type="text"
+                                   data-validate="{required:true}"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="phone" class="label"><?= __('Telephone') ?></label>
+                        <div class="input-box">
+                            <input name="phone" id="phone" title="<?= __('Phone') ?>"
+                                   class="input-text" type="text"/>
+                        </div>
+                    </div>
+                    <div class="field required wide">
+                        <label for="address" class="label"><?= __('Address') ?></label>
+                        <div class="input-box">
+                            <textarea name="address" id="address" title="<?= __('Address') ?>"
+                                      class="required-entry input-text" cols="5" rows="3"
+                                      data-validate="{required:true}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons-set">
+                <p class="required"><?= __('* Required Fields') ?></p>
+                <button type="submit" id="invite-form-button" title="<?= __('Submit') ?>" class="action primary">
+                    <span><span><?= __('Submit') ?></span></span></button>
+            </div>
+        </form>
+    </div>
+    <?php
+}
+?>

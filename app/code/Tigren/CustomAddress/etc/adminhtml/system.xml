@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="tigren" translate="label" sortOrder="6996">
+            <label>Tigren</label>
+        </tab>
+        <section id="custom_address" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Custom Address</label>
+            <tab>tigren</tab>
+            <resource>Tigren_CustomAddress::system_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General Settings</label>
+                <field id="suggestion_type" translate="label" type="select" sortOrder="0" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Suggestion Type</label>
+                    <source_model>Tigren\CustomAddress\Model\Config\Source\SuggestionType</source_model>
+                </field>
+                <field id="move_billing" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Move Billing Address</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set 'Yes' to move Billing Address from payment step to shipping step at checkout page.</comment>
+                </field>
+                <field id="full_tax_invoice_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Full Tax Invoice</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Set 'Yes' to enable full tax invoice feature.</comment>
+                    <depends>
+                        <field id="move_billing">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

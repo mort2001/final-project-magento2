@@ -1,0 +1,209 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<?php
+$event = $block->getEvent();
+if ($event->getId()) {
+    ?>
+    <div class="event-content">
+        <!--Content-->
+        <div class="event-info">
+            <div class="section-label">Event Information</div>
+            <div class="event-info-field event-time">
+                <div class="event-info-label"><label><?= __('Time') ?></label></div>
+                <div class="event-info-content"><?= $block->getFormattedTime($event->getStartTime()); ?>
+                    - <?= $block->getFormattedTime($event->getEndTime()); ?></div>
+            </div>
+            <div class="event-info-field event-location">
+                <span class="event-info-label"><label><?= __('Location') ?></label></span>
+                <span class="event-info-content"><?= $event->getLocation(); ?></span>
+            </div>
+
+            <?php if ($block->getScopeConfig('events/general_setting/show_num_participants')) {
+        ?>
+                <div class="event-info-field participants">
+                    <div class="event-info-label"><label><?= __('Number of Participant') ?></label></div>
+                    <div class="event-info-content">
+                        <?php
+                        if ($event->getNoOfParticipant() > 0) {
+                            echo $event->getNoOfParticipant();
+                        } else {
+                            echo '0';
+                        } ?>
+                    </div>
+                </div>
+                <?php
+    }
+    if ($event->getRegistrationDeadline()) {
+        ?>
+                <div class="event-info-field deadline">
+                    <div class="event-info-label"><label><?= __('Registration Deadline') ?></label></div>
+                    <div class="event-info-content"><?= $block->getFormattedTime($event->getRegistrationDeadline()); ?></div>
+                </div>
+                <?php
+    } ?>
+            <div class="event-info-field event-price">
+                <div class="event-info-label"><label><?= __('Price') ?></label></div>
+                <div class="event-info-content">
+                    <?php
+                    if ($event->getPrice() > 0) {
+                        echo $block->getPriceWithCurrency();
+                    } else {
+                        echo __('FREE');
+                    } ?>
+                </div>
+            </div>
+        </div>
+        <!--Description-->
+        <div class="event-description">
+            <?= $block->getDescriptionHtml($event); ?>
+        </div>
+        <!--Organizer-->
+        <?php if ($event->getIsShowContact() && (($event->getContactPerson() != '')
+                || ($event->getContactPhone() != '') || ($event->getContactEmail() != '') || ($event->getContactAddress() != ''))
+        ) {
+                        ?>
+            <div class="event-organizer">
+                <div class="section-label">Organizer Information</div>
+                <?php if ($event->getContactPerson() != '') {
+                            ?>
+                    <div class="event-info-field event-contact-person">
+                        <span class="event-info-label"><label><?= __('Contact Person') ?></label></span>
+                        <span class="event-info-content"><?= $event->getContactPerson(); ?></span>
+                    </div>
+                    <?php
+                        } ?>
+                <?php if ($event->getContactPhone() != '') {
+                            ?>
+                    <div class="event-info-field event-contact-phone">
+                        <span class="event-info-label"><label><?= __('Phone') ?></label></span>
+                        <span class="event-info-content"><?= $event->getContactPhone(); ?></span>
+                    </div>
+                    <?php
+                        } ?>
+                <?php if ($event->getContactEmail() != '') {
+                            ?>
+                    <div class="event-info-field event-contact-email">
+                        <span class="event-info-label"><label><?= __('Email') ?></label></span>
+                        <span class="event-info-content"><?= $event->getContactEmail(); ?></span>
+                    </div>
+                    <?php
+                        } ?>
+                <?php if ($event->getContactAddress() != '') {
+                            ?>
+                    <div class="event-info-field event-contact-address">
+                        <span class="event-info-label"><label><?= __('Address') ?></label></span>
+                        <span class="event-info-content"><?= $event->getContactAddress(); ?></span>
+                    </div>
+                    <?php
+                        } ?>
+            </div>
+            <?php
+                    } ?>
+
+        <div class="register-button">
+            <?php if ($block->getScopeConfig('events/general_setting/allow_send_invitation')) {
+                        ?>
+                <button href="#inviteformcontent" id="invite_friend_button" class="action primary"
+                        title="<?= __('Invite Friends'); ?>">
+                    <?= __('Invite Friends'); ?>
+                </button>
+                <?php
+                    } ?>
+
+            <!--register event-->
+            <?php
+            if ($event->isAllowRegisterEvent()) {
+                if ($event->getPrice() > 0) {
+                    ?>
+                    <button onclick="location.href='<?= $event->getAddToCartUrl(); ?>'" class="action primary"
+                            title="<?= __('Buy Ticket'); ?>">
+                        <?= __('Buy Ticket') ?>
+                    </button>
+                    <?php
+                } else {
+                    ?>
+                    <button onclick="location.href='<?= $event->getRegisterUrl() ?>'" class="action primary"
+                            title="<?= __('Register'); ?>">
+                        <?= __('Register'); ?>
+                    </button>
+                    <?php
+                }
+            } ?>
+        </div>
+
+        <!-- share Link-->
+        <?php if ($block->getScopeConfig('events/general_setting/show_social_share')) {
+                ?>
+            <div class="event-social-links tigren-social">
+                <?= $block->getFacebookButton(); ?>
+                <?= $block->getTwitterButton(); ?>
+                <?= $block->getGooglePlusButton(); ?>
+                <div class="social-button favorite-img">
+                    <a href="<?= $block->getUrl(
+                        'events/index/favorite',
+                        ['event_id' => $event->getId(), 'action' => $block->isFavorited() ? 'remove' : 'add']
+                    ) ?>">
+                        <img src="<?= $block->getFavoriteImageSrc(); ?>" height="28" width="28"
+                             alt="Favorite"
+                             title="<?= $block->isFavorited() ? __('Remove from Favorite') : __('Add to Favorite'); ?>"/>
+                    </a>
+                </div>
+            </div>
+            <?php
+            } ?>
+        <!-- End Share -->
+    </div>
+
+    <?php if ($block->getScopeConfig('events/general_setting/allow_send_invitation')) {
+                ?>
+        <div id="inviteformcontent" style="display:none;">
+            <div id="invite_form_header" class="page-title" style="text-align: center">
+                <h2><strong><?= __('Invite Friends'); ?></strong></h2>
+            </div>
+            <form action="<?= $block->getUrl('events/Index/Sendinvitation') ?>" id="event-invite-form"
+                  method="post">
+                <input type="hidden" name="event_id" id="event_id" value="<?= $event->getId(); ?>"/>
+                <div class="yourname">
+                    <label for="yourname" class="required"><?= __('Your Name:') ?>
+                        <span class="required" style="color: red"> * </span></label>
+                    <div class="input-box">
+                        <input type="text" name="yourname" class="input-text required-entry" id="yourname"/>
+                    </div>
+                </div>
+                <div class="friendemail">
+                    <label for="friendemail"><?= __('Send to: ') ?>
+                        <span class="required" style="color: red"> * </span> </label>
+                    <div class="input-box">
+                        <input type="text" name="friendemail" class="input-text required-entry validate-email"
+                               id="friendemail"/>
+                    </div>
+                </div>
+                <div class="invitemessage">
+                    <label for="invitemessage"><?= __('Message: ') ?></label>
+                    <div class="input-box">
+                        <textarea name="invitemessage" rows="5" cols="44"></textarea>
+                    </div>
+                </div>
+                <div class="buttons-set" style="text-align: center">
+                    <input class="action primary" type="submit" id="invite-form-button" title="submit" value="Submit"/>
+                </div>
+            </form>
+        </div>
+        <?php
+            }
+}
+?>
+
+<script type="text/javascript">
+    require(["jquery", "mage/mage", "fancybox"], function ($) {
+        $(document).ready(function () {
+            var inviteForm = $('#event-invite-form');
+            inviteForm.mage('validation', {});
+
+            $('#invite_friend_button').fancybox({
+                helpers: {
+                    title: null
+                }
+            });
+        });
+    });
+</script>

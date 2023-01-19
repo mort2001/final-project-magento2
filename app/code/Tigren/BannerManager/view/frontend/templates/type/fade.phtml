@@ -1,0 +1,40 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+$additionalClass = $block->getAdditionalClass();
+$htmlId = $block->getBannerItemHtmlId();
+$bannerCollection = $block->getBannerCollection();
+?>
+<div class="tigren-bannermanager fade <?= $additionalClass ?>">
+    <script type="text/javascript">
+        require(['jquery', 'tigren/flexslider'], function ($) {
+            $(document).ready(function ($) {
+                var flexSliderSelector = '<?= $htmlId; ?>';
+                $('.' + flexSliderSelector).flexslider({
+                    animation: 'fade'
+                });
+            });
+        });
+
+    </script>
+    <div class="tigren-bannermanager-slider">
+        <div id="<?= $htmlId ?>" class="flexslider flexslider-content-image <?= $htmlId ?>"
+             style="margin:auto">
+            <ul class="slides">
+                <?php foreach ($bannerCollection as $banner): ?>
+                    <li>
+                        <a href="<?= $banner->getBannerUrl() ?>"
+                           <?= $banner->getTarget() ? 'target="_blank" ' : ''; ?>style="display:block;">
+                            <img alt="<?= $banner->getTitle() ?>"
+                                 src="<?= $block->getBannerImageUrl($banner) ?>"
+                                 title="<?= $banner->getDescription() ?>" />
+                        </a>
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Tigren_Ajaxsuite::ajaxcompare" title="Ajax Compare" module="Tigren_Ajaxsuite" sortOrder="3"
+             parent="Tigren_Ajaxsuite::ajaxsuite_main" resource="Tigren_Ajaxsuite::ajaxcompare"
+             action="adminhtml/system_config/edit/section/ajaxcompare"/>
+    </menu>
+</config>

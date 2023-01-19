@@ -1,0 +1,22 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<!--@subject Event {{var event.getTitle()}} is waiting for you @-->
+<!--@styles
+body,p { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+
+<h3>Event {{var event.getTitle()}} is waiting for you</h3>
+<p>
+    Dear {{var; recipient}}, <br/><br/>
+    I would like you to take part in an attractive event.
+    <br/><br/>
+</p>
+<p>You can view this event by clicking the following link:</p>
+<p><a href="{{var event.getEventUrl()}}" target="_blank">{{var event.getTitle()}}</a></p>
+<p>
+    {{var; message}}
+</p>

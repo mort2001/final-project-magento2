@@ -1,0 +1,26 @@
+<!--@copyright Copyright (c) 2016 www.tigren.com-->
+<?php if ($block->isShowUpcomingEvents()) {
+    $upcomingEventCollection = $block->getUpcomingEventCollection(); ?>
+    <div class="block block-events">
+        <div class="block-title" style="margin: 0 0 20px;">
+            <strong style="font-size: 18px; font-weight: 300;"><span>Upcoming Events</span></strong>
+        </div>
+        <div class="block-content">
+            <?php if (count($upcomingEventCollection) > 0) {
+        ?>
+                <ul class="upcoming-events" style="padding-left:0; list-style-type: none;">
+                    <?php foreach ($upcomingEventCollection as $event) {
+            ?>
+                        <li class="item">
+                            <a href="<?= $block->getEventUrl($event) ?>"
+                               title="<?= $event->getTitle() ?>"><?= $event->getTitle() ?></a>
+                        </li>
+                        <?php
+        } ?>
+                </ul>
+                <?php
+    } ?>
+        </div>
+    </div>
+    <?php
+} ?>

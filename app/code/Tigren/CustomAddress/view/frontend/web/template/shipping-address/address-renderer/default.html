@@ -1,0 +1,32 @@
+<div class="shipping-address-item"
+     data-bind="click: selectAddress, css: isSelected() ? 'selected-item' : 'not-selected-item', attr :{id : 'shipping-address-' + address().customerAddressId} ">
+    <div class="address-selection">
+        <strong class="name"><!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname -->
+            <!-- /ko -->
+            <!-- ko text: address().middlename --><!-- /ko -->
+            <!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix -->
+            <!-- /ko --></strong><br />
+        <!-- ko text: _.values(address().street).join(", ") --><!-- /ko -->
+        <!-- ko if: (address().customAttributes) -->
+        <!-- ko text: address().customAttributes.subdistrict --><!-- /ko -->,
+        <!-- /ko -->
+        <!-- ko text: address().city --><!-- /ko -->, <span data-bind="html: address().region"></span>
+        <!-- ko text: address().postcode --><!-- /ko -->,
+        <!-- ko text: getCountryName(address().countryId) --><!-- /ko --><br />
+        <!-- ko if: (address().telephone) -->
+        <a data-bind="text: address().telephone, attr: {'href': 'tel:' + address().telephone}"></a>
+        <!-- /ko -->
+    </div>
+    <div class="actions">
+        <button class="action edit-address-link"
+                data-bind="css: isDefault() ? 'default-address' : 'additional-address', click: editAddress,visible: isSelected()"
+                type="button">
+            <span data-bind="i18n: 'Edit'"></span>
+        </button>
+        <button class="action edit-address-link delete-address-link"
+                data-bind="click: deleteAddress,visible: isSelected() && (!isDefault() && !isDefaultBilling())"
+                type="button">
+            <span data-bind="i18n: 'Delete'"></span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<address>
+    <!-- ko if: (visible()) -->
+    <strong class="name">
+        <!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname --><!-- /ko -->
+        <!-- ko text: address().middlename --><!-- /ko -->
+        <!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix --><!-- /ko -->
+    </strong><br />
+    <!-- ko text: address().street --><!-- /ko -->,
+    <!-- ko if: (address().customAttributes) -->
+    <!-- ko text: address().customAttributes.subdistrict --><!-- /ko -->,
+    <!-- /ko -->
+    <!-- ko text: address().city --><!-- /ko -->,
+    <span data-bind="html: address().region"></span>
+    <!-- ko text: address().postcode --><!-- /ko -->,
+    <!-- ko text: getCountryName(address().countryId) --><!-- /ko -->
+    <!-- /ko -->
+</address>

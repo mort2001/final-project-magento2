@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  ~
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_ImportExport:etc/import.xsd">
+    <entity name="custom_region" label="Directory Region(s)" model="Tigren\CustomAddress\Model\Import\Region"
+            behaviorModel="Tigren\CustomAddress\Model\Import\Source\Behavior\Region" />
+    <entity name="custom_city" label="Directory City(ies)" model="Tigren\CustomAddress\Model\Import\City"
+            behaviorModel="Tigren\CustomAddress\Model\Import\Source\Behavior\City" />
+    <entity name="custom_subdistrict_and_zipcode" label="Directory Subdistrict(s) vs Zipcode(s)" model="Tigren\CustomAddress\Model\Import\SubdistrictAndZipcode"
+            behaviorModel="Tigren\CustomAddress\Model\Import\Source\Behavior\SubdistrictAndZipcode" />
+</config>

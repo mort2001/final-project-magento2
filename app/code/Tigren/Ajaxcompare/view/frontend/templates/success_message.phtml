@@ -1,0 +1,37 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+$successHeader = $this->helper(Tigren\Ajaxcompare\Helper\Data::class)->getSuccessHeaderAjaxCompare();
+?>
+<?php $_product = $block->getProduct(); ?>
+
+<div class="mb-login-popup-title">
+    <strong><?= $successHeader ?></strong>
+</div>
+<div class="mb-ajaxsuite-popup-border ajaxcompare-success-box">
+    <?= $block->getChildHtml('ajaxcompare.message'); ?>
+
+    <h2 class="product-name"><?= $_product->getName() ?></h2>
+    <?= $block->getChildHtml('product_image', true); ?>
+    <div class="ajaxcompare-buttons">
+        <button type="button" id="ajaxcompare_btn_close_popup" class="action primary mb-ajaxsuite-close"
+                title="<?= __('Close') ?>">
+            <span><?= __('Close ') ?></span>
+            <?php
+            if ($popupTTL = $this->helper('Tigren\Ajaxsuite\Helper\Data')->getTTLAjaxSuite()) {
+                ?>
+                (<span class="ajaxsuite-autoclose-countdown"><?= $popupTTL ?></span>)
+                <?php
+            }
+            ?>
+        </button>
+        <button type="button" id="ajaxcompare_checkout" class="action focus primary"
+                title="<?= __('View Comparison') ?>"
+                onClick="window.location='<?= $block->getUrl('catalog/product_compare/index/'); ?>'">
+            <span><?= __('View Comparison') ?></span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+$bannerCollection = $block->getBannerCollection();
+?>
+<div class="list-categories owl-carousel">
+    <?php foreach ($bannerCollection as $banner): ?>
+        <div class="item">
+            <a href="<?= $banner->getBannerUrl() ?>">
+                <img alt="<?= $banner->getTitle() ?>"
+                     src="<?= $block->getBannerImageUrl($banner) ?>"
+                     title="<?= $banner->getDescription() ?>" />
+            </a>
+        </div>
+    <?php endforeach ?>
+</div>
+<script type="text/javascript" xml="space">
+    // <![CDATA[
+    require(['jquery', 'owlcarousel'], function ($) {
+        $(document).ready(function ($) {
+            $('.list-categories.owl-carousel').owlCarousel({
+                loop: true,
+                nav: true,
+                dots: false,
+                margin: 10,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    600: {
+                        items: 2,
+                        nav: false
+                    },
+                    768: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 4
+                    }
+                }
+            });
+        });
+    });
+    // ]]>
+</script>

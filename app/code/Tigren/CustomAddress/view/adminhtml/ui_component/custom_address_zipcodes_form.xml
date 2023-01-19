@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  ~
+  -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                custom_address_zipcodes_form.custom_address_zipcodes_form_data_source
+            </item>
+            <item name="deps" xsi:type="string">
+                custom_address_zipcodes_form.custom_address_zipcodes_form_data_source
+            </item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">The Subdistrict Form</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">custom_address_zipcodes_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <url path="custom_address/zipcode/index"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+            <button name="save">
+                <url path="custom_address/zipcode/save"/>
+                <class>primary</class>
+                <label translate="true">Save</label>
+            </button>
+        </buttons>
+        <namespace>custom_address_zipcodes_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>custom_address_zipcodes_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="custom_address_zipcodes_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Tigren\CustomAddress\Model\ResourceModel\Subdistrict\DataProvider
+            </argument>
+            <argument name="name" xsi:type="string">custom_address_zipcodes_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">subdistrict_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <validateUrl path="custom_address/zipcode/index"/>
+            <submitUrl path="custom_address/zipcode/save"/>
+        </settings>
+    </dataSource>
+    <fieldset name="directory_city_subdistrict">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true"/>
+            </item>
+        </argument>
+        <field name="region_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Directory\Model\ResourceModel\Region\Collection</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Region</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">store</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="city_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Tigren\CustomAddress\Model\ResourceModel\City\Collection</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">City</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">store</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="customEntry" xsi:type="string">city</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="filterBy" xsi:type="array">
+                        <item name="target" xsi:type="string">${ $.provider }:${ $.parentScope }.region_id</item>
+                        <item name="field" xsi:type="string">region_id</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="subdistrict_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Tigren\CustomAddress\Model\ResourceModel\Subdistrict\Collection</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Subdistrict</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">store</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="customEntry" xsi:type="string">subdistrict</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="filterBy" xsi:type="array">
+                        <item name="target" xsi:type="string">${ $.provider }:${ $.parentScope }.city_id</item>
+                        <item name="field" xsi:type="string">city_id</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="zipcode">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Zip Code</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">zipcode</item>
+                    <item name="dataScope" xsi:type="string">zipcode</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

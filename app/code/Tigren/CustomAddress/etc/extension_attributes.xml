@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Customer\Api\Data\AddressInterface">
+        <attribute code="city_id" type="int" />
+        <attribute code="subdistrict_id" type="int" />
+        <attribute code="subdistrict" type="string" />
+    </extension_attributes>
+    <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
+        <attribute code="city_id" type="int" />
+        <attribute code="subdistrict_id" type="int" />
+        <attribute code="subdistrict" type="string" />
+        <attribute code="address_id" type="string"/>
+        <attribute code="use_full_tax" type="string"/>
+        <attribute code="is_full_invoice" type="int" />
+        <attribute code="head_office" type="string" />
+        <attribute code="branch_office" type="string" />
+        <attribute code="tax_identification_number" type="string" />
+        <attribute code="company" type="string" />
+        <attribute code="company_name" type="string" />
+        <attribute code="personal_firstname" type="string" />
+        <attribute code="personal_lastname" type="string" />
+        <attribute code="invoice_type" type="string" />
+        <attribute code="telephone" type="string"/>
+        <attribute code="phone" type="string"/>
+        <attribute code="company_branch" type="string"/>
+        <attribute code="branch_name" type="string" />
+        <attribute code="branch" type="string" />
+    </extension_attributes>
+</config>

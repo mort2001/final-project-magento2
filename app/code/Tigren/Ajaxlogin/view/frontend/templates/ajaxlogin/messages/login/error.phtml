@@ -1,0 +1,38 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+?>
+<div class="mb-login-popup-title center">
+    <span class="mb-login-popup-title-error"></span>
+    <strong><?= __('Error'); ?></strong>
+</div>
+<div class="mb-ajaxsuite-popup-border mb-ajaxlogin-popup mb-ajaxlogin-message-error">
+    <div class="mb-login-container-login">
+        <div class="block-content" aria-labelledby="block-customer-login-heading">
+            <div class="mb-error-message">
+                <h4 class="mb-message-error"><?= __('Login Failed!'); ?></h4>
+                <p class="message"></p>
+            </div>
+            <div class="mb-actions-toolbar">
+                <div class="secondary mb-inline">
+                    <button class="action primary mb-continue" id="ajaxlogin_btn_close_popup" type="button">
+                        <span>
+                            <span><?= __('Close') ?></span>
+                        </span>
+                    </button>
+                </div>
+                <div class="secondary mb-inline">
+                    <button class="action primary mb-create-account" id="ajaxlogin_btn_to_login" type="button">
+                        <span>
+                            <span><?= __('Login') ?></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

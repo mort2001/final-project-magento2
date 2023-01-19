@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.cart.form">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Tigren_Ajaxcart::cart/form.phtml</argument>
+            </action>
+            <block class="Magento\Framework\View\Element\RendererList" name="checkout.cart.item.renderers.override"
+                   as="renderer.list.custom"/>
+            <arguments>
+                <argument name="renderer_list_name" xsi:type="string">checkout.cart.item.renderers.override</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,421 @@
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/* Common */
+ul {
+    list-style-type: none;
+}
+
+.buttons-set p.required {
+    color: red;
+}
+
+/* Events Filter*/
+#top-filter .event-search {
+    width: 25%;
+}
+
+#top-filter .location-search {
+    width: 25%;
+}
+
+#top-filter .category-filter {
+    width: 25%;
+}
+
+#top-filter .search-button {
+    width: 20%;
+    margin-bottom: 3px;
+}
+
+#top-filter {
+    clear: both;
+}
+
+.event-index .box-filter {
+    margin-bottom: 30px;
+}
+
+.event-index .view-mode {
+    margin-bottom: 30px;
+}
+
+.event-index .view-mode .viewmode-grid {
+    width: 40%;
+    margin-left: 30px;
+}
+
+/* Events Grid mode */
+.page-events .event-item .desc {
+    min-height: 120px;
+}
+
+.page-events .event-item .event-title a {
+    color: black;
+}
+
+.page-events .event-item .event-item-details label {
+    font-weight: 600;
+}
+
+/* Events Calendar mode */
+/* Quickview */
+.event-quickview {
+    display: none;
+    position: fixed;
+    width: 530px;
+    border: 1px solid black;
+    z-index: 1000;
+    background: #ffffff;
+}
+
+.event-quickview .event-image {
+    float: left;
+    width: 30%;
+    padding: 5px;
+}
+
+.event-quickview .event-info {
+    float: right;
+    width: 65%;
+    padding: 5px;
+}
+
+.event-quickview .event-info label {
+    font-weight: 600;
+}
+
+.event-quickview .event-info .event-title a {
+    font-weight: bold;
+    font-size: 120%;
+    color: black;
+}
+
+/* Event Details*/
+.event-info-main {
+    padding-left: 2%;
+    box-sizing: border-box;
+}
+
+.event-info-main .page-title-wrapper {
+    border-bottom: 1px #c1c1c1 solid;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.event-info-main .page-title-wrapper h1 {
+    font-weight: bold;
+}
+
+.event-info-main .event-content {
+    width: 100%;
+    color: #575757;
+    margin-bottom: 15px;
+}
+
+.event-info-main .event-content .event-info, .event-info-main .event-content .event-organizer {
+    font-size: 1.2em;
+}
+
+.event-info-main .event-content .event-description, .event-info-main .event-content .event-organizer,
+.event-info-main .event-content .event-info, .event-info-main .event-content .register-button {
+    margin-bottom: 20px;
+}
+
+.event-info-main .event-content .event-info-field {
+    display: table;
+    width: 100%;
+    color: #575757;
+    margin-bottom: 5px;
+}
+
+.event-info-main .event-content .event-info-field .event-info-label {
+    display: table-cell;
+    vertical-align: middle;
+    width: 30%;
+    font-weight: 600;
+    background-color: #F3F3F3;
+    padding: 5px 10px;
+}
+
+.event-info-main .event-content .event-info-field .event-info-content {
+    display: table-cell;
+    vertical-align: middle;
+    width: 70%;
+    background-color: #FCFCFC;
+    padding: 5px 10px;
+}
+
+.event-info-main .event-content .event-organizer {
+    border-bottom: 1px solid #c1c1c1;
+    padding-bottom: 10px;
+}
+
+.event-info-main .event-content .section-label {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #F3F3F3;
+}
+
+.event-info-main .event-content .event-description {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    white-space: pre-line;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+.tigren-social {
+    display: block;
+    width: 100%;
+}
+
+.tigren-social .favorite-img {
+    margin-top: -5px;
+}
+
+.tigren-social .social-button {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+.event.media .event-image {
+    position: relative
+}
+
+.event.media .free-tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.event.media .event-image > img {
+    width: 100%;
+}
+
+/*Invite friend */
+#inviteformcontent .field label {
+    float: left;
+    min-width: 90px;
+    text-align: left;
+    line-height: 30px;
+}
+
+#inviteformcontent .field .input-box {
+    float: left;
+}
+
+#inviteformcontent .field.last .input-box {
+    clear: both;
+    width: 285px;
+}
+
+#inviteformcontent .field .input-box {
+    width: 200px;
+}
+
+#inviteformcontent .field .input-box input.input-text {
+    width: 200px;
+}
+
+#inviteformcontent .field .input-box textarea {
+    width: 285px;
+}
+
+#inviteformcontent .field {
+    margin: 0 0 10px;
+}
+
+#inviteformcontent .field span.required {
+    color: red;
+}
+
+#inviteformcontent .field label.required:after, span.required:after {
+    content: none !important;
+}
+
+/* Register */
+#event-registration .input-box {
+    width: 50%;
+}
+
+.registration-note {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Wishlist */
+.event-wishlist-table th {
+    text-align: center;
+}
+
+#event-wishlist h3 {
+    color: red;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Pager */
+.events-list ~ .toolbar .toolbar-amount {
+    display: none;
+}
+
+.events-list ~ .toolbar .limiter {
+    display: block;
+}
+
+/* Override product classes ------------------------------*/
+/*Index*/
+.events {
+    margin: 30px 0;
+}
+
+.event-item {
+    vertical-align: top;
+}
+
+.events-grid .event-item {
+    width: 50%;
+    display: inline-block;
+}
+
+.event-item-name {
+    display: block;
+    margin: 5px 0;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+
+.event-item-info {
+    width: 152px;
+    max-width: 100%;
+}
+
+.page-events .event-item-info {
+    width: 240px;
+}
+
+.event-item-actions {
+    display: none;
+}
+
+.event-item-actions .actions-secondary > .action:before {
+    margin: 0;
+}
+
+.column.main .event-items {
+    margin-left: -20px;
+}
+
+.column.main .event-item {
+    padding-left: 20px;
+}
+
+@media all and (min-width: 1024px), print {
+    .page-events .events-grid .event-items {
+        margin: 0;
+    }
+
+    .page-events .events-grid .event-item {
+        width: 24.439%;
+        margin-left: calc((100% - 4 * 24.439%) / 3 - 1);
+        padding: 0;
+    }
+
+    .page-events .events-grid .event-item:nth-child(4n+1) {
+        margin-left: 0;
+    }
+}
+
+.events-grid .event-item-info:hover,
+.events-grid .event-item-info.active {
+    margin: -10px;
+    padding: 9px;
+    border: 1px solid #bbbbbb;
+    box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+}
+
+.event-image-container {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.event-image-wrapper {
+    height: 0;
+    display: block;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.event-image-photo {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: auto;
+    max-width: 100%;
+}
+
+/*Details*/
+.event-addto-links {
+    display: inline;
+}
+
+.event-social-links {
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+@media all and (min-width: 768px), print {
+    .event-info-main .page-title-wrapper h1 {
+        margin-bottom: 15px;
+    }
+
+    .event-social-links {
+        text-align: left;
+    }
+
+    .event-info-main {
+        float: right;
+    }
+
+    .event.media {
+        float: left;
+        margin-bottom: 25px;
+    }
+
+    .page-layout-1column .event-info-main {
+        width: 40%;
+    }
+
+    .page-layout-1column .event.media {
+        width: 57%;
+    }
+
+    .page-layout-2columns-left .event-info-main,
+    .page-layout-2columns-right .event-info-main,
+    .page-layout-3columns .event-info-main {
+        width: 48%;
+    }
+
+    .page-layout-2columns-left .event.media,
+    .page-layout-2columns-right .event.media,
+    .page-layout-3columns .event.media {
+        width: 50%;
+    }
+}

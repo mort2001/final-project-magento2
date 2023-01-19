@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account" />
+    <body>
+        <referenceContainer name="content">
+            <block class="Tigren\CustomAddress\Block\Customer\Address\Edit" name="customer_address_edit"
+                   template="Tigren_CustomAddress::address/edit.phtml" cacheable="false" />
+        </referenceContainer>
+    </body>
+</page>

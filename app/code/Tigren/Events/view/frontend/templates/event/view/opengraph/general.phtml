@@ -1,0 +1,16 @@
+<?php
+/**
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+?>
+<meta property="og:type" content="og:product"/>
+<meta property="og:title" content="<?= $block->stripTags($block->getEvent()->getTitle()); ?>"/>
+<meta property="og:image" content="<?= $block->stripTags($block->getAvatarUrl()); ?>"/>
+<meta property="og:description" content="<?= $block->stripTags($block->getEvent()->getDescription()); ?>"/>
+<meta property="og:url" content="<?= $block->stripTags($block->getEvent()->getEventUrl()); ?>"/>
+<?php if ($priceAmount = $block->getEvent()->getPrice()): ?>
+    <meta property="product:price:amount" content="<?= $priceAmount; ?>"/>
+    <?= $block->getChildHtml('meta.currency'); ?>
+<?php endif; ?>

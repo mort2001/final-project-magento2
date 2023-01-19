@@ -1,0 +1,16 @@
+<div class="checkout-full-tax-invoice">
+    <div class="field choice" data-bind="visible: true">
+        <input data-bind="
+                    checked: isUseFullTaxInvoice,
+                    attr: {
+                        id: 'full-tax-invoice-section',
+                        name: 'use-full-tax-invoice'
+                    }"
+               type="checkbox" />
+        <label data-bind="attr: {for: 'full-tax-invoice-section'}">
+            <span data-bind="i18n: 'Need to amend full tax invoice'"></span>
+        </label>
+    </div>
+
+    <render if="isUseFullTaxInvoice" args="fullTaxInvoiceFormTemplate"></render>
+</div>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Tigren_Events::css/jquery.fancybox.css"/>
+        <css src="Tigren_Events::css/events.css"/>
+        <attribute name="prefix" value="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# event: http://ogp.me/ns/event#"/>
+    </head>
+    <body>
+        <referenceBlock name="head.additional">
+            <block class="Tigren\Events\Block\View" name="opengraph.general"
+                   template="Tigren_Events::event/view/opengraph/general.phtml">
+                <block class="Magento\Directory\Block\Currency" name="event.opengraph.currency" as="meta.currency"
+                       template="Tigren_Events::event/view/opengraph/currency.phtml"/>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <container name="event.info.main" htmlTag="div" htmlClass="event-info-main" before="-">
+                <block class="Tigren\Events\Block\View" name="events_index_view" template="view.phtml"
+                       cacheable="false"/>
+            </container>
+            <container name="event.info.media" htmlTag="div" htmlClass="event media" after="event.info.main">
+                <block class="Tigren\Events\Block\View" name="event.info.media.image" template="media.phtml"/>
+            </container>
+        </referenceContainer>
+        <move element="page.main.title" destination="event.info.main" before="-"/>
+    </body>
+</page>

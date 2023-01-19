@@ -1,0 +1,39 @@
+<!-- ko if: (visible()) -->
+<div class="billing-tax-detail">
+    <!--ko if: (checkUsingFullTaxInvoice()) -->
+    <!-- ko text: getBilling().invoice_type --><!-- /ko --><br />
+    <!--ko if: (checkUsingPersonal()) -->
+    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().tax_identification_number -->
+    <!-- /ko --><br />
+    <!-- ko text: getBilling().personal_firstname --><!-- /ko -->
+    <!-- ko text: getBilling().personal_lastname --><!-- /ko --><br />
+    <!-- /ko -->
+    <!--ko if: (!checkUsingPersonal()) -->
+    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().tax_identification_number -->
+    <!-- /ko --><br />
+    <!-- ko text: getBilling().company --><!-- /ko --><br />
+    <!-- ko if: (getBilling().company_branch === 'head') -->
+    <!-- ko text: 'Head Office '--><!-- /ko --><br />
+    <!-- /ko -->
+    <!-- ko if: (getBilling().company_branch === 'branch') -->
+    <!-- ko text: 'Branch Office '--><!-- /ko --><br />
+    <!-- ko text: 'Branch Name: '--><!-- /ko --><!-- ko text: getBilling().branch_name -->
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
+
+</div>
+<!-- ko text: 'Telephone : '--><!-- /ko --><!-- ko text: getBilling().telephone --><!-- /ko -->
+<!-- ko text: address().suffix --><!-- /ko --><br />
+<!-- ko text: address().street --><!-- /ko --><br />
+<!-- ko if: (address().customAttributes) -->
+<!-- ko text: address().customAttributes.subdistrict --><!-- /ko -->,
+<!-- /ko -->
+<!-- ko text: address().city --><!-- /ko -->, <span
+        data-bind="html: address().region"></span> <!-- ko text: address().postcode --><!-- /ko --><br />
+<!-- ko text: getCountryName(address().countryId) --><!-- /ko --><br />
+<!-- ko if: (address().telephone) -->
+<a data-bind="text: address().telephone, attr: {'href': 'tel:' + address().telephone}"></a>
+<!-- /ko --><br />
+<!-- /ko -->

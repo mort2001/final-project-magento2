@@ -1,0 +1,19 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<!--@subject You have registered Event {{var event.getTitle()}} @-->
+<!--@styles
+body,p { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+
+<h3>You have registered Event {{var event.getTitle()}}</h3>
+<p>
+    Dear {{var; participant['fullname']}}, <br/><br/>
+    This email to notify you about your registration to participate Event {{var; event.getTitle()}}
+    <br/><br/>
+</p>
+<p>You can view the event by clicking the following link:</p>
+<p><a href="{{var event.getEventUrl()}}" target="_blank">{{var event.getTitle()}}</a></p>

@@ -1,0 +1,32 @@
+<div class="checkout-billing-address">
+    <div class="billing-address-same-as-shipping-block field choice" data-bind="visible: canUseShippingAddress()">
+        <input type="checkbox" name="billing-address-same-as-shipping"
+               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping-' + getCode($parent)}" />
+        <label data-bind="attr: {for: 'billing-address-same-as-shipping-' + getCode($parent)}"><span
+                data-bind="i18n: 'Use the same address as the shipping address.'"></span></label>
+    </div>
+
+    <!-- ko if: (!isAddressSameAsShipping()) -->
+    <!-- ko foreach: getRegion('billing-address-list') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <!--/ko-->
+
+    <!-- Address form pop up -->
+    <if args="!isFormInline && !isAddressSameAsShipping()">
+        <button type="button"
+                class="action action-show-popup"
+                click="showFormPopUp.bind($data, $parent)"
+                visible="!isNewAddressAdded()">
+            <span translate="'Add New Address'"></span>
+        </button>
+        <div data-bind="attr: {id: 'opc-new-billing-address-' + getCode($parent)}"
+             visible="isFormPopUpVisible()"
+             render="billingFormTemplate"></div>
+    </if>
+
+    <!-- ko if: (!isAddressSameAsShipping() && isFormInline) -->
+    <!-- Inline address form -->
+    <render if="isFormInline" args="billingFormTemplate"></render>
+    <!--/ko-->
+</div>

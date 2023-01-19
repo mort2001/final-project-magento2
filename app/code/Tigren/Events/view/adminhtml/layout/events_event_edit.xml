@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Tigren_Events::js/jscolor.js"/>
+    </head>
+    <body>
+        <referenceContainer name="left">
+            <block class="Tigren\Events\Block\Adminhtml\Event\Edit\Tabs" name="events_event_edit_tabs">
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Tigren\Events\Block\Adminhtml\Event\Edit" name="events_event_edit"/>
+        </referenceContainer>
+    </body>
+</page>

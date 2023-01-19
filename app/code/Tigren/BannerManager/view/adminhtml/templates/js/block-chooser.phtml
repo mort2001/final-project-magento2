@@ -1,0 +1,116 @@
+<div class="chooser-container" id="blocks-ids">
+    <input disabled="disabled" type="text" class="input-text entities" name="blocks-selected"
+           value="<?= $block->getElementValue() ?>" readonly="readonly" />
+    <a id="widget-option-chooser-block" href="javascript:void(0)"
+       title="<?= $block->escapeJsQuote(__('Select Blocks')); ?>">
+        <img src="<?= $block->getViewFileUrl('images/rule_chooser_trigger.gif') ?>"
+             alt="<?= $block->escapeJsQuote(__('Open Chooser')); ?>" />
+    </a>
+    <a id="widget-hide-chooser-block" href="javascript:void(0)"
+       title="<?= $block->escapeJsQuote(__('Apply')); ?>">
+        <img src="<?= $block->getViewFileUrl('images/rule_component_apply.gif') ?>"
+             alt="<?= $block->escapeJsQuote(__('Apply')); ?>" />
+    </a>
+    <div id="blocks-chooser"></div>
+</div>
+<script>
+    require
+    ([
+        'jquery',
+        'mage/template',
+        'Magento_Ui/js/modal/alert',
+        'prototype',
+        'extjs/ext-tree-checkbox'
+    ], function (jQuery, mageTemplate, alert) {
+        var WidgetSelect = {
+            selectedItems: {},
+
+            addPage: function (data) {
+                if (data.blocks) {
+                    var selected_entities = data['blocks'].split(',');
+                    if (selected_entities.length > 0) {
+                        for (var i = 0; i < selected_entities.length; i++) {
+                            this.addblockItemToSelection(data.group, selected_entities[i]);
+                        }
+                    }
+                }
+            },
+
+            addblockItemToSelection: function (groupId, item) {
+                if (undefined == this.selectedItems[groupId]) {
+                    this.selectedItems[groupId] = $H({});
+                }
+                if (!isNaN(parseInt(item))) {
+                    this.selectedItems[groupId].set(item, 1);
+                }
+            },
+            removeBlockItemFromSelection: function (groupId, item) {
+                if (undefined !== this.selectedItems[groupId]) {
+                    this.selectedItems[groupId].unset(item);
+                }
+            },
+            checkBlock: function (event) {
+                var elm = event.memo.element,
+                    container = event.target.up('#blocks-chooser'),
+                    selectionId = container.id,
+                    entitiesElm = container.up('.admin__field').down('input[type="text"].entities'),
+                    blocksElm = container.up('.admin__field').down('#mb-blocks-selected');
+                if (elm.checked) {
+                    this.addblockItemToSelection(selectionId, elm.value);
+                } else {
+                    this.removeBlockItemFromSelection(selectionId, elm.value);
+                }
+                if (entitiesElm) {
+                    entitiesElm.value = this.selectedItems[selectionId].keys().join(',');
+                    blocksElm.value = this.selectedItems[selectionId].keys().join(',');
+                }
+            }
+        };
+
+        jQuery('#widget-option-chooser-block').on('click', function () {
+            chooser = $('blocks-chooser');
+            entities = chooser.up('.admin__field').down('#mb-blocks-selected').value;
+            postParameters = $H({ selected: entities });
+            url = '<?= $block->getBlocksChooserUrl(); ?>';
+            if (chooser.innerHTML == '') {
+                new Ajax.Request(url, {
+                    method: 'post',
+                    parameters: postParameters,
+                    onSuccess: function (transport) {
+                        try {
+                            if (transport.responseText) {
+                                chooser.insert(transport.responseText);
+                                chooser.show();
+                            }
+                        } catch (e) {
+                            alert({
+                                content: 'Error occurs during loading chooser.'
+                            });
+                        }
+                    }
+                });
+            } else {
+                chooser.show();
+            }
+
+        });
+
+        jQuery('#widget-hide-chooser-block').on('click', function () {
+            chooser = $('blocks-chooser');
+            if (chooser) {
+                chooser.hide();
+            }
+        });
+
+        jQuery(function () {
+            <?php $page = $block->getPage(); ?>
+            <?php if ($page): ?>
+            WidgetSelect.addPage(<?= Zend_Json::encode($page) ?>);
+            <?php endif; ?>
+
+            Event.observe(document, 'blocks:changed', function (event) {
+                WidgetSelect.checkBlock(event);
+            });
+        });
+    });
+</script>

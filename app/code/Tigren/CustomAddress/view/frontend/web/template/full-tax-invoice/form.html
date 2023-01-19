@@ -1,0 +1,15 @@
+<div class="fieldset full-invoice-form">
+    <form class="form form-full-tax-invoice" data-bind="attr: {'data-hasrequired': $t('* Required Fields')}"
+          id="co-full-tax-invoice-form">
+        <!-- ko foreach: getRegion('before-fields') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div id="full-tax-invoice-form">
+            <div class="left-fields fieldset address">
+                <!-- ko foreach: getRegion('additional-fieldsets') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <!--/ko-->
+            </div>
+        </div>
+    </form>
+</div>

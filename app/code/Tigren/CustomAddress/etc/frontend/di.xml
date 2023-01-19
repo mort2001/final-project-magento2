@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="Tigren\CustomAddress\Plugin\Magento\Checkout\Block\LayoutProcessor"
+                type="Tigren\CustomAddress\Plugin\Magento\Checkout\Block\LayoutProcessor" sortOrder="200" />
+    </type>
+</config>

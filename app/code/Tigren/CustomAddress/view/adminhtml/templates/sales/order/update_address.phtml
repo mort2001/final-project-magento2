@@ -1,0 +1,26 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2021 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/** @var \Tigren\CustomAddress\Block\Adminhtml\Sales\Order\View\UpdateAddress $block */
+?>
+<div id="customer-address-edit-form" data-bind="scope:'customer-address-edit-form'" class="form-container">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#customer-address-edit-form": {
+                "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */
+        $block->getJsLayout() ?>
+            }
+        }
+
+
+    </script>
+    <script type="text/javascript">
+        window.getAddressesDataUrl = '<?= /* @escapeNotVerified */ $block->getAddressesDataUrl() ?>';
+        window.updateAddressesDataUrl = '<?= /* @escapeNotVerified */ $block->updateAddressesDataUrl() ?>';
+    </script>
+</div>

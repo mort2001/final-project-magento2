@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Tigren_Events::events" title="Events" sortOrder="20">
+                    <resource id="Tigren_Events::manage_events" title="Manage Events" sortOrder="10"/>
+                    <resource id="Tigren_Events::manage_categories" title="Manage Categories" sortOrder="10"/>
+                    <resource id="Tigren_Events::settings" title="Settings" sortOrder="10"/>
+                </resource>
+
+                <!-- below part of our system configuration settings -->
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Tigren_Events::events_config" title="Events Section"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
