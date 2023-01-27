@@ -8,9 +8,11 @@ $successHeader = $this->helper(Tigren\Ajaxcompare\Helper\Data::class)->getSucces
 ?>
 <?php $_product = $block->getProduct(); ?>
 
-<div class="mb-login-popup-title">
-    <strong><?= $successHeader ?></strong>
-</div>
+<?php if ($successHeader): ?>
+    <div class="mb-login-popup-title">
+        <strong><?= $successHeader ?></strong>
+    </div>
+<?php endif; ?>
 <div class="mb-ajaxsuite-popup-border ajaxcompare-success-box">
     <?= $block->getChildHtml('ajaxcompare.message'); ?>
 

@@ -6,10 +6,12 @@
  */
 $successHeader = $this->helper(Tigren\Ajaxlogin\Helper\Data::class)->getSuccessHeaderAjaxLogin();
 ?>
-<div class="mb-login-popup-title center">
-    <span class="mb-login-popup-title-logo"></span>
-    <strong><?= $successHeader ?></strong>
-</div>
+<?php if ($successHeader): ?>
+    <div class="mb-login-popup-title center">
+        <span class="mb-login-popup-title-logo"></span>
+        <strong><?= $successHeader ?></strong>
+    </div>
+<?php endif; ?>
 <div class="mb-ajaxsuite-popup-border mb-ajaxlogin-popup mb-ajaxlogin-message-success">
     <div class="mb-login-container-login">
         <div class="block-content" aria-labelledby="block-customer-login-heading">

@@ -7,9 +7,12 @@
 $successHeader = $this->helper(Tigren\Ajaxcart\Helper\Data::class)->getSuccessHeaderAjaxCart();
 ?>
 <?php $_product = $block->getProduct(); ?>
-<div class="mb-login-popup-title">
-    <strong><?= $successHeader ?></strong>
-</div>
+
+<?php if ($successHeader): ?>
+    <div class="mb-login-popup-title">
+        <strong><?= $successHeader ?></strong>
+    </div>
+<?php endif; ?>
 <div class="mb-ajaxsuite-popup-border ajaxcart-success-box">
     <div class="success-content">
         <?= $block->getChildHtml('ajaxcart.message'); ?>

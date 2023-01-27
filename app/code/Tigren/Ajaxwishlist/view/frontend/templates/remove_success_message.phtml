@@ -7,9 +7,11 @@
 $successHeader = $this->helper(Tigren\Ajaxwishlist\Helper\Data::class)->getSuccessHeaderAjaxWishList();
 $_product = $block->getProduct(); ?>
 <div class="ajaxwishlist-msg">
-    <div class="mb-login-popup-title">
-        <strong><?= $successHeader ?></strong>
-    </div>
+    <?php if ($successHeader): ?>
+        <div class="mb-login-popup-title">
+            <strong><?= $successHeader ?></strong>
+        </div>
+    <?php endif; ?>
     <div class="mb-ajaxsuite-popup-border ajaxwishlist-success-box">
         <?= $block->getChildHtml('ajaxwishlist.message'); ?>
 
