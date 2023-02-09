@@ -55,6 +55,9 @@
                        showInStore="1">
                     <label>Ajax autoload qty if change</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="ajax_update_cart_page">1</field>
+                    </depends>
                 </field>
                 <field id="enabled_success_header" translate="label" type="select" sortOrder="80" showInDefault="1"
                        showInWebsite="1" showInStore="1">
