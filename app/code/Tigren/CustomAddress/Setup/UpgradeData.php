@@ -70,11 +70,7 @@ class UpgradeData implements UpgradeDataInterface
 
         $installer->startSetup();
 
-        if (version_compare($context->getVersion(), '1.1.0', '<')) {
-            $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/a.log');
-            $logger = new \Zend_Log();
-            $logger->addWriter($writer);
-            $logger->info('message '.print_r('upgrade', true));
+        if (version_compare($context->getVersion(), '1.0.3', '<')) {
             $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
             $customerSetup->addAttribute(AttributeProvider::ENTITY, 'city_id', [
                 'label' => 'City',
@@ -205,7 +201,7 @@ class UpgradeData implements UpgradeDataInterface
             );
         }
 
-        if (version_compare($context->getVersion(), '1.0.3', '<')) {
+        if (version_compare($context->getVersion(), '1.0.5', '<')) {
             $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
             $attribute = $customerSetup->getEavConfig()->getAttribute('customer_address', 'city_id')
                 ->addData([
@@ -243,22 +239,7 @@ class UpgradeData implements UpgradeDataInterface
             );
             $salesSetup->addAttribute(
                 'order_address',
-                'company_name',
-                ['type' => 'varchar', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $salesSetup->addAttribute(
-                'order_address',
-                'phone',
-                ['type' => 'varchar', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $salesSetup->addAttribute(
-                'order_address',
                 'branch_office',
-                ['type' => 'text', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $salesSetup->addAttribute(
-                'order_address',
-                'branch',
                 ['type' => 'text', 'input' => 'hidden', 'is_user_defined' => 0]
             );
             $salesSetup->addAttribute(
@@ -291,27 +272,12 @@ class UpgradeData implements UpgradeDataInterface
             );
             $quoteSetup->addAttribute(
                 'quote_address',
-                'company_name',
-                ['type' => 'varchar', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $quoteSetup->addAttribute(
-                'quote_address',
-                'phone',
-                ['type' => 'varchar', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $quoteSetup->addAttribute(
-                'quote_address',
                 'head_office',
                 ['type' => 'varchar', 'input' => 'hidden', 'is_user_defined' => 0]
             );
             $quoteSetup->addAttribute(
                 'quote_address',
                 'branch_office',
-                ['type' => 'text', 'input' => 'hidden', 'is_user_defined' => 0]
-            );
-            $quoteSetup->addAttribute(
-                'quote_address',
-                'branch',
                 ['type' => 'text', 'input' => 'hidden', 'is_user_defined' => 0]
             );
             $quoteSetup->addAttribute(

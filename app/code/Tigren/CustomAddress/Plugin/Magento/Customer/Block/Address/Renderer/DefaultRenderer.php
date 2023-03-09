@@ -113,16 +113,16 @@ class DefaultRenderer extends \Magento\Customer\Block\Address\Renderer\DefaultRe
             }
 
             $attributeCode = $attributeMetadata->getAttributeCode();
-            if ($attributeCode == 'country_id' && !empty($addressAttributes['country_id'])) {
+            if ($attributeCode == 'country_id' && isset($addressAttributes['country_id'])) {
                 $data['country'] = $this->customAddressHelper->getCountryById(
                     $addressAttributes['country_id'],
                     $locale
                 );
-            } elseif ($attributeCode == 'region_id' && !empty($addressAttributes['region_id'])) {
+            } elseif ($attributeCode == 'region_id' && isset($addressAttributes['region_id'])) {
                 $data['region'] = $this->customAddressHelper->getRegionById($addressAttributes['region_id'], $locale);
-            } elseif ($attributeCode == 'city_id' && !empty($addressAttributes['city_id'])) {
+            } elseif ($attributeCode == 'city_id' && isset($addressAttributes['city_id'])) {
                 $data['city'] = $this->customAddressHelper->getCityById($addressAttributes['city_id'], $locale);
-            } elseif ($attributeCode == 'subdistrict_id' && !empty($addressAttributes['subdistrict_id'])) {
+            } elseif ($attributeCode == 'subdistrict_id' && isset($addressAttributes['subdistrict_id'])) {
                 $data['subdistrict'] = $this->customAddressHelper->getSubdistrictById(
                     $addressAttributes['subdistrict_id'],
                     $locale

@@ -7,14 +7,14 @@
 
 namespace Tigren\CustomAddress\Model\Config\Source;
 
-use Magento\Framework\Data\OptionSourceInterface;
+use Magento\Framework\Option\ArrayInterface;
 use Tigren\CustomAddress\Model\ResourceModel\City\CollectionFactory;
 
 /**
  * Class City
  * @package Tigren\CustomAddress\Model\Config\Source
  */
-class City implements OptionSourceInterface
+class City implements ArrayInterface
 {
     /**
      * @var CollectionFactory
@@ -26,8 +26,7 @@ class City implements OptionSourceInterface
      */
     public function __construct(
         CollectionFactory $cityCollectionFactory
-    )
-    {
+    ) {
         $this->cityCollectionFactory = $cityCollectionFactory;
     }
 
