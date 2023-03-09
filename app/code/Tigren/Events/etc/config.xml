@@ -19,6 +19,7 @@
                 <invitation_email>events_general_setting_invitation_email</invitation_email>
                 <is_send_registered_email>1</is_send_registered_email>
                 <registered_email>events_general_setting_registered_email</registered_email>
+                <type_time>1</type_time>
             </general_setting>
             <calendar_setting>
                 <page_title>Event Calendar</page_title>

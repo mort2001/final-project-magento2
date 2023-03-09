@@ -82,6 +82,8 @@ class Main extends Generic
     {
         $event = $this->_coreRegistry->registry('events_event');
         $eventId = $event->getId();
+        $typeTimeConfig = $this->_eventsHelper->getTypeTimeValue();
+        $typeTimeShow = $typeTimeConfig == 1 ? 'HH:mm:ss' : 'h:m:s a';
 
         /**
          *
@@ -180,6 +182,26 @@ class Main extends Generic
         $style = 'color: #000;background-color: #fff; font-weight: bold; font-size: 13px;';
 
         $fieldset->addField(
+            'require_time',
+            'select',
+            [
+                'name' => 'require_time',
+                'label' => __('Require Time'),
+                'title' => __('Require Time'),
+                'required' => true,
+                "values" => [
+                    ["value" => 0, "label" => __("No")],
+                    ["value" => 1, "label" => __("Yes")],
+                ],
+                'note' => "If 'No' the time will be set to begin of day (00:00:00 or 12:00:00 AM - base on config show time) and will not display at the frontend"
+            ]
+        );
+
+        if (!$event->getId()) {
+            $event->setData('require_time', 1);
+        }
+
+        $fieldset->addField(
             'start_time',
             'date',
             [
@@ -189,9 +211,9 @@ class Main extends Generic
                 'style' => $style,
                 'required' => true,
                 'class' => __('validate-date'),
-                'date_format' => $dateFormat,
-                'time_format' => $timeFormat,
-                'note' => $this->_localeDate->getDateTimeFormat(IntlDateFormatter::SHORT)
+                'date_format' => 'MM/dd/Y',
+                'time_format' => $typeTimeShow,
+                'note' => 'MM/dd/Y ' . $typeTimeShow
             ]
         );
 
@@ -205,9 +227,9 @@ class Main extends Generic
                 'style' => $style,
                 'required' => true,
                 'class' => __('validate-date'),
-                'date_format' => $dateFormat,
-                'time_format' => $timeFormat,
-                'note' => $this->_localeDate->getDateTimeFormat(IntlDateFormatter::SHORT),
+                'date_format' => 'MM/dd/Y',
+                'time_format' => $typeTimeShow,
+                'note' => 'MM/dd/Y ' . $typeTimeShow
             ]
         );
 
@@ -220,9 +242,9 @@ class Main extends Generic
                 'title' => __('Registration Deadline'),
                 'style' => $style,
                 'class' => __('validate-date'),
-                'date_format' => $dateFormat,
-                'time_format' => $timeFormat,
-                'note' => $this->_localeDate->getDateTimeFormat(IntlDateFormatter::SHORT),
+                'date_format' => 'MM/dd/Y',
+                'time_format' => $typeTimeShow,
+                'note' => 'MM/dd/Y ' . $typeTimeShow
             ]
         );
 

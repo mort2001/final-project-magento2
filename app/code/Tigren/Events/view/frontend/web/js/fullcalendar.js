@@ -5975,7 +5975,9 @@ Prerequisite: the object being mixed into needs to be a *Grid*
             if (seg.isStart) {
                 timeText = this.getEventTimeText(event);
                 if (timeText) {
-                    timeHtml = '<span class="fc-time">' + htmlEscape(timeText) + '</span>';
+                    if (event.require_time === '1') {
+                        timeHtml = '<span class="fc-time">' + htmlEscape(timeText) + '</span>';
+                    }
                 }
             }
 
