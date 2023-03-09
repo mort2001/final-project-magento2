@@ -76,6 +76,11 @@
                     <label>Choose Confirmation Email Template</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
+                <field id="type_time" translate="label" type="select" sortOrder="13" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Show Time (12/24h)</label>
+                    <source_model>Tigren\Events\Model\Config\Source\TypeTime</source_model>
+                </field>
             </group>
 
             <group id="calendar_setting" translate="label" type="text" sortOrder="20" showInDefault="1"

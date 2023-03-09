@@ -7,6 +7,7 @@
 
 namespace Tigren\Events\Block;
 
+use Exception;
 use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -238,7 +239,18 @@ class View extends Template
     public function getFormattedTime($time)
     {
         $timestamp = $this->_date->timestamp($time);
-        return date('M d, Y g:i A', $timestamp);
+        return date('M d, Y H:i:s', $timestamp);
+    }
+
+    /**
+     * @param  $time
+     * @return string
+     * @throws Exception
+     */
+    public function getFormattedNoTime($time): string
+    {
+        $timestamp = $this->_date->timestamp($time);
+        return date('M d, Y', $timestamp);
     }
 
     /**

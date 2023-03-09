@@ -107,6 +107,17 @@ class Data extends AbstractHelper
     }
 
     /**
+     * @return mixed
+     */
+    public function getTypeTimeValue(): mixed
+    {
+        return $this->scopeConfig->getValue(
+            'events/general_setting/type_time',
+            ScopeInterface::SCOPE_STORE
+        );
+    }
+
+    /**
      * @return int|null
      */
     public function getCustomerId()
@@ -119,7 +130,7 @@ class Data extends AbstractHelper
 
     /**
      * @param  $dateTime
-     * @param  bool     $isReserved
+     * @param bool $isReserved
      * @return string
      * @throws Exception
      */
@@ -134,6 +145,32 @@ class Data extends AbstractHelper
         }
 
         $dateTime = $date->format('Y-m-d H:i:s');
+
+        return $dateTime;
+    }
+
+    /**
+     * @param  $dateTime
+     * @param bool $isReserved
+     * @param $isRequiredTime
+     * @return string
+     * @throws Exception
+     */
+    public function convertTimeToSave($dateTime, $isRequiredTime, $isReserved = false)
+    {
+        if ($isReserved) {
+            $date = new DateTime($dateTime, new DateTimeZone($this->_localeDate->getDefaultTimezone()));
+            $date->setTimezone(new DateTimeZone($this->_localeDate->getConfigTimezone()));
+        } else {
+            $date = new DateTime($dateTime, new DateTimeZone($this->_localeDate->getConfigTimezone()));
+            $date->setTimezone(new DateTimeZone($this->_localeDate->getDefaultTimezone()));
+        }
+
+        if ($isRequiredTime == 0) {
+            $dateTime = $date->format('Y-m-d 00:00:00');
+        } else {
+            $dateTime = $date->format('Y-m-d H:i:s');
+        }
 
         return $dateTime;
     }

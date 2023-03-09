@@ -1,5 +1,8 @@
 <!--@copyright Copyright (c) 2016 www.tigren.com-->
 <?php
+/**
+ * @var Tigren\Events\Block\View $block
+ */
 $event = $block->getEvent();
 if ($event->getId()) {
     ?>
@@ -9,8 +12,13 @@ if ($event->getId()) {
             <div class="section-label">Event Information</div>
             <div class="event-info-field event-time">
                 <div class="event-info-label"><label><?= __('Time') ?></label></div>
-                <div class="event-info-content"><?= $block->getFormattedTime($event->getStartTime()); ?>
-                    - <?= $block->getFormattedTime($event->getEndTime()); ?></div>
+                <div class="event-info-content">
+                    <?php if ($event->getRequireTime() == 1) : ?>
+                        <?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?>
+                    <?php else: ?>
+                        <?= $block->getFormattedNoTime($event->getStartTime()) . ' - ' . $block->getFormattedNoTime($event->getEndTime()); ?>
+                    <?php endif; ?>
+                </div>
             </div>
             <div class="event-info-field event-location">
                 <span class="event-info-label"><label><?= __('Location') ?></label></span>

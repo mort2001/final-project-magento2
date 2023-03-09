@@ -7,6 +7,7 @@
 
 namespace Tigren\Events\Block;
 
+use Exception;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\ObjectManagerInterface;
@@ -204,6 +205,7 @@ class Events extends Template implements BlockInterface
                     'reg_deadline' => $event->getRegistrationDeadline(),
                     'location' => $event->getLocation(),
                     'description' => $this->getShortDescription($event),
+                    'require_time' => $event->getRequireTime(),
                 ];
                 $item['start'] = $this->_eventsHelper->convertTime($event->getStartTime(), true);
                 $item['end'] = $this->_eventsHelper->convertTime($event->getEndTime(), true);
@@ -262,13 +264,56 @@ class Events extends Template implements BlockInterface
 
     /**
      * @param  $time
-     * @return false|string
+     * @return string
+     * @throws Exception
      */
-    public function getFormattedTime($time)
+    public function getFormattedTime($time): string
+    {
+        $timestamp = $this->_date->timestamp($time);
+        if ($this->_eventsHelper->getTypeTimeValue() == 1) {
+            return date('M d, Y H:i:s', $timestamp);
+        } else {
+            return date('M d, Y h:i:s A', $timestamp);
+        }
+    }
+
+    /**
+     * @param  $time
+     * @return string
+     * @throws Exception
+     */
+    public function getFormattedTimeGridMode($time): string
     {
         $time = $this->_eventsHelper->convertTime($time, true);
         $timestamp = $this->_date->timestamp($time);
-        return date('M d, Y g:i A', $timestamp);
+        if ($this->_eventsHelper->getTypeTimeValue() == 1) {
+            return date('M d, Y H:i:s', $timestamp);
+        } else {
+            return date('M d, Y h:i:s A', $timestamp);
+        }
+    }
+
+    /**
+     * @param  $time
+     * @return string
+     * @throws Exception
+     */
+    public function getFormattedNoTime($time): string
+    {
+        $timestamp = $this->_date->timestamp($time);
+        return date('M d, Y', $timestamp);
+    }
+
+    /**
+     * @param  $time
+     * @return string
+     * @throws Exception
+     */
+    public function getFormattedNoTimeGridMode($time): string
+    {
+        $time = $this->_eventsHelper->convertTime($time, true);
+        $timestamp = $this->_date->timestamp($time);
+        return date('M d, Y', $timestamp);
     }
 
     /**

@@ -163,15 +163,16 @@ class Save extends Action
                 $data
             );
             $data = $inputFilter->getUnescaped();
+            $isRequiredTime = $data['require_time'];
 
             if ($data['start_time']) {
-                $data['start_time'] = $this->_eventsHelper->convertTime($data['start_time']);
+                $data['start_time'] = $this->_eventsHelper->convertTimeToSave($data['start_time'], $isRequiredTime);
             }
             if ($data['end_time']) {
-                $data['end_time'] = $this->_eventsHelper->convertTime($data['end_time']);
+                $data['end_time'] = $this->_eventsHelper->convertTimeToSave($data['end_time'], $isRequiredTime);
             }
             if ($data['registration_deadline']) {
-                $data['registration_deadline'] = $this->_eventsHelper->convertTime($data['registration_deadline']);
+                $data['registration_deadline'] = $this->_eventsHelper->convertTimeToSave($data['registration_deadline'], $isRequiredTime);
             }
 
             //Check if time is valid

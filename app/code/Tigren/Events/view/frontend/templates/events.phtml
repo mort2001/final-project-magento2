@@ -1,8 +1,12 @@
 <!--@copyright Copyright (c) 2016 www.tigren.com-->
 <?php
+/**
+ * @var Tigren\Events\Block\Events $block
+ */
 $helper = $this->helper('Tigren\Events\Helper\Data');
 $eventsJson = $block->getEventJson();
 $events = $block->getPagedEvents();
+$typeTimeConfig = $helper->getTypeTimeValue();
 ?>
 <div class="event-index page-events">
     <script type='text/javascript'>
@@ -25,9 +29,9 @@ $events = $block->getPagedEvents();
     <div class="box-filter">
         <form id="top-filter" action="<?php $block->getUrl('events/index/index', $currentModeArr); ?>" method="post">
             <input type="text" name="event" placeholder="Enter Event Name" class="event-search control"
-                   value="<?= $block->getEventSearch(); ?>"/>
+                   value="<?= $block->getEventSearch(); ?>" />
             <input type="text" name="location" placeholder="Enter Location (Street or City)"
-                   class="location-search control" value="<?= $block->getLocationSearch(); ?>"/>
+                   class="location-search control" value="<?= $block->getLocationSearch(); ?>" />
             <?php if ($block->getScopeConfig('events/general_setting/allow_filter_by_cat') && count($eventCategories)) {
         ?>
                 <?php $filterCatId = $block->getFilterCatId(); ?>
@@ -82,7 +86,7 @@ $events = $block->getPagedEvents();
                     <div class="event-image">
                         <a href="<?= $event->getEventUrl(); ?>" title="<?= $event->getTitle(); ?>">
                             <img src="<?= $block->getAvatarUrl($event); ?>"
-                                 alt="<?= $event->getTitle(); ?>"/>
+                                 alt="<?= $event->getTitle(); ?>" />
                         </a>
                     </div>
                     <div class="event-info">
@@ -93,7 +97,11 @@ $events = $block->getPagedEvents();
                         <div class="desc">
                             <div class="event-time">
                                 <label><?= __('Time: ') ?></label>
-                                <?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?>
+                                <?php if ($event->getRequireTime() == 1) : ?>
+                                    <span class="date-with-time"><?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?></span>
+                                <?php else: ?>
+                                    <span class="date-no-time"><?= $block->getFormattedNoTime($event->getStartTime()) . ' - ' . $block->getFormattedNoTime($event->getEndTime()); ?></span>
+                                <?php endif; ?>
                             </div>
                             <div class="event-location">
                                 <label><?= __('Location: ') ?></label>
@@ -119,7 +127,8 @@ $events = $block->getPagedEvents();
     <?php $locale = $block->getScopeConfig('events/calendar_setting/language'); ?>
         <script type='text/javascript'>
 
-            require(['jquery', 'fullcalendar', 'moment'<?php if ($locale != 'en') {
+            require([
+                'jquery', 'fullcalendar', 'moment'<?php if ($locale != 'en') {
                 ?>, 'locale_all'<?php
             } ?>], function ($) {
                 var $j = $.noConflict();
@@ -131,12 +140,11 @@ $events = $block->getPagedEvents();
                     var calendar_mode = '';
                     var defaultMode = '<?= $block->getScopeConfig('events/calendar_setting/default_view_mode'); ?>';
                     var events = <?= $eventsJson; ?>;
+                    var timeFormat = <?= $typeTimeConfig ?> === 1 ? 'HH:mm:ss' : 'h:mm:ss A';
                     $('#calendar').fullCalendar({
-                        <?php if ($locale != 'en') {
-                ?>
+                        <?php if ($locale != 'en') { ?>
                         locale: "<?= $locale; ?>",
-                        <?php
-            } ?>
+                        <?php } ?>
                         editable: true,
                         displayEventEnd: true,
                         disableDragging: true,
@@ -147,7 +155,7 @@ $events = $block->getPagedEvents();
                         },
                         defaultView: defaultMode,
                         eventTextColor: 'white',
-                        timeFormat: 'H:mm',
+                        timeFormat: timeFormat,
                         events: events,
                         eventMouseover: eventMouseoverFunc,
                         eventMouseout: eventMouseoutFunc
@@ -164,7 +172,7 @@ $events = $block->getPagedEvents();
                         } else {
                             var leftPos = $(window).width() - quickviewWidth;
                             $('.event-quickview[data-event_id="' + event.id + '"]').css({
-                                left: leftPos,
+                                left: leftPos - 50,
                                 top: jsEvent.clientY
                             }).show();
                         }
@@ -176,9 +184,9 @@ $events = $block->getPagedEvents();
                     }
 
                     $('.event-quickview').hover(function () {
-                        $(this).show()
+                        $(this).show();
                     }, function () {
-                        $(this).hide()
+                        $(this).hide();
                     });
                 });
             });
@@ -199,7 +207,7 @@ $events = $block->getPagedEvents();
                                     <span class="event-image-container" style="width:240px;">
                                         <span class="event-image-wrapper" style="padding-bottom: 75%;">
                                             <img src="<?= $block->getAvatarUrl($event); ?>"
-                                                 class="event-image-photo" alt="<?= $event->getTitle(); ?>"/>
+                                                 class="event-image-photo" alt="<?= $event->getTitle(); ?>" />
                                         </span>
                                     </span>
                             </a>
@@ -211,7 +219,11 @@ $events = $block->getPagedEvents();
                                 <div class="desc">
                                     <div class="event-time">
                                         <label><?= __('Time: ') ?></label>
-                                        <?= $block->getFormattedTime($event->getStartTime()) . ' - ' . $block->getFormattedTime($event->getEndTime()); ?>
+                                        <?php if ($event->getRequireTime() == 1) : ?>
+                                            <span class="date-with-time"><?= $block->getFormattedTimeGridMode($event->getStartTime()) . ' - ' . $block->getFormattedTimeGridMode($event->getEndTime()); ?></span>
+                                        <?php else: ?>
+                                            <span class="date-no-time"><?= $block->getFormattedNoTimeGridMode($event->getStartTime()) . ' - ' . $block->getFormattedNoTimeGridMode($event->getEndTime()); ?></span>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="event-location">
                                         <label><?= __('Location: ') ?></label>
