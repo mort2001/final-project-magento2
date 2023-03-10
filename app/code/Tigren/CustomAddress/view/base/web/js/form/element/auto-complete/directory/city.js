@@ -15,7 +15,6 @@ define([
 
     return Select.extend({
         defaults: {
-            country: '',
             modules: {
                 region: '${ $.parentName }.region_id',
                 regionInput: '${ $.parentName }.region',
@@ -23,17 +22,10 @@ define([
                 subdistrict: '${ $.parentName }.subdistrict_id',
                 subdistrictInput: '${ $.parentName }.subdistrict',
                 postcode: '${ $.parentName }.postcode'
-            },
-            imports: {
-                countryVal: '${$.parentName}.country_id:value'
             }
         },
 
         additionalClass: 'address-city-field',
-
-        countryVal: function(country_id) {
-            this.country = country_id;
-        },
 
         /**
          * Filtered options list by value from filter options list
@@ -49,26 +41,23 @@ define([
                 cityCurOptionLabel,
                 cityCurOptionValue,
                 cityCurOption,
-                addedLabels = [],
-                newCityOptions;
+                addedLabels = [];
 
-            newCityOptions = cityOptions.filter(city => city.country_id === this.country);
-
-            if (!newCityOptions) {
+            if (!cityOptions) {
                 return cityArray;
             }
 
-            for (cityIndex; cityIndex < newCityOptions.length; cityIndex++) {
-                cityCurOptionLabel = newCityOptions[cityIndex].label;
-                cityCurOptionValue = newCityOptions[cityIndex].value;
-                cityCurOption = newCityOptions[cityIndex].label.toLowerCase();
+            for (cityIndex; cityIndex < cityOptions.length; cityIndex++) {
+                cityCurOptionLabel = cityOptions[cityIndex].label;
+                cityCurOptionValue = cityOptions[cityIndex].value;
+                cityCurOption = cityOptions[cityIndex].label.toLowerCase();
 
                 if (cityCurOption.indexOf(value) > -1) { /*eslint max-depth: [2, 4]*/
-                        var regionOptions = this.region().initialOptions,
-                            regionIndex = 0;
+                    var regionOptions = this.region().initialOptions,
+                        regionIndex = 0;
 
                     for (regionIndex; regionIndex < regionOptions.length; regionIndex++) {
-                        if (regionOptions[regionIndex].value === newCityOptions[cityIndex].region_id) {
+                        if (regionOptions[regionIndex].value === cityOptions[cityIndex].region_id) {
                             break;
                         }
                     }
@@ -77,7 +66,7 @@ define([
                         subdistrictIndex = 0;
 
                     for (subdistrictIndex; subdistrictIndex < subdistrictOptions.length; subdistrictIndex++) {
-                        if (subdistrictOptions[subdistrictIndex].city_id === newCityOptions[cityIndex].value) {
+                        if (subdistrictOptions[subdistrictIndex].city_id === cityOptions[cityIndex].value) {
                             var newLabel;
                             if (subdistrictOptions[subdistrictIndex].zipcode) {
                                 newLabel = subdistrictOptions[subdistrictIndex].label + ', ' + cityCurOptionLabel +
@@ -89,7 +78,7 @@ define([
                             }
                             if ($.inArray(newLabel, addedLabels) === -1) {
                                 addedLabels.push(newLabel);
-                                var newCityOption = $.extend(true, [], newCityOptions[cityIndex]);
+                                var newCityOption = $.extend(true, [], cityOptions[cityIndex]);
                                 newCityOption.value = subdistrictOptions[subdistrictIndex].value + '-' +
                                     cityCurOptionValue + '-' + regionOptions[regionIndex].value;
                                 newCityOption.label = newLabel;

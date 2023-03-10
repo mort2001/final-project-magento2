@@ -39,10 +39,6 @@ $billingAddress = $order->getBillingAddress();
                                 <td><?= __('Last Name') ?></td>
                                 <td style="text-align: right;"><?= $billingAddress->getPersonalLastname() ?></td>
                             </tr>
-                            <tr>
-                                <td><?= __('Phone Number') ?></td>
-                                <td style="text-align: right;"><?= $billingAddress->getTelephone() ?></td>
-                            </tr>
                         <?php else: ?>
                             <tr>
                                 <td><?= __('Company Name') ?></td>
@@ -54,12 +50,9 @@ $billingAddress = $order->getBillingAddress();
                             </tr>
                             <tr>
                                 <td><?= __('Branch Type') ?></td>
-                                <td style="text-align: right;"><?= ($billingAddress->getBranchOffice()) ? __('Sub Branch') . ': ' . $billingAddress->getBranchOffice() : __('Head office') ?></td>
+                                <?= ($billingAddress->getBranchOffice()) ? __('Sub Branch') . ': ' . $billingAddress->getBranchOffice() : __('Head office') ?>
                             </tr>
-                            <tr>
-                                <td><?= __('Phone Number') ?></td>
-                                <td style="text-align: right;"><?= $billingAddress->getTelephone() ?></td>
-                            </tr>
+
                         <?php endif; ?>
                     <?php else: ?>
                         <span id="no-invoice">No invoice needed</span>

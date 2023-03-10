@@ -15,7 +15,6 @@ define([
 
     return Select.extend({
         defaults: {
-            country: '',
             modules: {
                 regionInput: '${ $.parentName }.region',
                 city: '${ $.parentName }.city_id',
@@ -23,20 +22,10 @@ define([
                 subdistrict: '${ $.parentName }.subdistrict_id',
                 subdistrictInput: '${ $.parentName }.subdistrict',
                 postcode: '${ $.parentName }.postcode'
-            },
-            imports: {
-                countryVal: '${$.parentName}.country_id:value'
-            },
-            listens: {
-                '${ $.parentName }.country_id:value': 'countryChanged'
             }
         },
 
         additionalClass: 'address-region-field',
-
-        countryVal: function(country_id) {
-            this.country = country_id;
-        },
 
         /**
          * Filtered options list by value from filter options list
@@ -52,26 +41,23 @@ define([
                 regionCurOptionLabel,
                 regionCurOptionValue,
                 regionCurOption,
-                addedLabels = [],
-                newRegionOptions ;
+                addedLabels = [];
 
-            newRegionOptions = regionOptions.filter(region => region.country_id === this.country);
-
-            if (!newRegionOptions) {
+            if (!regionOptions) {
                 return regionArray;
             }
 
-            for (regionIndex; regionIndex < newRegionOptions.length; regionIndex++) {
-                regionCurOptionLabel = newRegionOptions[regionIndex].label;
-                regionCurOptionValue = newRegionOptions[regionIndex].value;
-                regionCurOption = newRegionOptions[regionIndex].label.toLowerCase();
+            for (regionIndex; regionIndex < regionOptions.length; regionIndex++) {
+                regionCurOptionLabel = regionOptions[regionIndex].label;
+                regionCurOptionValue = regionOptions[regionIndex].value;
+                regionCurOption = regionOptions[regionIndex].label.toLowerCase();
 
                 if (regionCurOption.indexOf(value) > -1) { /*eslint max-depth: [2, 4]*/
                     var cityOptions = this.city().initialOptions,
                         cityIndex = 0;
 
                     for (cityIndex; cityIndex < cityOptions.length; cityIndex++) {
-                        if (cityOptions[cityIndex].region_id === newRegionOptions[regionIndex].value) {
+                        if (cityOptions[cityIndex].region_id === regionOptions[regionIndex].value) {
                             var subdistrictOptions = this.subdistrict().initialOptions,
                                 subdistrictIndex = 0;
 
@@ -88,7 +74,7 @@ define([
                                     }
                                     if ($.inArray(newLabel, addedLabels) === -1) {
                                         addedLabels.push(newLabel);
-                                        var newReionOption = $.extend(true, [], newRegionOptions[regionIndex]);
+                                        var newReionOption = $.extend(true, [], regionOptions[regionIndex]);
                                         newReionOption.value = subdistrictOptions[subdistrictIndex].value + '-' +
                                             cityOptions[cityIndex].value + '-' + regionCurOptionValue;
                                         newReionOption.label = newLabel;
@@ -162,21 +148,6 @@ define([
             this.listVisible(false);
 
             return this;
-        },
-
-        //If country has changed after user has picked other fields, it would have cleaned those fields
-        countryChanged: function () {
-            //Remove value input after choosing data in fields now
-            this.value('');
-            this.city().value('');
-            this.subdistrict().value('');
-            this.postcode().value('');
-
-            //Remove value input by typing in specific fields
-            this.filterInputValue('');
-            this.city().filterInputValue('');
-            this.subdistrict().filterInputValue('');
-            this.postcode().filterInputValue('');
         }
     });
 });

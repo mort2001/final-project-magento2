@@ -7,7 +7,7 @@
                         class: 'radio',
                         id: 'invoice_type_personal',
                         value: 'personal',
-                        checked: $parents[1].isUsePersonal()
+                        checked: true
                     }"
                type="radio" />
         <label class="label" data-bind="
@@ -23,8 +23,7 @@
                         name: 'invoice_type',
                         class: 'radio',
                         id: 'invoice_type_corporate',
-                        value: 'corporate',
-                        checked: !$parents[1].isUsePersonal()
+                        value: 'corporate'
                     }"
                type="radio" />
         <label class="label" data-bind="i18n: 'Corporate'" for="invoice_type_corporate"></label>

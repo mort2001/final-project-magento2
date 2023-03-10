@@ -39,13 +39,6 @@ define([
         backToShippingMethod: function () {
             sidebarModel.hide();
             stepNavigator.navigateTo('shipping', 'opc-shipping_method');
-        },
-
-        /**
-         * @return {Boolean}
-         */
-        isMoveBilling: function () {
-            return window.checkoutConfig.quoteData.move_billing === 1;
-        },
+        }
     });
 });

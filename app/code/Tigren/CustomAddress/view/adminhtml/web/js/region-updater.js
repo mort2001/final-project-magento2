@@ -23,8 +23,7 @@ define([
             isZipRequired: true,
             isCountryRequired: true,
             currentRegion: null,
-            isMultipleCountriesAllowed: true,
-            isCountryChange: false
+            isMultipleCountriesAllowed: true
         },
 
         /**
@@ -33,14 +32,13 @@ define([
          */
         _create: function () {
             this._initCountryElement();
-            this._updatePostcode();
+
             this.currentRegionOption = this.options.currentRegion;
             this.regionTmpl = mageTemplate(this.options.regionTemplate);
 
             this._updateRegion(this.element.find('option:selected').val());
 
             $(this.options.regionListId).on('change', $.proxy(function (e) {
-                this.options.isCountryChange = false;
                 this.setOption = false;
                 this.currentRegionOption = $(e.target).val();
                 this._updateRegion(this.element.find('option:selected').val());
@@ -88,18 +86,7 @@ define([
             if (this.options.isMultipleCountriesAllowed) {
                 this.element.parents('div.field').show();
                 this.element.on('change', $.proxy(function (e) {
-                    this.options.isCountryChange = true;
-                    var countryOptions = $(e.target).find('option');
-                    countryOptions.each(function () {
-                        if ($(this).val() == $(e.target).val()){
-                            $(this).attr('selected',true);
-                        }else {
-                            $(this).removeAttr('selected');
-                        }
-                    });
-
                     this._updateRegion($(e.target).val());
-                    this._updatePostcode();
                 }, this));
 
                 if (this.options.isCountryRequired) {
@@ -133,7 +120,6 @@ define([
          * @private
          */
         _renderSelectOption: function (selectElement, key, value) {
-            var countryChange = this.options.isCountryChange;
             selectElement.append($.proxy(function () {
                 var name = value.name.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '\\$&'),
                     tmplData,
@@ -150,7 +136,7 @@ define([
                     isSelected: false
                 };
 
-                if (this.options.defaultRegion === key && !countryChange) {
+                if (this.options.defaultRegion === key) {
                     tmplData.isSelected = true;
                 }
 
@@ -222,10 +208,10 @@ define([
                 }, this);
                 options.sort(function (a, b) {
                     if (a.value.name.toLowerCase() > b.value.name.toLowerCase()) {
-                        return 1
+                        return 1;
                     }
                     if (a.value.name.toLowerCase() < b.value.name.toLowerCase()) {
-                        return -1
+                        return -1;
                     }
                     return 0;
                 });
@@ -234,8 +220,7 @@ define([
                     this._renderSelectOption(regionList, region.key, region.value);
                 }, this));
 
-
-                if (this.currentRegionOption && !this.options.isCountryChange) {
+                if (this.currentRegionOption) {
                     regionList.val(this.currentRegionOption);
                     regionInput.val();
                     regionList.find('option').filter(function () {
@@ -254,59 +239,49 @@ define([
                 }
 
                 if (this.options.isRegionRequired) {
-                    regionList.addClass('required-entry').removeAttr('disabled').show();
+                    regionList.addClass('required-entry').removeAttr('disabled');
                     requiredLabel.addClass('required');
-                    requiredLabel.addClass('_required');
                 } else {
                     regionList.removeClass('required-entry validate-select').removeAttr('data-validate');
                     requiredLabel.removeClass('required');
-                    requiredLabel.removeClass('_required');
 
                     if (!this.options.optionalRegionAllowed) { //eslint-disable-line max-depth
-                        // regionList.attr('disabled', 'disabled');
-                        regionList.hide();
+                        regionList.attr('disabled', 'disabled');
+                    } else {
+                        regionList.prop('disabled', false); //
                     }
                 }
 
                 if (this.options.type && 'order-shipping_address' == this.options.type) {
                     var sameAsBillingCheckbox = $('#' + this.options.type).find('#order-shipping_same_as_billing');
-                    if (sameAsBillingCheckbox.is(":checked")) {
-                        // regionList.attr('disabled', 'disabled');
-                        regionList.hide();
+                    if (sameAsBillingCheckbox.is(':checked')) {
+                        regionList.attr('disabled', 'disabled');
                     }
                 }
 
                 regionList.show();
                 regionInput.hide();
                 label.attr('for', regionList.attr('id'));
-                regionList.attr('defaultvalue', this.options.defaultRegion);
-                // regionList.trigger('change');
             } else {
                 if (this.options.isRegionRequired) {
                     regionInput.addClass('required-entry').removeAttr('disabled');
                     requiredLabel.addClass('required');
-                    requiredLabel.addClass('_required');
                 } else {
                     if (!this.options.optionalRegionAllowed) { //eslint-disable-line max-depth
                         regionInput.attr('disabled', 'disabled');
                     }
                     requiredLabel.removeClass('required');
-                    requiredLabel.removeClass('_required');
-
                     regionInput.removeClass('required-entry');
                 }
 
                 if (this.options.type && 'order-shipping_address' == this.options.type) {
                     var sameAsBillingCheckbox = $('#' + this.options.type).find('#order-shipping_same_as_billing');
-                    if (sameAsBillingCheckbox.is(":checked")) {
+                    if (sameAsBillingCheckbox.is(':checked')) {
                         regionInput.attr('disabled', 'disabled');
                     }
                 }
 
-                // regionList.removeClass('required-entry').prop('disabled', 'disabled').show();
-                regionList.removeClass('required-entry').show();
-                regionList.val('');
-                regionList.hide();
+                regionList.removeClass('required-entry').prop('disabled', 'disabled').hide();
                 regionInput.show();
                 label.attr('for', regionInput.attr('id'));
             }
@@ -319,47 +294,9 @@ define([
             }
 
             // Add defaultvalue attribute to state/province select element
+            regionList.attr('defaultvalue', this.options.defaultRegion);
         },
-        _updatePostcode: function () {
-            $(this.options.postcodeId).on('keydown', $.proxy(function (e) {
-                var country = $('#order-billing_address_country_id').val();
-                // Allow: backspace, delete, tab, escape, enter and .
-                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                    // Allow: Ctrl/cmd+A
-                    (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-                    // Allow: Ctrl/cmd+C
-                    (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-                    // Allow: Ctrl/cmd+X
-                    (e.keyCode === 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-                    // Allow: home, end, left, right
-                    (e.keyCode >= 35 && e.keyCode <= 39)) {
-                    // let it happen, don't do anything
-                    return true;
-                }
-                if (country === "TH") {
-                    // Ensure that it is a number and stop the keypress
-                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                        return false;
-                    }
-                    var numberToString = $(e.currentTarget).val();
-                    if (numberToString.length >= 5) {
-                        return false;
-                    }
-                }
-                if (country !== "TH"){
 
-                    // Ensure that it is a number and stop the keypress
-                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 65 || e.keyCode > 105)) {
-                        return false;
-                    }
-                    var numberToString = $(e.currentTarget).val();
-                    if (numberToString.length >= 10) {
-                        return false;
-                    }
-                }
-                return true;
-            }, this));
-        },
         /**
          * Check if the selected country has a mandatory region selection
          *
@@ -375,21 +312,16 @@ define([
                     self.options.isRegionRequired = true;
                 }
             });
-        },
-
-        getOptions: function () {
-            var self = this;
-            return self.options;
         }
     });
 
     $.validator.addMethod(
-        "aureatelabsvalidationrule",
+        'aureatelabsvalidationrule',
         function (value, element) {
             //Perform your operation here and return the result true/false.
             return true / false;
         },
-        $.mage.__("Your validation message.")
+        $.mage.__('Your validation message.')
     );
 
     return $.mage.regionUpdater;

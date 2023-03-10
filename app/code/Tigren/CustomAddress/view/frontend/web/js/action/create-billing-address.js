@@ -6,9 +6,8 @@
 
 define([
     'Magento_Customer/js/model/address-list',
-    'Magento_Checkout/js/model/address-converter',
-    'Magento_Checkout/js/model/quote'
-], function (addressList, addressConverter, quote) {
+    'Magento_Checkout/js/model/address-converter'
+], function (addressList, addressConverter) {
     'use strict';
 
     return function (addressData) {
@@ -22,10 +21,6 @@ define([
 
                 return false;
             });
-
-        if (quote.isMoveBilling()) {
-            address['isBillingAddress'] = true;
-        }
 
         if (!isAddressUpdated) {
             addressList.push(address);

@@ -54,9 +54,9 @@
     <div class="checkout-shipping-method">
         <div class="step-title"
              translate="'Shipping Methods'"
-             data-role="title"></div>
+             data-role="title" />
 
-        <each args="getRegion('before-shipping-method-form')" render=""></each>
+        <each args="getRegion('before-shipping-method-form')" render="" />
 
         <div id="checkout-step-shipping_method"
              class="step-content"
@@ -69,27 +69,27 @@
                   submit="setShippingInformation"
                   novalidate="novalidate">
 
-                <render args="shippingMethodListTemplate"></render>
+                <render args="shippingMethodListTemplate" />
 
                 <div id="onepage-checkout-shipping-method-additional-load">
-                    <each args="getRegion('shippingAdditional')" render=""></each>
+                    <each args="getRegion('shippingAdditional')" render="" />
                 </div>
                 <div role="alert"
                      if="errorValidationMessage().length"
                      class="message notice">
-                    <span text="errorValidationMessage()"></span>
+                    <span text="errorValidationMessage()" />
                 </div>
                 <div class="actions-toolbar" id="shipping-method-buttons-container">
                     <div class="primary">
                         <button data-role="opc-continue" type="submit" class="button action continue primary">
-                            <span translate="'Next'"></span>
+                            <span translate="'Next'" />
                         </button>
                     </div>
                 </div>
             </form>
             <div class="no-quotes-block"
                  ifnot="rates().length > 0"
-                 translate="'Sorry, no quotes are available for this order at this time'"></div>
+                 translate="'Sorry, no quotes are available for this order at this time'" />
         </div>
     </div>
 </li>

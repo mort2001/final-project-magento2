@@ -222,7 +222,7 @@ define([
                 }
 
                 cityList.removeClass('required-entry').hide().val('');
-                cityInput.show();
+                cityInput.show().val('');
                 label.attr('for', cityInput.attr('id'));
             }
 
@@ -231,11 +231,7 @@ define([
         },
 
         _checkCityRequired: function () {
-            var length = $(this.options.cityListId + ' > option').length;
             this.options.isCityRequired = true;
-            if (length <= 1) {
-                this.options.isCityRequired = false;
-            }
         }
     });
 

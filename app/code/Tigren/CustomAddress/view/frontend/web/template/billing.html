@@ -18,15 +18,15 @@
                 class="action action-show-popup"
                 click="showFormPopUp.bind($data, $parent)"
                 visible="!isNewAddressAdded()">
-            <span translate="'Add New Address'"></span>
+            <span translate="'Add New Address'" />
         </button>
         <div data-bind="attr: {id: 'opc-new-billing-address-' + getCode($parent)}"
              visible="isFormPopUpVisible()"
-             render="billingFormTemplate"></div>
+             render="billingFormTemplate" />
     </if>
 
     <!-- ko if: (!isAddressSameAsShipping() && isFormInline) -->
     <!-- Inline address form -->
-    <render if="isFormInline" args="billingFormTemplate"></render>
+    <render if="isFormInline" args="billingFormTemplate" />
     <!--/ko-->
 </div>
