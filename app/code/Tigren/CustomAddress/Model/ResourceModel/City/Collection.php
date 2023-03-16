@@ -7,7 +7,6 @@
 
 namespace Tigren\CustomAddress\Model\ResourceModel\City;
 
-use Magento\Framework\Api\Search\AggregationInterface;
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface;
 use Magento\Framework\Data\Collection\EntityFactory;
 use Magento\Framework\DB\Adapter\AdapterInterface;
@@ -22,7 +21,7 @@ use Tigren\CustomAddress\Model\ResourceModel\City;
  * Class Collection
  * @package Tigren\CustomAddress\Model\ResourceModel\City
  */
-class Collection extends AbstractCollection implements \Magento\Framework\Api\Search\SearchResultInterface
+class Collection extends AbstractCollection
 {
     /**
      * Locale region name table name
@@ -32,7 +31,7 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
     protected $_cityNameTable;
 
     /**
-     * Region table name
+     * Country table name
      *
      * @var string
      */
@@ -42,12 +41,6 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
      * @var ResolverInterface
      */
     protected $_localeResolver;
-
-    protected $_map = [
-        'fields' => [
-            'city_id' => 'main_table.city_id'
-        ]
-    ];
 
     /**
      * @param EntityFactory $entityFactory
@@ -59,13 +52,13 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
      * @param AbstractDb $resource
      */
     public function __construct(
-        EntityFactory          $entityFactory,
-        LoggerInterface        $logger,
+        EntityFactory $entityFactory,
+        LoggerInterface $logger,
         FetchStrategyInterface $fetchStrategy,
-        ManagerInterface       $eventManager,
-        ResolverInterface      $localeResolver,
-        AdapterInterface       $connection = null,
-        AbstractDb             $resource = null
+        ManagerInterface $eventManager,
+        ResolverInterface $localeResolver,
+        AdapterInterface $connection = null,
+        AbstractDb $resource = null
     ) {
         $this->_localeResolver = $localeResolver;
         $this->_resource = $resource;
@@ -156,7 +149,6 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
             'value' => 'city_id',
             'title' => 'default_name',
             'region_id' => 'region_id',
-            'country_id' => 'country_id',
         ];
 
         foreach ($this as $item) {
@@ -164,17 +156,16 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
             foreach ($propertyMap as $code => $field) {
                 $option[$code] = $item->getData($field);
             }
-            $option['label'] = $item->getCityname(); //This takes the name in directory_region_city_name table based on __initSelect() function below
+            $option['label'] = $item->getName();
             $options[] = $option;
         }
 
         if (count($options) > 0) {
             array_unshift(
                 $options,
-                ['title' => '', 'value' => '', 'label' => __('Please select city.')]
+                ['title' => '', 'value' => '', 'label' => __('Please select district.')]
             );
         }
-
         return $options;
     }
 
@@ -192,10 +183,9 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
 
         $this->_regionTable = $this->getTable('directory_country_region');
         $this->_cityNameTable = $this->getTable('directory_region_city_name');
-        $this->_regionNameTable = $this->getTable('directory_country_region_name');
 
-//        $this->addOrder('name', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
-//        $this->addOrder('default_name', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
+        $this->addOrder('name', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
+        $this->addOrder('default_name', \Magento\Framework\Data\Collection::SORT_ORDER_ASC);
     }
 
     /**
@@ -205,99 +195,16 @@ class Collection extends AbstractCollection implements \Magento\Framework\Api\Se
      */
     protected function _initSelect()
     {
-//        parent::_initSelect();
+        parent::_initSelect();
         $locale = $this->_localeResolver->getLocale();
-        $this->getSelect()->reset();
-        $this->getSelect()->from(['main_table' => $this->getMainTable()], ['*'])->joinLeft(
-            ['cityName' => $this->_cityNameTable],
-            $this->getConnection()->quoteInto('main_table.city_id = cityName.city_id AND cityName.locale = ?', $locale),
-            ['cityname' => 'cityName.name']
-        )->joinLeft(
-            ['region' => $this->_regionTable],
-            'main_table.region_id = region.region_id',
-            ['regioncode' => 'region.code', 'country_id' => 'region.country_id']
-        )->joinLeft(
-            ['regionName' => $this->_regionNameTable],
-            $this->getConnection()->quoteInto('main_table.region_id = regionName.region_id AND regionName.locale = ?', $locale),
-            ['regionname' => 'regionName.name']
+
+        $this->addBindParam(':city_locale', $locale);
+        $this->getSelect()->joinLeft(
+            ['rname' => $this->_cityNameTable],
+            'main_table.city_id = rname.city_id AND rname.locale = :city_locale',
+            ['name']
         );
-    }
 
-    /**
-     * @return AggregationInterface
-     */
-    public function getAggregations()
-    {
-        return $this->aggregations;
-    }
-
-    /**
-     * @param AggregationInterface $aggregations
-     * @return $this
-     */
-    public function setAggregations($aggregations)
-    {
-        $this->aggregations = $aggregations;
-        return $this;
-    }
-
-    /**
-     * Get search criteria.
-     *
-     * @return SearchCriteriaInterface
-     */
-    public function getSearchCriteria()
-    {
-        return $this->searchCriteria;
-    }
-
-    /**
-     * Set search criteria.
-     *
-     * @param SearchCriteriaInterface|null $searchCriteria
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function setSearchCriteria($searchCriteria = null)
-    {
-        $this->searchCriteria = $searchCriteria;
-        return $this;
-    }
-
-    /**
-     * Get total count.
-     *
-     * @return int
-     */
-    public function getTotalCount()
-    {
-        return $this->getSize();
-    }
-
-    /**
-     * Set total count.
-     *
-     * @param int $totalCount
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function setTotalCount($totalCount)
-    {
-        return $this;
-    }
-
-    /**
-     * @param array|null $items
-     * @return $this|SearchResultInterface
-     * @throws \Exception
-     */
-    public function setItems(array $items = null)
-    {
-        if ($items) {
-            foreach ($items as $item) {
-                $this->addItem($item);
-            }
-        }
         return $this;
     }
 }

@@ -105,6 +105,7 @@ class FormPost extends \Magento\Customer\Controller\Address\FormPost
 
         try {
             $params = $this->getRequest()->getParams();
+
             if (isset($params['default_shipping'])) {
                 $params['default_shipping'] = $params['default_shipping'] === 'true' ? 1 : 0;
             }
@@ -116,22 +117,6 @@ class FormPost extends \Magento\Customer\Controller\Address\FormPost
             $this->getRequest()->setParams($params);
 
             $address = $this->_extractAddress();
-            if(isset($params['custom_attributes']['subdistrict'])){
-                $address->setSubdistrict($params['custom_attributes']['subdistrict']);
-            }
-            if(empty($params['custom_attributes']['subdistrict_id'])) {
-                $params['custom_attributes']['subdistrict_id'] = 0;
-                $params['subdistrict_id'] = 0;
-                $address->setSubdistrictId(0);
-            }
-            if(empty($params['custom_attributes']['city_id'])) {
-                $params['custom_attributes']['subdistrict_id'] = 0;
-                $params['subdistrict_id'] = 0;
-                $address->setCityId(0);
-            }
-            $this->getRequest()->setParams($params);
-
-            // $address->setCompany($params['company']);
             $this->_addressRepository->save($address);
             $result = ['success' => true, 'message' => __('You saved the address.')];
         } catch (InputException $e) {

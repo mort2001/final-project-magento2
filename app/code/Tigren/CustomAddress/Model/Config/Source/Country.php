@@ -8,13 +8,13 @@
 namespace Tigren\CustomAddress\Model\Config\Source;
 
 use Magento\Directory\Block\Data as DirectoryData;
-use Magento\Framework\Data\OptionSourceInterface;
+use Magento\Framework\Option\ArrayInterface;
 
 /**
  * Class Country
  * @package Tigren\CustomAddress\Model\Config\Source
  */
-class Country implements OptionSourceInterface
+class Country implements ArrayInterface
 {
     /**
      * @var DirectoryData

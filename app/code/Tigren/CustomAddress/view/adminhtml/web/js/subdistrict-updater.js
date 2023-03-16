@@ -95,6 +95,10 @@ define([
                     this._updateZipcode(false);
                 }, this));
 
+                if (this.options.isCityRequired) {
+                    this.element.addClass('required-entry');
+                    this.element.parents('div.field').addClass('required');
+                }
             } else {
                 this.element.parents('div.field').hide();
             }
@@ -260,18 +264,16 @@ define([
                 subdistrictInput.hide();
                 label.attr('for', subdistrictList.attr('id'));
             } else {
-                if (this.options.isSubdistrictRequired && $(subdistrictInput).is(':visible') === false) {
+                if (this.options.isSubdistrictRequired) {
                     subdistrictInput.addClass('required-entry');
-                    requiredLabel.addClass('_required');
                     requiredLabel.addClass('required');
                 } else {
                     requiredLabel.removeClass('required');
-                    requiredLabel.removeClass('_required');
                     subdistrictInput.removeClass('required-entry');
                 }
 
                 subdistrictList.removeClass('required-entry').hide().val('');
-                subdistrictInput.show();
+                subdistrictInput.show().val('');
                 label.attr('for', subdistrictInput.attr('id'));
             }
 
@@ -301,11 +303,7 @@ define([
         },
 
         _checkSubdistrictRequired: function () {
-            var length = $(this.options.subdistrictListId + ' > option').length;
             this.options.isSubdistrictRequired = true;
-            if (length <= 1) {
-                this.options.isSubdistrictRequired = false;
-            }
         }
     });
 

@@ -16,21 +16,14 @@
         <attribute code="city_id" type="int" />
         <attribute code="subdistrict_id" type="int" />
         <attribute code="subdistrict" type="string" />
-        <attribute code="address_id" type="string"/>
-        <attribute code="use_full_tax" type="string"/>
+
         <attribute code="is_full_invoice" type="int" />
         <attribute code="head_office" type="string" />
         <attribute code="branch_office" type="string" />
         <attribute code="tax_identification_number" type="string" />
         <attribute code="company" type="string" />
-        <attribute code="company_name" type="string" />
         <attribute code="personal_firstname" type="string" />
         <attribute code="personal_lastname" type="string" />
         <attribute code="invoice_type" type="string" />
-        <attribute code="telephone" type="string"/>
-        <attribute code="phone" type="string"/>
-        <attribute code="company_branch" type="string"/>
-        <attribute code="branch_name" type="string" />
-        <attribute code="branch" type="string" />
     </extension_attributes>
 </config>
