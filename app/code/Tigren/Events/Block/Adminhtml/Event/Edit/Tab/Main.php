@@ -83,7 +83,7 @@ class Main extends Generic
         $event = $this->_coreRegistry->registry('events_event');
         $eventId = $event->getId();
         $typeTimeConfig = $this->_eventsHelper->getTypeTimeValue();
-        $typeTimeShow = $typeTimeConfig == 1 ? 'HH:mm:ss' : 'h:m:s a';
+        $typeTimeShow = $typeTimeConfig == 1 ? 'HH:mm:ss' : 'hh:mm:ss a';
 
         /**
          *
@@ -179,7 +179,7 @@ class Main extends Generic
 
         $dateFormat = $this->_localeDate->getDateFormat(IntlDateFormatter::SHORT);
         $timeFormat = $this->_localeDate->getTimeFormat(IntlDateFormatter::SHORT);
-        $style = 'color: #000;background-color: #fff; font-weight: bold; font-size: 13px;';
+        $style = 'color: #000;background-color: #fff; font-weight: bold; font-size: 13px; width: auto;';
 
         $fieldset->addField(
             'require_time',
