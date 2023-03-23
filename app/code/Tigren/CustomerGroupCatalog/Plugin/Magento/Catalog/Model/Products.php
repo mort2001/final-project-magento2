@@ -7,12 +7,10 @@
 
 namespace Tigren\CustomerGroupCatalog\Plugin\Magento\Catalog\Model;
 
-use Magento\Customer\Model\Session;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Tigren\CustomerGroupCatalog\Model\ResourceModel\Rule\CollectionFactory;
-use Tigren\CustomerGroupCatalog\Helper\Data;
 use Magento\Catalog\Model\Product;
+use Magento\Customer\Model\Session;
+use Tigren\CustomerGroupCatalog\Helper\Data;
+use Tigren\CustomerGroupCatalog\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
  * Class Products
@@ -44,8 +42,7 @@ class Products
         Session           $session,
         CollectionFactory $collectionFactory,
         Data              $data
-    )
-    {
+    ) {
         $this->_session = $session;
         $this->collectionFactory = $collectionFactory;
         $this->_data = $data;
@@ -60,14 +57,11 @@ class Products
      */
     public function afterGetSpecialPrice(Product $product, $result)
     {
-        try {
-            $group_id = $this->_session->getCustomerGroupId();
-            $sku = $product->getSku();
-            $discountAmount = $this->_data->getApplyRuleDiscount($sku, $group_id);
-            $finalPriceValue = $product->getPriceInfo()->getPrice('final_price')->getValue();
+        $group_id = $this->_session->getCustomerGroupId();
+        $sku = $product->getSku();
+        $discountAmount = $this->_data->getApplyRuleDiscount($sku, $group_id);
+        $finalPriceValue = $product->getPriceInfo()->getPrice('final_price')->getValue();
 
-            return $finalPriceValue - ($finalPriceValue * $discountAmount);
-        } catch (NoSuchEntityException|LocalizedException) {
-        }
+        return $finalPriceValue - ($finalPriceValue * $discountAmount);
     }
 }

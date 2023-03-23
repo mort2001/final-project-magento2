@@ -13,49 +13,58 @@ $applyDiscount = $this->helper(Tigren\CustomerGroupCatalog\Helper\Data::class)->
  */
 ?>
 <style>
+    .main.content {
+        text-align: center;
+    }
+
     td {
         text-align: center;
     }
 
-    #center {
-        text-align: center;
-    }
 </style>
 
-<div>
-    <p style="color: rebeccapurple; font-weight: bold; font-size: 20px" id="center">
-        Congratulation!!! You have received discount <?= $applyDiscount * 100 ?> % with several products!!!
-    </p>
-</div>
-<hr>
-<div class="rule-data">
-    <table border="2">
-        <div class="table-title" style="text-align: center; color: #0a820b; font-family: monospace; font-size: 25px;">
-            <b>Rule Information</b>
+<div class="main content">
+    <?php if ($items) : ?>
+        <p style="color: rebeccapurple; font-weight: bold; font-size: 20px" class="notification-discount">
+            Congratulation!!! You have received discount <?= $applyDiscount * 100 ?> % with several products!!!
+        </p>
+        <hr>
+        <div class="rule-data">
+            <table border="2">
+                <div class="table-title"
+                     style="text-align: center; color: #0a820b; font-family: monospace; font-size: 25px;">
+                    <b>Rule Information</b>
+                </div>
+                <br>
+                <tr style="background: aquamarine;">
+                    <th id="center">Customer Group View</th>
+                    <th id="center">Name</th>
+                    <th id="center">Products applied</th>
+                    <th id="center">Discount Amount (%)</th>
+                    <th id="center">From</th>
+                    <th id="center">To</th>
+                    <th id="center">Priority</th>
+                </tr>
+                <?php foreach ($items as $item): ?>
+                    <tr style="background: pink;">
+                        <td><?= $item['customer_group_ids'] ?></td>
+                        <td><?= $item['name'] ?></td>
+                        <td><?= $item['products'] ?></td>
+                        <td><?= $item['discount_amount'] ?></td>
+                        <td><?= date('d-m-Y', strtotime($item['from_date'])) ?></td>
+                        <td><?= date('d-m-Y', strtotime($item['to_date'])) ?></td>
+                        <td><?= $item['priority'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
         </div>
-        <br>
-        <tr style="background: aquamarine;">
-            <th id="center">Customer Group View</th>
-            <th id="center">Name</th>
-            <th id="center">Products applied</th>
-            <th id="center">Discount Amount (%)</th>
-            <th id="center">From</th>
-            <th id="center">To</th>
-            <th id="center">Priority</th>
-        </tr>
-        <?php foreach ($items as $item): ?>
-            <tr style="background: pink;">
-                <td><?= $item['customer_group_ids'] ?></td>
-                <td><?= $item['name'] ?></td>
-                <td><?= $item['products'] ?></td>
-                <td><?= $item['discount_amount'] ?></td>
-                <td><?= date('d-m-Y',strtotime($item['from_date'])) ?></td>
-                <td><?= date('d-m-Y',strtotime($item['to_date'])) ?></td>
-                <td><?= $item['priority'] ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+    <?php else : ?>
+        <p style="color: darkred; font-weight: bold; font-size: 20px" class="notification-discount">
+            Sorry. There's no discount event for you at this time!!!
+        </p>
+    <?php endif; ?>
 </div>
+
 <div class="home-button" style="margin: 10px;">
     <button class="action primary"><a style="color: white; float: left;" href="<?= $block->getUrl('') ?>">
             <?php echo __('Back to Homepage') ?></a></button>

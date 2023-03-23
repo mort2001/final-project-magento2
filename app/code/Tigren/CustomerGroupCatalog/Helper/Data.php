@@ -7,13 +7,13 @@
 
 namespace Tigren\CustomerGroupCatalog\Helper;
 
+use Magento\Customer\Model\Session;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Tigren\CustomerGroupCatalog\Model\ResourceModel\Rule\CollectionFactory;
-use Magento\Customer\Model\Session;
 use Zend_Log_Exception;
 
 /**
@@ -132,14 +132,15 @@ class Data extends AbstractHelper
             ->setOrder('priority', 'ASC')
             ->setOrder('discount_amount', 'DESC');
         $ruleData = $ruleCollection->setPageSize(1)->getFirstItem()->getProducts();
-        $ruleProductDiscount = explode(',', $ruleData);
-
-        foreach ($ruleProductDiscount as $rule) {
-            if ($rule == "*" || $rule == "all" || $rule == "All") {
-                return $this->getDiscount();
+        if ($ruleData) {
+            str_replace(' ', '', $ruleData);
+            $ruleProductDiscount = explode(', ', $ruleData);
+            foreach ($ruleProductDiscount as $rule) {
+                if ($rule == "*" || $rule == "all" || $rule == "All") {
+                    return $this->getDiscount();
+                }
             }
         }
-
         $ruleCollection = $this->collectionFactory->create()
             ->addFieldToFilter('products', ['like' => '%' . $sku . '%'])
             ->addFieldToFilter('customer_group_ids', ['like' => '%' . $group_id . '%'])
@@ -147,8 +148,12 @@ class Data extends AbstractHelper
             ->addFieldToFilter('to_date', ['gt' => date('Y-m-d')])
             ->setOrder('priority', 'ASC')
             ->setOrder('discount_amount', 'DESC');
-        $discount_amount = $ruleCollection->setPageSize(1)->getFirstItem()->getDiscountAmount();
+        if ($ruleCollection->getData()) {
+            $discount_amount = ($ruleCollection->setPageSize(1)->getFirstItem()->getDiscountAmount()) / 100;
+        } else {
+            $discount_amount = 0;
+        }
 
-        return $discount_amount / 100;
+        return $discount_amount;
     }
 }

@@ -8,17 +8,17 @@
 namespace Tigren\CustomerGroupCatalog\Observer\Product\CustomOption\PriceRule;
 
 use Magento\Catalog\Model\Product;
+use Magento\Customer\Model\Session;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Customer\Model\Session;
+use Tigren\CustomerGroupCatalog\Helper\Data;
 use Tigren\CustomerGroupCatalog\Model\ResourceModel\Rule\CollectionFactory;
 use Zend_Log_Exception;
-use Magento\Framework\Message\ManagerInterface;
-use Tigren\CustomerGroupCatalog\Helper\Data;
 
 /**
  * Class Cartload
@@ -78,8 +78,7 @@ class AddDiscountProductToCart implements ObserverInterface
         CollectionFactory     $collectionFactory,
         ManagerInterface      $_message,
         Data                  $data
-    )
-    {
+    ) {
         $this->_data = $data;
         $this->_message = $_message;
         $this->collectionFactory = $collectionFactory;

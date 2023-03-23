@@ -11,7 +11,8 @@
     <menu>
         <add id="Tigren_CustomAddress::custom_address" title="Custom Address" module="Tigren_CustomAddress"
              sortOrder="20"
-             resource="Tigren_CustomAddress::custom_address"/>
+             resource="Tigren_CustomAddress::custom_address"
+             parent="Tigren_Core::tigren"/>
         <add id="Tigren_CustomAddress::region" title="Manage regions" module="Tigren_CustomAddress" sortOrder="10"
              action="custom_address/region/index" resource="Tigren_CustomAddress::region"
              parent="Tigren_CustomAddress::custom_address"/>
