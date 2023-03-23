@@ -1,0 +1,33 @@
+{
+    "tigren_customergroup_rule": {
+        "column": {
+            "rule_id": true,
+            "name": true,
+            "customer_group_ids": true,
+            "store_ids": true,
+            "products": true,
+            "discount_amount": true,
+            "from_date": true,
+            "to_date": true,
+            "priority": true,
+            "is_active": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        },
+        "index": {
+            "TIGREN_CUSTOMERGROUP_RULE_NAME_DISCOUNT_AMOUNT_PRODUCTS": true
+        }
+    },
+    "customergroup_catalog_history": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "customer_id": true,
+            "rule_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
