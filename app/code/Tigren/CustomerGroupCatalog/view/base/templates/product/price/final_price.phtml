@@ -1,0 +1,63 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+$discount = $this->helper(Tigren\CustomerGroupCatalog\Helper\Data::class)->getDiscount();
+$priceModel = $block->getPriceType('regular_price');
+$finalPriceModel = $block->getPriceType('final_price');
+$idSuffix = $block->getIdSuffix() ? $block->getIdSuffix() : '';
+$schema = $block->getZone() == 'item_view';
+?>
+
+<?php if ($block->hasSpecialPrice()): ?>
+    <span class="special-price">
+        <?php echo $block->renderAmount($finalPriceModel->getAmount(), [
+            'display_label' => __('New Price'),
+            'price_id' => $block->getPriceId('product-price-' . $idSuffix),
+            'price_type' => 'finalPrice',
+            'include_container' => true,
+            'schema' => $schema
+        ]); ?>
+    </span>
+
+    <span>
+        <?php
+        $item = $block->getSaleableItem();
+        $_savePercent = (float)$discount * 100;
+        echo '<b style="color:#008000">' . $_savePercent . '% off vs </b>';
+        ?>
+    </span>
+
+    <span class="old-price">
+        <?php echo $block->renderAmount($priceModel->getAmount(), [
+            'display_label' => __('Original Price'),
+            'price_id' => $block->getPriceId('old-price-' . $idSuffix),
+            'price_type' => 'oldPrice',
+            'include_container' => true,
+            'skip_adjustments' => true
+        ]); ?>
+    </span>
+
+<?php else: ?>
+    <?php echo $block->renderAmount($finalPriceModel->getAmount(), [
+        'price_id' => $block->getPriceId('product-price-' . $idSuffix),
+        'price_type' => 'finalPrice',
+        'include_container' => true,
+        'schema' => $schema
+    ]); ?>
+<?php endif; ?>
+
+<?php if ($block->showMinimalPrice()): ?>
+    <?php if ($block->getUseLinkForAsLowAs()): ?>
+        <a href="<?= $block->getSaleableItem()->getProductUrl() ?>" class="minimal-price-link">
+            <?= $block->renderAmountMinimal() ?>
+        </a>
+    <?php else: ?>
+        <span class="minimal-price-link">
+            <?= $block->renderAmountMinimal() ?>
+        </span>
+    <?php endif ?>
+<?php endif; ?>

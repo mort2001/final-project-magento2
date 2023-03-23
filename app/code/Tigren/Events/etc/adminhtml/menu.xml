@@ -8,7 +8,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add id="Tigren_Events::events" title="Events" module="Tigren_Events" sortOrder="20"
-             resource="Tigren_Events::events"/>
+             resource="Tigren_Events::events" parent="Tigren_Core::tigren"/>
         <add id="Tigren_Events::manage_events" title="Manage Events" module="Tigren_Events" sortOrder="0"
              parent="Tigren_Events::events" resource="Tigren_Events::manage_events" action="events/event"/>
         <add id="Tigren_Events::manage_categories" title="Manage Categories" module="Tigren_Events" sortOrder="0"
