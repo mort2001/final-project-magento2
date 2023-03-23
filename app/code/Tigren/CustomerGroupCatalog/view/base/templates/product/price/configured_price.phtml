@@ -1,0 +1,75 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+?>
+
+<?php
+/** @var FinalPriceBox $block */
+
+use Magento\Catalog\Pricing\Price\ConfiguredPrice;
+use Magento\Catalog\Pricing\Price\ConfiguredPriceInterface;
+use Magento\Catalog\Pricing\Price\ConfiguredRegularPrice;
+use Magento\Catalog\Pricing\Render\FinalPriceBox;
+
+$discount = $this->helper(Tigren\CustomerGroupCatalog\Helper\Data::class)->getDiscount();
+$schema = ($block->getZone() == 'item_view') ? true : false;
+$idSuffix = $block->getIdSuffix() ? $block->getIdSuffix() : '';
+/** @var ConfiguredPrice $configuredPrice */
+$configuredPrice = $block->getPrice();
+/** @var ConfiguredRegularPrice $configuredRegularPrice */
+$configuredRegularPrice = $block->getPriceType(
+    ConfiguredPriceInterface::CONFIGURED_REGULAR_PRICE_CODE
+);
+?>
+<?php if ($configuredPrice->getAmount()->getValue() < $configuredRegularPrice->getAmount()->getValue()) : ?>
+    <p class="price-as-configured">
+        <span class="special-price">
+            <?= /* @noEscape */
+            $block->renderAmount(
+                $configuredPrice->getAmount(),
+                [
+                    'display_label' => $block->escapeHtml(__('New Price')),
+                    'price_id' => $block->escapeHtml($block->getPriceId('product-price-' . $idSuffix)),
+                    'price_type' => 'finalPrice',
+                    'include_container' => true,
+                    'schema' => $schema,
+                ]
+            ); ?>
+        </span>
+        <span class="old-price">
+            <?= /* @noEscape */
+            $block->renderAmount(
+                $configuredRegularPrice->getAmount(),
+                [
+                    'display_label' => $block->escapeHtml(__('Original Price')),
+                    'price_id' => $block->escapeHtml($block->getPriceId('old-price-' . $idSuffix)),
+                    'price_type' => 'oldPrice',
+                    'include_container' => true,
+                    'skip_adjustments' => true,
+                ]
+            ); ?>
+        </span>
+    </p>
+<?php else : ?>
+    <?php
+    $priceLabel = ($block->getPriceLabel() !== null)
+        ? $block->getPriceLabel()
+        : '';
+    ?>
+    <p class="price-as-configured">
+        <?= /* @noEscape */
+        $block->renderAmount(
+            $configuredPrice->getAmount(),
+            [
+                'display_label' => $block->escapeHtml($priceLabel),
+                'price_id' => $block->escapeHtml($block->getPriceId('product-price-' . $idSuffix)),
+                'price_type' => 'finalPrice',
+                'include_container' => true,
+                'schema' => $schema,
+            ]
+        ); ?>
+    </p>
+<?php endif; ?>
