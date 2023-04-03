@@ -21,6 +21,7 @@ define([
                 parent: '${ $.parentName }',
                 region: '${ $.parentName }.region_id',
                 regionInput: '${ $.parentName }.region',
+                city: '${ $.parentName }.city_id',
                 cityInput: '${ $.parentName }.city',
                 subdistrict: '${ $.parentName }.subdistrict_id',
                 subdistrictInput: '${ $.parentName }.subdistrict',
@@ -142,6 +143,30 @@ define([
                 }
 
                 this.required(true);
+
+                if (option && this.subdistrict() && this.subdistrictInput() && this.postcode()) {
+                    this.cityInput().validation = _.omit(this.cityInput().validation, 'required-entry');
+                    this.cityInput().required(false);
+                    this.cityInput().visible(false);
+                    this.cityInput().reset();
+
+                    this.city().validation = _.extend(this.city().validation, { 'required-entry': true });
+                    this.city().required(true);
+                    this.city().visible(true);
+                    this.city().reset();
+
+                    this.subdistrictInput().visible(false);
+                    this.subdistrictInput().validation = _.omit(this.subdistrictInput().validation, 'required-entry');
+                    this.subdistrictInput().required(false);
+                    this.subdistrictInput().reset();
+
+                    this.subdistrict().visible(true);
+                    this.subdistrict().validation = _.extend(this.subdistrict().validation, { 'required-entry': true });
+                    this.subdistrict().required(true);
+                    this.subdistrict().reset();
+
+                    this.postcode().reset();
+                }
             }
         },
 

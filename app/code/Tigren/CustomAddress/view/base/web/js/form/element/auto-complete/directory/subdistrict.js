@@ -15,6 +15,7 @@ define([
 
     return Select.extend({
         defaults: {
+            country: '',
             modules: {
                 parent: '${ $.parentName }',
                 region: '${ $.parentName }.region_id',
@@ -23,10 +24,17 @@ define([
                 cityInput: '${ $.parentName }.city',
                 subdistrictInput: '${ $.parentName }.subdistrict',
                 postcode: '${ $.parentName }.postcode'
+            },
+            imports: {
+                countryVal: '${$.parentName}.country_id:value'
             }
         },
 
         additionalClass: 'address-subdistrict-field',
+
+        countryVal: function(country_id) {
+            this.country = country_id;
+        },
 
         /**
          * Filtered options list by value from filter options list
@@ -42,23 +50,26 @@ define([
                 subdistrictCurOptionLabel,
                 subdistrictCurOptionValue,
                 subdistrictCurOption,
-                addedLabels = [];
+                addedLabels = [],
+                newSubdistrictOptions;
 
-            if (!subdistrictOptions) {
+            newSubdistrictOptions = subdistrictOptions.filter(subdistrict => subdistrict.country_id === this.country);
+
+            if (!newSubdistrictOptions) {
                 return subdistrictArray;
             }
 
-            for (subdistrictIndex; subdistrictIndex < subdistrictOptions.length; subdistrictIndex++) {
-                subdistrictCurOptionLabel = subdistrictOptions[subdistrictIndex].label;
-                subdistrictCurOptionValue = subdistrictOptions[subdistrictIndex].value;
-                subdistrictCurOption = subdistrictOptions[subdistrictIndex].label.toLowerCase();
+            for (subdistrictIndex; subdistrictIndex < newSubdistrictOptions.length; subdistrictIndex++) {
+                subdistrictCurOptionLabel = newSubdistrictOptions[subdistrictIndex].label;
+                subdistrictCurOptionValue = newSubdistrictOptions[subdistrictIndex].value;
+                subdistrictCurOption = newSubdistrictOptions[subdistrictIndex].label.toLowerCase();
 
                 if (subdistrictCurOption.indexOf(value) > -1) { /*eslint max-depth: [2, 4]*/
                     var cityOptions = this.city().initialOptions,
                         cityIndex = 0;
 
                     for (cityIndex; cityIndex < cityOptions.length; cityIndex++) {
-                        if (cityOptions[cityIndex].value === subdistrictOptions[subdistrictIndex].city_id) {
+                        if (cityOptions[cityIndex].value === newSubdistrictOptions[subdistrictIndex].city_id) {
                             break;
                         }
                     }
@@ -73,17 +84,17 @@ define([
                     }
 
                     var newLabel;
-                    if (subdistrictOptions[subdistrictIndex].zipcode) {
+                    if (newSubdistrictOptions[subdistrictIndex].zipcode) {
                         newLabel = subdistrictCurOptionLabel + ', ' + cityOptions[cityIndex].label + ', ' +
-                            regionOptions[regionIndex].label + ', ' + subdistrictOptions[subdistrictIndex].zipcode;
+                            regionOptions[regionIndex].label + ', ' + newSubdistrictOptions[subdistrictIndex].zipcode;
                     } else {
                         newLabel = subdistrictCurOptionLabel + ', ' + cityOptions[cityIndex].label + ', ' +
                             regionOptions[regionIndex].label;
                     }
                     if ($.inArray(newLabel, addedLabels) === -1) {
                         addedLabels.push(newLabel);
-                        var newSubdistrictOption = $.extend(true, [], subdistrictOptions[subdistrictIndex]);
-                        newSubdistrictOption.value = subdistrictOptions[subdistrictIndex].value + '-' +
+                        var newSubdistrictOption = $.extend(true, [], newSubdistrictOptions[subdistrictIndex]);
+                        newSubdistrictOption.value = newSubdistrictOptions[subdistrictIndex].value + '-' +
                             cityOptions[cityIndex].value + '-' + regionOptions[regionIndex].value;
                         newSubdistrictOption.label = newLabel;
                         newSubdistrictOption.subdistrict_id = subdistrictCurOptionValue;

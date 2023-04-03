@@ -340,7 +340,7 @@ class LayoutProcessor
                         ],
                         'company_branch' => [
                             'component' => 'Magento_Ui/js/form/element/boolean',
-                            'label' => __(''),
+                            'label' => __('Select the branch'),
                             'sortOrder' => 20,
                             'dataScope' => 'fullTaxInvoice.company_branch',
                             'provider' => 'checkoutProvider',
@@ -359,6 +359,8 @@ class LayoutProcessor
                         'telephone' => [
                             'component' => 'Magento_Ui/js/form/element/abstract',
                             'label' => __('Phone Number'),
+                            'visible' => false,
+                            'disabled' => true,
                             'config' => [
                                 'customScope' => 'fullTaxInvoice',
                                 'template' => 'ui/form/field',
@@ -704,7 +706,7 @@ class LayoutProcessor
                             'label' => __('State/Region'),
                             'provider' => 'checkoutProvider',
                             'visible' => false,
-                            'sortOrder' => 201
+                            'sortOrder' => 210
                         ],
                         'region_id' => [
                             'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/region',
@@ -720,7 +722,7 @@ class LayoutProcessor
                                 'target' => '${ $.provider }:${ $.parentScope }.country_id',
                                 'field' => 'country_id'
                             ],
-                            'sortOrder' => 202
+                            'sortOrder' => 220
                         ],
                         'subdistrict' => [
                             'component' => 'Magento_Ui/js/form/element/abstract',
@@ -737,7 +739,7 @@ class LayoutProcessor
                                 'min_text_length' => 1
                             ],
                             'visible' => false,
-                            'sortOrder' => 210
+                            'sortOrder' => 250
                         ],
                         'subdistrict_id' => [
                             'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/subdistrict',
@@ -753,7 +755,7 @@ class LayoutProcessor
                                 'target' => '${ $.provider }:${ $.parentScope }.city_id',
                                 'field' => 'city_id'
                             ],
-                            'sortOrder' => 220
+                            'sortOrder' => 260
                         ],
                         'city' => [
                             'component' => 'Magento_Ui/js/form/element/abstract',
@@ -913,7 +915,7 @@ class LayoutProcessor
                             'label' => __('State/Region'),
                             'provider' => 'checkoutProvider',
                             'visible' => false,
-                            'sortOrder' => 250
+                            'sortOrder' => 210
                         ],
                         'region_id' => [
                             'component' => 'Tigren_CustomAddress/js/form/element/drop-down/directory/region',
@@ -1082,7 +1084,7 @@ class LayoutProcessor
                             'label' => __('State/Region'),
                             'provider' => 'checkoutProvider',
                             'visible' => false,
-                            'sortOrder' => 250
+                            'sortOrder' => 210
                         ],
                         'region_id' => [
                             'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/region',
@@ -1098,7 +1100,7 @@ class LayoutProcessor
                                 'target' => '${ $.provider }:${ $.parentScope }.country_id',
                                 'field' => 'country_id'
                             ],
-                            'sortOrder' => 260
+                            'sortOrder' => 220
                         ],
                         'subdistrict' => [
                             'component' => 'Magento_Ui/js/form/element/abstract',
@@ -1115,7 +1117,7 @@ class LayoutProcessor
                                 'min_text_length' => 1
                             ],
                             'visible' => false,
-                            'sortOrder' => 210
+                            'sortOrder' => 250
                         ],
                         'subdistrict_id' => [
                             'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/subdistrict',
@@ -1131,7 +1133,7 @@ class LayoutProcessor
                                 'target' => '${ $.provider }:${ $.parentScope }.city_id',
                                 'field' => 'city_id'
                             ],
-                            'sortOrder' => 220
+                            'sortOrder' => 260
                         ],
                         'city' => [
                             'component' => 'Magento_Ui/js/form/element/abstract',
@@ -1617,7 +1619,7 @@ class LayoutProcessor
                                     'label' => __('State/Region'),
                                     'provider' => 'checkoutProvider',
                                     'visible' => false,
-                                    'sortOrder' => 250
+                                    'sortOrder' => 210
                                 ],
                                 'region_id' => [
                                     'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/region',
@@ -1633,7 +1635,7 @@ class LayoutProcessor
                                         'target' => '${ $.provider }:${ $.parentScope }.country_id',
                                         'field' => 'country_id'
                                     ],
-                                    'sortOrder' => 260
+                                    'sortOrder' => 220
                                 ],
                                 'subdistrict' => [
                                     'component' => 'Magento_Ui/js/form/element/abstract',
@@ -1650,7 +1652,7 @@ class LayoutProcessor
                                         'min_text_length' => 1
                                     ],
                                     'visible' => false,
-                                    'sortOrder' => 210
+                                    'sortOrder' => 250
                                 ],
                                 'subdistrict_id' => [
                                     'component' => 'Tigren_CustomAddress/js/form/element/auto-complete/directory/subdistrict',
@@ -1666,7 +1668,7 @@ class LayoutProcessor
                                         'target' => '${ $.provider }:${ $.parentScope }.city_id',
                                         'field' => 'city_id'
                                     ],
-                                    'sortOrder' => 220
+                                    'sortOrder' => 260
                                 ],
                                 'city' => [
                                     'component' => 'Magento_Ui/js/form/element/abstract',

@@ -7,26 +7,8 @@
     </div>
 
     <!-- ko if: (!isAddressSameAsShipping()) -->
-    <!-- ko foreach: getRegion('billing-address-list') -->
-    <!-- ko template: getTemplate() --><!-- /ko -->
-    <!--/ko-->
-    <!--/ko-->
-
-    <!-- Address form pop up -->
-    <if args="!isFormInline && !isAddressSameAsShipping()">
-        <button type="button"
-                class="action action-show-popup"
-                click="showFormPopUp.bind($data, $parent)"
-                visible="!isNewAddressAdded()">
-            <span translate="'Add New Address'" />
-        </button>
-        <div data-bind="attr: {id: 'opc-new-billing-address-' + getCode($parent)}"
-             visible="isFormPopUpVisible()"
-             render="billingFormTemplate" />
-    </if>
-
-    <!-- ko if: (!isAddressSameAsShipping() && isFormInline) -->
+    <render args="detailsTemplate"></render>
     <!-- Inline address form -->
-    <render if="isFormInline" args="billingFormTemplate" />
+    <render args="billingFormTemplate"></render>
     <!--/ko-->
 </div>

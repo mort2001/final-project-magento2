@@ -13,27 +13,31 @@ define([
 
     var countryData = customerData.get('directory-data');
 
+
     return Component.extend({
         defaults: {
             template: 'Tigren_CustomAddress/billing-information/address-renderer/default'
         },
 
         getBilling: function () {
-            return quote.billingAddress() ? quote.billingAddress() : {};
+            var fullTaxInvoice = JSON.parse(localStorage.getItem('full-tax-invoice'));
+            return fullTaxInvoice ? fullTaxInvoice : {};
         },
 
         checkUsingFullTaxInvoice: function () {
-            if (!quote.billingAddress() || quote.billingAddress().extensionAttributes === undefined) {
+            var fullTaxInvoice = JSON.parse(localStorage.getItem('full-tax-invoice'));
+            if (!fullTaxInvoice|| fullTaxInvoice === undefined) {
                 return false;
             }
-            return quote.billingAddress().extensionAttributes.is_full_invoice !== undefined;
+            return fullTaxInvoice.is_full_invoice !== undefined;
         },
 
         checkUsingPersonal: function () {
-            if (!quote.billingAddress() || quote.billingAddress().extensionAttributes === undefined) {
+            var fullTaxInvoice = JSON.parse(localStorage.getItem('full-tax-invoice'));
+            if (!fullTaxInvoice || fullTaxInvoice === undefined) {
                 return false;
             }
-            return quote.billingAddress().extensionAttributes.invoice_type === 'personal';
+            return fullTaxInvoice.invoice_type === 'personal';
         },
 
         /**

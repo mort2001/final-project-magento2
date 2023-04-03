@@ -114,13 +114,20 @@ class Address
 
         if ($address->getSubdistrictId()) {
             $this->request->setParam('subdistrict_id', $address->getSubdistrictId());
+        }else {
+            $this->request->setParam('subdistrict_id', 0);  $addressModel->setSubdistrictId(0);
         }
         if ($address->getSubdistrict()) {
             $this->request->setParam('subdistrict', $address->getSubdistrict());
             $addressModel->setSubdistrict($address->getSubdistrict());
+        }else {
+            $this->request->setParam('subdistrict', '');
+            $addressModel->setSubdistrict('');
         }
         if ($address->getCityId()) {
             $this->request->setParam('city_id', $address->getCityId());
+        }else {
+            $this->request->setParam('city_id', 0); $addressModel->setCityId(0);
         }
 
         if (!empty($addressData['city_id'])) {
@@ -134,11 +141,11 @@ class Address
         $this->updateSubdistrictData($attributeValues, $address);
 
         foreach ($attributeValues as $attributeCode => $attributeData) {
-            if ($attributeCode === 'city' && $attributeData->getCityId()) {
+            if ($attributeCode === 'city' && !empty($attributeData->getCityId())) {
                 $addressModel->setCity($attributeData->getCity());
                 $addressModel->setCityCode($attributeData->getCityCode());
                 $addressModel->setCityId($attributeData->getCityId());
-            } elseif ($attributeCode === 'subdistrict' && $attributeData->getSubdistrictId()) {
+            } elseif ($attributeCode === 'subdistrict' && !empty($attributeData->getSubdistrictId())) {
                 $addressModel->setSubdistrict($attributeData->getSubdistrict());
                 $addressModel->setSubdistrictCode($attributeData->getSubdistrictCode());
                 $addressModel->setSubdistrictId($attributeData->getSubdistrictId());
@@ -194,13 +201,13 @@ class Address
         }
 
         if (empty($attributeValues['city_id']) && $extensionAttributes = $address->getExtensionAttributes()) {
-            $attributeValues['city_id'] = $extensionAttributes->getCityId();
+            $attributeValues['city_id'] = $extensionAttributes->getCityId() ? $extensionAttributes->getCityId() : 0;
             $attributeValues['city'] = $address->getCity();
             $attributeValues['city_code'] = null;
         }
 
         $cityData = [
-            CityInterface::CITY_ID => !empty($attributeValues['city_id']) ? $attributeValues['city_id'] : null,
+            CityInterface::CITY_ID => !empty($attributeValues['city_id']) ? $attributeValues['city_id'] : 0,
             CityInterface::CITY => !empty($attributeValues['city']) ? $attributeValues['city'] : null,
             CityInterface::CITY_CODE => !empty($attributeValues['city_code'])
                 ? $attributeValues['city_code']
@@ -238,13 +245,13 @@ class Address
         }
 
         if (empty($attributeValues['subdistrict_id']) && $extensionAttributes = $address->getExtensionAttributes()) {
-            $attributeValues['subdistrict_id'] = $extensionAttributes->getSubdistrictId();
+            $attributeValues['subdistrict_id'] = $extensionAttributes->getSubdistrictId() ? $extensionAttributes->getSubdistrictId() : 0;
             $attributeValues['subdistrict'] = $extensionAttributes->getSubdistrict();
             $attributeValues['subdistrict_code'] = null;
         }
 
         $subdistrictData = [
-            SubdistrictInterface::SUBDISTRICT_ID => !empty($attributeValues['subdistrict_id']) ? $attributeValues['subdistrict_id'] : null,
+            SubdistrictInterface::SUBDISTRICT_ID => !empty($attributeValues['subdistrict_id']) ? $attributeValues['subdistrict_id'] : 0,
             SubdistrictInterface::SUBDISTRICT => !empty($attributeValues['subdistrict']) ? $attributeValues['subdistrict'] : null,
             SubdistrictInterface::SUBDISTRICT_CODE => !empty($attributeValues['subdistrict_code'])
                 ? $attributeValues['subdistrict_code']

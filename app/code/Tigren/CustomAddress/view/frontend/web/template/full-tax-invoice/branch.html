@@ -6,7 +6,8 @@
                         name: inputName,
                         class: 'radio',
                         id: 'head',
-                        value: 'head'
+                        value: 'head',
+                        checked: !$parents[1].isBranch()
                     }"
                type="radio" />
         <label class="label" data-bind="
@@ -22,13 +23,14 @@
                         name: inputName,
                         class: 'radio',
                         id: 'branch',
-                        value: 'branch'
+                        value: 'branch',
+                        checked: $parents[1].isBranch()
                     }"
                type="radio" />
         <label class="label" data-bind="i18n: 'Branch'" for="branch"></label>
     </div>
     <input class="input-text"
-           data-bind="enable: (!$parents[1].headOffice() && $parents[1].branch())"
+           data-bind="value: $parents[1].branchName() ,enable: (!$parents[1].headOffice() && $parents[1].branch())"
            id="more-info"
            name="more_info"
            type="text" />

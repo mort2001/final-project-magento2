@@ -453,6 +453,14 @@ class Edit extends Template
             $components['children']['company']['value'] = $address && $address->getCompany()
                 ? $address->getCompany() : null;
         }
+        if (isset($components['children']['default_shipping'])) {
+            if ($this->canSetAsDefaultShipping()) {
+                $components['children']['default_shipping']['value'] = $this->isDefaultShipping();
+            } else {
+                $components['children']['default_shipping']['value'] = true;
+                $components['children']['default_shipping']['visible'] = false;
+            }
+        }
 
         return $components;
     }
@@ -525,10 +533,25 @@ class Edit extends Template
                             'sortOrder' => 120
                         ],
                         'country_id' => [
+                            'component' => 'Tigren_CustomAddress/js/form/element/drop-down/directory/country',
                             'sortOrder' => 200
                         ],
                         'region' => [
+                            'component' => 'Magento_Ui/js/form/element/abstract',
+                            'config' => [
+                                'customScope' => 'address',
+                                'template' => 'ui/form/field',
+                                'elementTmpl' => 'ui/form/element/input'
+                            ],
+                            'dataScope' => 'address.region',
+                            'label' => __('State/Province'),
+                            'provider' => 'customerProvider',
                             'visible' => false,
+                            'validation' => [
+                                'required-entry' => true,
+                                'max_text_length' => 255,
+                                'min_text_length' => 1
+                            ],
                             'sortOrder' => 210
                         ],
                         'region_id' => [
@@ -560,7 +583,8 @@ class Edit extends Template
                             'provider' => 'customerProvider',
                             'validation' => [
                                 'max_text_length' => 255,
-                                'min_text_length' => 1
+                                'min_text_length' => 1,
+                                'required-entry' => true
                             ],
                             'visible' => false,
                             'sortOrder' => 230
@@ -854,8 +878,32 @@ class Edit extends Template
             foreach ($components['children'] as $key => $value) {
                 $components['children'][$key]['config']['additionalClasses'] = 'address-' . $key;
 
-                if ($key === 'country_id') {
-                    $components['children'][$key]['value'] = $address && $address->getCountryId() ? $address->getCountryId() : 'TH';
+//                if ($key === 'country_id') {
+//                    $components['children'][$key]['value'] = $address && $address->getCountryId() ? $address->getCountryId() : 'TH';
+//                }
+
+                if ($key === 'region') {
+                    if ($address->getRegion()) {
+                        if ($address->getRegion()->getRegion()) {
+                            $components['children'][$key]['value'] = $address->getRegion()->getRegion();
+                        }
+                    }
+                }
+                if ($key === 'city') {
+                    $components['children'][$key]['sortOrder'] = 240;
+                    if ($address->getCity() && empty($address->getExtensionAttributes()->getCityId())) {
+                        $components['children'][$key]['visible'] = true;
+                        $components['children'][$key]['value'] = $address->getCity();
+                        $components['children']['city_id']['visible'] = false;
+                    }
+                }
+                if ($key === 'subdistrict') {
+                    $components['children'][$key]['sortOrder'] = 250;
+                    if ($address->getSubdistrict() &&  empty($address->getExtensionAttributes()->getSubdistrictId())) {
+                        $components['children'][$key]['visible'] = true;
+                        $components['children'][$key]['value'] = $address->getSubdistrict();
+                        $components['children']['subdistrict_id']['visible'] = false;
+                    }
                 }
 
                 if ($key === 'city_id' || $key === 'subdistrict_id' || $key === 'postcode') {
@@ -870,6 +918,7 @@ class Edit extends Template
                     }
 
                     if ($key === 'city_id') {
+                        $components['children'][$key]['sortOrder'] = 240;
                         $components['children'][$key]['config']['defaultValue'] = $address && $address->getExtensionAttributes()->getCityId()
                             ? $address->getExtensionAttributes()->getCityId() : null;
                         $components['children'][$key]['value'] = $address && $address->getExtensionAttributes()->getCityId()
@@ -877,6 +926,7 @@ class Edit extends Template
                     }
 
                     if ($key === 'subdistrict_id') {
+                        $components['children'][$key]['sortOrder'] = 250;
                         $components['children'][$key]['value'] = $address && $address->getExtensionAttributes()->getSubdistrictId()
                             ? $address->getExtensionAttributes()->getSubdistrictId() : null;
                         $components['children'][$key]['config']['defaultValue'] = $address && $address->getExtensionAttributes()->getSubdistrictId()
