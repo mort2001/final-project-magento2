@@ -11,6 +11,7 @@ use Magento\Customer\Model\AddressFactory;
 use Tigren\CustomAddress\Helper\Data as CustomAddressHelper;
 use Tigren\CustomAddress\Model\CityFactory;
 use Tigren\CustomAddress\Model\SubdistrictFactory;
+use Magento\Checkout\Model\Cart;
 
 /**
  * Class DefaultConfigProvider
@@ -27,7 +28,7 @@ class DefaultConfigProvider
      * @var CityFactory
      */
     protected $cityFactory;
-
+    protected $cart;
     /**
      * @var SubdistrictFactory
      */
@@ -49,8 +50,10 @@ class DefaultConfigProvider
         AddressFactory $addressFactory,
         CustomAddressHelper $customAddressHelper,
         CityFactory $cityFactory,
-        SubdistrictFactory $subdistrictFactory
+        SubdistrictFactory $subdistrictFactory,
+        Cart $cart
     ) {
+        $this->cart = $cart;
         $this->addressFactory = $addressFactory;
         $this->customAddressHelper = $customAddressHelper;
         $this->cityFactory = $cityFactory;
@@ -92,7 +95,16 @@ class DefaultConfigProvider
         $result['quoteData']['suggestionType'] = $this->customAddressHelper->getSuggestionType();
         $result['quoteData']['move_billing'] = $this->customAddressHelper->getMoveBilling();
         $result['quoteData']['full_tax_invoice_enabled'] = $this->customAddressHelper->isFullTaxInvoiceEnabled();
-
+        $result['quoteData']['full_tax_invoice'] = $this->getFullTaxInvoice();
         return $result;
+    }
+
+    /**
+     * @return AddressFactory
+     */
+    public function getFullTaxInvoice()
+    {
+        $shippingAddress = $this->cart->getQuote()->getShippingAddress()->toArray();
+       return  $shippingAddress;
     }
 }

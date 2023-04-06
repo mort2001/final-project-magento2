@@ -414,8 +414,17 @@ define([
 
             validateBillingInformation: function () {
                 if (!quote.isMoveBilling()) {
+                    if (tmpCheckoutData.isBillingSameShipping()) {
+                        selectBillingAddress(quote.shippingAddress());
+                    }
                     return true;
                 }
+
+                _.each(addressList(), function (address) {
+                    if (address.isBillingAddress !== undefined) {
+                        delete address.isBillingAddress;
+                    }
+                });
 
                 var addressData, newBillingAddress;
 
@@ -509,10 +518,32 @@ define([
             },
 
             validateFullTaxInvoice: function () {
-                if (!this.source.fullTaxInvoice || !this.source.fullTaxInvoice.use_full_tax) {
+                if (!this.source.fullTaxInvoice ) {
                     return true;
                 }
+                this.source.fullTaxInvoice.is_full_invoice = '1';
+                if(this.source.fullTaxInvoice.company_branch === 'branch'){
+                    this.source.fullTaxInvoice.branch_name = $('#more-info').val();
+                }else{
+                    this.source.fullTaxInvoice.branch_name = ''
+                }
 
+                var shippingAddress = quote.shippingAddress();
+                    if (shippingAddress['extensionAttributes'] === undefined) {
+                        shippingAddress['extensionAttributes'] = {};
+                    }
+                    shippingAddress['extensionAttributes'] = this.source.fullTaxInvoice;
+                    if(shippingAddress['extensionAttributes']['invoice_type'] === 'personal'){
+                        shippingAddress['extensionAttributes']['company'] = '';
+                        shippingAddress['extensionAttributes']['company_branch'] = '';
+                        shippingAddress['extensionAttributes']['branch_name'] = '';
+                    }else{
+                        shippingAddress['extensionAttributes']['personal_firstname'] = '';
+                        shippingAddress['extensionAttributes']['personal_lastname'] = '';
+                    }
+
+
+                localStorage.setItem("full-tax-invoice",JSON.stringify(this.source.fullTaxInvoice));
                 this.source.set('params.invalid', false);
 
                 this.source.trigger('fullTaxInvoice.data.validate');

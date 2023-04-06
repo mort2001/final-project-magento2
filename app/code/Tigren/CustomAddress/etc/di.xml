@@ -58,11 +58,21 @@
                 type="Tigren\CustomAddress\Plugin\Magento\Customer\Block\Address\Renderer\DefaultRenderer" />
     </type>
 
-    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form"
+                type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form"/>
 
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form\Address" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form\Account" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Create\Form\Account" />
     <preference for="Magento\Sales\Block\Adminhtml\Order\Address\Form" type="Tigren\CustomAddress\Override\Magento\Sales\Block\Adminhtml\Order\Address\Form" />
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="custom_region" xsi:type="string">Tigren_CustomAddress</item>
+                <item name="custom_city" xsi:type="string">Tigren_CustomAddress</item>
+                <item name="custom_subdistrict_and_zipcode" xsi:type="string">Tigren_CustomAddress</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

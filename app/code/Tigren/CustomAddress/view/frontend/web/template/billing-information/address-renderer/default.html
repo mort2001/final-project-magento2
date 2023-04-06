@@ -1,33 +1,31 @@
 <!-- ko if: (visible()) -->
 <div class="billing-tax-detail">
     <!--ko if: (checkUsingFullTaxInvoice()) -->
+    <!-- ko text: getBilling().invoice_type --><!-- /ko --><br />
     <!--ko if: (checkUsingPersonal()) -->
-    <!-- ko text: getBilling().extensionAttributes.invoice_type --><!-- /ko --><br />
-    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().extensionAttributes.tax_identification_number -->
+    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().tax_identification_number -->
     <!-- /ko --><br />
-    <!-- ko text: getBilling().extensionAttributes.personal_firstname --><!-- /ko --><br />
-    <!-- ko text: getBilling().extensionAttributes.personal_lastname --><!-- /ko --><br />
+    <!-- ko text: getBilling().personal_firstname --><!-- /ko -->
+    <!-- ko text: getBilling().personal_lastname --><!-- /ko --><br />
     <!-- /ko -->
     <!--ko if: (!checkUsingPersonal()) -->
-    <!-- ko text: getBilling().extensionAttributes.invoice_type --><!-- /ko --><br />
-    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().extensionAttributes.tax_identification_number -->
+    <!-- ko text: 'Tax ID: '--><!-- /ko --><!-- ko text: getBilling().tax_identification_number -->
     <!-- /ko --><br />
-    <!-- ko text: getBilling().extensionAttributes.company --><!-- /ko --><br />
-    <!-- ko if: (!getBilling().extensionAttributes.branch_office) -->
+    <!-- ko text: getBilling().company --><!-- /ko --><br />
+    <!-- ko if: (getBilling().company_branch === 'head') -->
     <!-- ko text: 'Head Office '--><!-- /ko --><br />
     <!-- /ko -->
-    <!-- ko if: (getBilling().extensionAttributes.branch_office) -->
-    <!-- ko text: 'Branch ID: '--><!-- /ko --><!-- ko text: getBilling().extensionAttributes.branch_office -->
-    <!-- /ko --><br />
+    <!-- ko if: (getBilling().company_branch === 'branch') -->
+    <!-- ko text: 'Branch Office '--><!-- /ko --><br />
+    <!-- ko text: 'Branch Name: '--><!-- /ko --><!-- ko text: getBilling().branch_name -->
     <!-- /ko -->
     <!-- /ko -->
     <!-- /ko -->
+    <!-- /ko -->
+
 </div>
-<!--ko if: (checkUsingFullTaxInvoice()) -->
-<!-- ko text: getBilling().extensionAttributes.tax_identification_number --><!-- /ko --><br />
-<!-- /ko -->
-<!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname --><!-- /ko --> <!-- ko text: address().middlename --><!-- /ko -->
-<!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix --><!-- /ko --><br />
+<!-- ko text: 'Telephone : '--><!-- /ko --><!-- ko text: getBilling().telephone --><!-- /ko -->
+<!-- ko text: address().suffix --><!-- /ko --><br />
 <!-- ko text: address().street --><!-- /ko --><br />
 <!-- ko if: (address().customAttributes) -->
 <!-- ko text: address().customAttributes.subdistrict --><!-- /ko -->,

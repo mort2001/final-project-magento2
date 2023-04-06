@@ -58,6 +58,8 @@ define([
     'use strict';
 
     var lastSelectedBillingAddress = null,
+        addressUpdated = false,
+        addressEdited = false,
         newAddressOption = {
             /**
              * Get new address label
@@ -81,6 +83,10 @@ define([
         defaults: {
             template: 'Tigren_CustomAddress/billing',
             billingFormTemplate: 'Tigren_CustomAddress/billing-address/form',
+            actionsTemplate: 'Tigren_CustomAddress/billing-address/actions',
+            detailsTemplate: 'Tigren_CustomAddress/billing-address/details',
+            detailsAsGuestTemplate: 'Tigren_CustomAddress/billing-address/detailsAsGuest',
+            billingFormAsGuestTemplate: 'Tigren_CustomAddress/billing-address/formAsGuest',
             modules: {
                 postcode: '${ $.name }.address-fieldset.postcode',
                 subdistrict: '${ $.name }.address-fieldset.subdistrict_id'
@@ -121,6 +127,10 @@ define([
 
             checkoutDataResolver.resolveBillingAddress();
 
+            if (quote.isVirtual()) {
+                this.isAddressSameAsShipping(false);
+            }
+
             var self = this,
                 hasNewAddress = addressList.some(function (address) {
                     return address.getType() === 'new-customer-address' || address.getType() === 'new-billing-address'; //eslint-disable-line eqeqeq
@@ -134,12 +144,15 @@ define([
                 }
             });
 
-            if (this.isAddressSameAsShipping()) {
+            if (this.isAddressSameAsShipping() || (!quote.isVirtual() && quote.isMoveBilling())) {
                 this.isAddressDetailsVisible(true);
             } else {
                 lastSelectedBillingAddress = quote.billingAddress();
                 quote.billingAddress(null);
                 this.isAddressDetailsVisible(false);
+                if (quote.isVirtual()) {
+                    this.isAddressDetailsVisible(true);
+                }
             }
 
             return this;
@@ -205,13 +218,15 @@ define([
                             if (name === 'custom_attributes') {
                                 _.each(value, function (customAttributeValue, customAttributeName) {
                                     if (customAttributeName === 'subdistrict_id') {
-                                        this.source.set(this.dataScopePrefix + '.custom_attributes.' + customAttributeName,
+                                        this.source.set(
+                                            this.dataScopePrefix + '.custom_attributes.' + customAttributeName,
                                             customAttributeValue);
                                         if (this.subdistrict()) {
                                             this.subdistrict().value(customAttributeValue);
                                         }
                                     } else {
-                                        this.source.set(this.dataScopePrefix + '.custom_attributes.' + customAttributeName,
+                                        this.source.set(
+                                            this.dataScopePrefix + '.custom_attributes.' + customAttributeName,
                                             customAttributeValue);
                                     }
                                 }, this);
@@ -258,7 +273,7 @@ define([
          */
         updateAddress: function () {
             var addressData, newBillingAddress;
-
+            addressUpdated = true;
             if (this.selectedAddress() && this.selectedAddress() !== newAddressOption) { //eslint-disable-line eqeqeq
                 selectBillingAddress(this.selectedAddress());
                 checkoutData.setSelectedBillingAddress(this.selectedAddress().getKey());
@@ -285,6 +300,7 @@ define([
                     checkoutData.setNewCustomerBillingAddress(addressData);
                 }
             }
+            setBillingAddressAction(globalMessageList);
             this.updateAddresses();
         },
 
@@ -392,14 +408,18 @@ define([
          * Edit address action
          */
         editAddress: function () {
+            addressUpdated = false;
+            addressEdited = true;
             lastSelectedBillingAddress = quote.billingAddress();
             quote.billingAddress(null);
+            this.isAddressDetailsVisible(false);
         },
 
         /**
          * Cancel address edit action
          */
         cancelAddressEdit: function () {
+            addressUpdated = true;
             this.restoreBillingAddress();
 
             if (quote.billingAddress()) {
@@ -409,8 +429,16 @@ define([
                     quote.billingAddress().getCacheKey() === quote.shippingAddress().getCacheKey() && //eslint-disable-line
                     !quote.isVirtual()
                 );
+                this.isAddressDetailsVisible(true);
             }
         },
+
+        /**
+         * Manage cancel button visibility
+         */
+        canUseCancelBillingAddress: ko.computed(function () {
+            return quote.billingAddress() || lastSelectedBillingAddress;
+        }),
 
         /**
          * Restore billing address
@@ -457,6 +485,7 @@ define([
             if (window.checkoutConfig.reloadOnBillingAddress ||
                 !window.checkoutConfig.displayBillingOnPaymentMethod
             ) {
+                this.isAddressDetailsVisible(true);
                 setBillingAddressAction(globalMessageList);
             }
         },
@@ -543,6 +572,10 @@ define([
             });
 
             return convertedArray.slice(0);
+        },
+
+        customerHasAddress: function () {
+            return !!(window.checkoutConfig.customerData.default_shipping);
         }
     });
 });

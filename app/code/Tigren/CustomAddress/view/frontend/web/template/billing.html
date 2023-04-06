@@ -6,6 +6,7 @@
                 data-bind="i18n: 'Use the same address as the shipping address.'"></span></label>
     </div>
 
+    <!-- ko if: (isCustomerLoggedIn()) -->
     <!-- ko if: (!isAddressSameAsShipping()) -->
     <!-- ko foreach: getRegion('billing-address-list') -->
     <!-- ko template: getTemplate() --><!-- /ko -->
@@ -18,15 +19,29 @@
                 class="action action-show-popup"
                 click="showFormPopUp.bind($data, $parent)"
                 visible="!isNewAddressAdded()">
-            <span translate="'Add New Address'" />
+            <span translate="'Add New Address'"></span>
         </button>
         <div data-bind="attr: {id: 'opc-new-billing-address-' + getCode($parent)}"
              visible="isFormPopUpVisible()"
-             render="billingFormTemplate" />
+             render="billingFormTemplate"></div>
     </if>
 
     <!-- ko if: (!isAddressSameAsShipping() && isFormInline) -->
+    <!-- ko if: customerHasAddress() -->
     <!-- Inline address form -->
-    <render if="isFormInline" args="billingFormTemplate" />
+    <render if="isFormInline" args="billingFormTemplate"></render>
+    <!--/ko-->
+    <!-- ko ifnot: customerHasAddress() -->
+    <render args="detailsAsGuestTemplate"></render>
+    <render args="billingFormAsGuestTemplate"></render>
+    <!--/ko-->
+    <!--/ko-->
+    <!--/ko-->
+
+    <!-- ko ifnot: (isCustomerLoggedIn()) -->
+    <!-- ko if: (!isAddressSameAsShipping()) -->
+    <render args="detailsAsGuestTemplate"></render>
+    <render args="billingFormAsGuestTemplate"></render>
+    <!--/ko-->
     <!--/ko-->
 </div>

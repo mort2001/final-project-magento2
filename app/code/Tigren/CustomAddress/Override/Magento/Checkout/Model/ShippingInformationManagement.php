@@ -19,14 +19,12 @@ use Magento\Framework\Exception\StateException;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\CartTotalRepositoryInterface;
 use Magento\Quote\Api\Data\AddressInterface;
-use Magento\Quote\Api\Data\CartExtensionFactory;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Quote\TotalsCollector;
 use Magento\Quote\Model\QuoteAddressValidator;
-use Magento\Quote\Model\ShippingAssignmentFactory;
-use Magento\Quote\Model\ShippingFactory;
 use Psr\Log\LoggerInterface;
+use function Sodium\add;
 use Tigren\CustomAddress\Helper\Data as CustomAddressHelper;
 
 /**
@@ -170,6 +168,37 @@ class ShippingInformationManagement extends \Magento\Checkout\Model\ShippingInfo
         }
 
         $extAttributes = $address->getExtensionAttributes();
+        if ($extAttributes) {
+            $address->setIsFullInvoice('1');
+            $address->setTaxIdentificationNumber($extAttributes->getTaxIdentificationNumber());
+            $address->setPhone($extAttributes->getTelephone());
+            $address->setInvoiceType($extAttributes->getInvoiceType());
+            $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/a.log');
+            $logger = new \Zend_Log();
+            $logger->addWriter($writer);
+            $logger->info('message ' . print_r($extAttributes, true));
+            if ($extAttributes->getInvoiceType() === 'corporate') {
+                $address->setCompanyName($extAttributes->getcompany());
+                $address->setPersonalFirstname('');
+                $address->setPersonalLastname('');
+                if ($extAttributes->getCompanyBranch() === 'head') {
+                    $address->setHeadOffice('1');
+                    $address->setBranchOffice('');
+                } elseif ($extAttributes->getCompanyBranch() === 'branch') {
+                    $address->setBranchOffice('1');
+                    $address->setHeadOffice('');
+                    $address->setBranch($extAttributes->getBranchName());
+                }
+            } else {
+                $address->setPersonalFirstname($extAttributes->getPersonalFirstname());
+                $address->setPersonalLastname($extAttributes->getPersonalLastname());
+                $address->setCompanyName('');
+                $address->setHeadOffice('');
+                $address->setBranchOffice('');
+                $address->setBranch('');
+            }
+        }
+
         $extAttributesBilling = $billingAddress->getExtensionAttributes();
 
         $quote = $this->quoteRepository->getActive($cartId);

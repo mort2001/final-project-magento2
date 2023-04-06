@@ -7,14 +7,14 @@
 
 namespace Tigren\CustomAddress\Model\Config\Source;
 
-use Magento\Framework\Option\ArrayInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 use Tigren\CustomAddress\Model\ResourceModel\Subdistrict\CollectionFactory;
 
 /**
  * Class Subdistrict
  * @package Tigren\CustomAddress\Model\Config\Source
  */
-class Subdistrict implements ArrayInterface
+class Subdistrict implements OptionSourceInterface
 {
     /**
      * @var CollectionFactory

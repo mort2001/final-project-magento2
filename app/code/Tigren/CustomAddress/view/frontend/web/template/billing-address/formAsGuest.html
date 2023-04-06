@@ -1,0 +1,19 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2023 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<div class="billing-address-form" data-bind="if: !currentBillingAddress()">
+    <!-- ko foreach: getRegion('before-fields') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!--/ko-->
+    <form data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
+        <fieldset class="fieldset address" data-form="billing-new-address">
+            <!-- ko foreach: getRegion('additional-fieldsets') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <render args="actionsTemplate"></render>
+        </fieldset>
+    </form>
+</div>

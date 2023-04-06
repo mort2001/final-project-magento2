@@ -131,31 +131,7 @@ define([
 
                 this.required(!!option['is_region_required']);
 
-                if (option && option.value === 'TH' && this.subdistrict() && this.subdistrictInput() && this.city() &&
-                    this.cityInput() && this.postcode()) {
-                    this.cityInput().validation = _.omit(this.cityInput().validation, 'required-entry');
-                    this.cityInput().required(false);
-                    this.cityInput().visible(false);
-                    this.cityInput().reset();
-
-                    this.city().validation = _.extend(this.city().validation, { 'required-entry': true });
-                    this.city().required(true);
-                    this.city().visible(true);
-                    this.city().reset();
-
-                    this.subdistrictInput().visible(false);
-                    this.subdistrictInput().validation = _.omit(this.subdistrictInput().validation, 'required-entry');
-                    this.subdistrictInput().required(false);
-                    this.subdistrictInput().reset();
-
-                    this.subdistrict().visible(true);
-                    this.subdistrict().validation = _.extend(this.subdistrict().validation, { 'required-entry': true });
-                    this.subdistrict().required(true);
-                    this.subdistrict().reset();
-
-                    this.postcode().reset();
-                } else if (option && option.value !== 'TH' && this.subdistrict() && this.subdistrictInput() &&
-                    this.city() && this.cityInput() && this.postcode()) {
+                if (option && this.subdistrict() && this.subdistrictInput() && this.city() && this.cityInput() && this.postcode()) {
                     this.cityInput().validation = _.extend(this.cityInput().validation, { 'required-entry': true });
                     this.cityInput().required(true);
                     this.cityInput().visible(true);
