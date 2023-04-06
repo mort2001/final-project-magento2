@@ -1,0 +1,37 @@
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2023 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<div class="billing-address-details" data-bind="if: currentBillingAddress()">
+    <div class="address-selection">
+        <address>
+            <strong class="name">
+                <!-- ko text: currentBillingAddress().prefix --><!-- /ko -->
+                <!-- ko text: currentBillingAddress().firstname --><!-- /ko -->
+                <!-- ko text: currentBillingAddress().middlename --><!-- /ko -->
+                <!-- ko text: currentBillingAddress().lastname --><!-- /ko -->
+            </strong>
+            <!-- ko text: currentBillingAddress().suffix --><!-- /ko -->
+            <!-- ko text: _.values(currentBillingAddress().street).join(", ") --><!-- /ko -->
+            <!-- ko if: (currentBillingAddress().customAttributes) -->
+            <!-- ko text: currentBillingAddress().customAttributes.subdistrict --><!-- /ko -->,
+            <!-- /ko -->
+            <!-- ko text: currentBillingAddress().city --><!-- /ko -->,
+            <span data-bind="html: currentBillingAddress().region"></span>
+            <!-- ko text: currentBillingAddress().postcode --><!-- /ko -->,
+            <!-- ko text: currentBillingAddress().countryId --><!-- /ko -->,
+            <!-- ko if: (currentBillingAddress().telephone) -->
+            <span data-bind="i18n: 'Tel:'"></span>
+            <a data-bind="text: currentBillingAddress().telephone, attr: {'href': 'tel:' + currentBillingAddress().telephone}"></a>
+            <!-- /ko -->
+            <button data-bind="if: !isAddressSameAsShipping()"
+                    type="button"
+                    class="action action-edit-address"
+                    click="editAddress">
+                <span translate="'Edit'"></span>
+            </button>
+        </address>
+    </div>
+</div>
