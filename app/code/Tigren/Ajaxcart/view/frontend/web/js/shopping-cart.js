@@ -124,11 +124,11 @@ define([
                                 form = $('form#form-validate');
                             eventFired = 0;
                             if (48 <= key && key <= 57 || 96 <= key && key <= 105) {
-                                // if (self._checkStockState(this)) {
-                                //     self._showPopupErrorQty(productName);
-                                //     $(this).val(qtyOrdered);
-                                //     return;
-                                // }
+                                if (self._checkStockState(this)) {
+                                    self._showPopupErrorQty(productName);
+                                    $(this).val(qtyOrdered);
+                                    return;
+                                }
                                 self._ajaxUpdateHiddenField(form);
                                 self._ajaxCartUpdate(form);
                                 eventFired += 1;

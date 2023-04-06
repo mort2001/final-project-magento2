@@ -59,6 +59,13 @@ $helperJs = $this->helper('Tigren\Ajaxcart\Helper\Data');
                             <?php endif; ?>
                         </dd>
                     <?php endforeach; ?>
+                    <dt>The remaining quantity</dt>
+                    <dd><?= $helperJs->getStockState($_item->getProduct()) ?></dd>
+                </dl>
+            <?php else: ?>
+                <dl class="item-options">
+                    <dt>The remaining quantity</dt>
+                    <dd><?= $helperJs->getStockState($_item->getProduct()) ?></dd>
                 </dl>
             <?php endif; ?>
             <?php if ($messages = $block->getMessages()): ?>
@@ -108,7 +115,7 @@ $helperJs = $this->helper('Tigren\Ajaxcart\Helper\Data');
                        data-cart-max="<?= $helperJs->getStockState($_item->getProduct()) ?>"
                        data-cart-ordered="<?= $_item->getQty() ?>"
                        data-validate="{required:true,'validate-greater-than-zero':true}"
-                       data-role="cart-item-qty"/>
+                       data-role="cart-item-qty" />
             </div>
         </div>
     </td>

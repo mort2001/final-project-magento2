@@ -9,6 +9,7 @@ define([
     'mage/translate',
     'jquery/ui',
     'mage/validation/validation',
+    'Magento_Catalog/product/view/validation',
     'tigren/ajaxsuite',
     'mage/mage',
     'mage/cookies'
@@ -84,18 +85,51 @@ define([
                 var self = this;
                 $('body').delegate(
                     self.options.ajaxCart.addToCartButtonSelector, 'click', function (e) {
-                        var colorId = null, sizeId = null;
-                        var selectedColor = $(this).
-                            closest('.product-item-details').
-                            find('.swatch-attribute.color .swatch-option.color.selected');
+                        var colorId = null, sizeId = null, proId;
+                        var productDetailSelector = $(this).closest('.product-item-details');
+                        var selectedColor = productDetailSelector.find(
+                            '.swatch-attribute.color .swatch-option.color.selected');
+
                         if (selectedColor.length > 0) {
                             colorId = selectedColor.attr('data-option-id');
                         }
-                        var selectedSize = $(this).
-                            closest('.product-item-details').
-                            find('.swatch-attribute.size .swatch-option.text.selected');
+                        var selectedSize = productDetailSelector.find(
+                            '.swatch-attribute.size .swatch-option.text.selected');
                         if (selectedSize.length > 0) {
                             sizeId = selectedSize.attr('data-option-id');
+                        }
+
+                        var selectedProduct = productDetailSelector.find('div.price-box');
+                        var optionsSize = productDetailSelector.find('div.swatch-attribute.size');
+                        var optionsColor = productDetailSelector.find('div.swatch-attribute.color');
+
+                        proId = selectedProduct.attr('data-product-id');
+
+                        if (productDetailSelector.length) {
+                            // Case to divide that it's for configurable product or not
+                            if (productDetailSelector.find('.swatch-opt-' + proId).length) {
+                                if (optionsSize.find('div#super_attribute-error').length ||
+                                    optionsColor.find('div#super_attribute-error').length)
+                                {
+                                    optionsSize.find('div#super_attribute-error').remove();
+                                    optionsColor.find('div#super_attribute-error').remove();
+                                }
+
+                                if (sizeId === null || colorId === null) {
+                                    e.preventDefault();
+                                    if (sizeId === null) {
+                                        optionsSize.append(
+                                            '<div id="super_attribute-error" class="mage-error" style="color: red">This is a required field.</div>');
+                                    }
+
+                                    if (colorId === null) {
+                                        optionsColor.append(
+                                            '<div id="super_attribute-error" class="mage-error" style="color: red; padding-bottom: 15px;">This is a required field.</div>');
+                                    }
+
+                                    return;
+                                }
+                            }
                         }
 
                         if ($(this).closest('.product-info-main').length) {             //In product details page
@@ -108,6 +142,25 @@ define([
                             }
                             return;
                         }
+
+                        if ($(this).closest('.table-wrapper.comparison').length) {             //In the comparison page
+                            e.preventDefault();
+                            // Set case if the selected product is bundle or custom options product
+                            var bundleSignal = $(this).closest('.cell.product.info').find('.price-final_price .price-from');
+                            var productLink = $(this).closest('.cell.product.info').find('a.product-item-photo').attr('href');
+                            if(bundleSignal.length) {
+                                window.location.href = productLink;
+                            }
+                        }
+
+                        var bundleDetailPage = $(this).closest('.bundle-options-container'); //In product details Bundle page
+                        e.preventDefault();
+                        if(bundleDetailPage.length) {
+                            var forms = $(this).closest('form');
+                            self.ajaxSubmit(forms);
+                            return;
+                        }
+
                         if ($(this).data('post')) {
                             e.stopPropagation();
                             var actionUrl = $(this).data('post').action,
@@ -115,6 +168,11 @@ define([
                                 isWishlist = false;
                             if (actionUrl.search('wishlist/index/cart') != -1) {        //In wishlist page
                                 additionUrl = actionUrl.replace(self.options.ajaxCart.wishlistAddToCartUrl, '');
+                                var optionsDetail = $(this).closest('.product-item-info').find('.tooltip.content');
+                                var hasOptionsDetail = '';
+                                if (optionsDetail.length > 0) {
+                                    hasOptionsDetail = 1;
+                                }
                                 isWishlist = true;
                             } else if (actionUrl.search('checkout/cart/add') != -1) {
                                 additionUrl = actionUrl.replace(self.options.ajaxCart.checkoutCartUrl, '');
@@ -130,6 +188,7 @@ define([
                             }
 
                             params.form_key = self.options.ajaxCart.formKey;
+                            params.has_options_detail = hasOptionsDetail;
                             self.showPopup(params, additionUrl, isWishlist, colorId, sizeId);
                         } else {
                             var form = $(this).closest('form');
@@ -139,7 +198,11 @@ define([
                                 if (actionUrl.search('checkout/cart/add') != -1) {
                                     additionUrl = actionUrl.replace(self.options.ajaxCart.checkoutCartUrl, '');
                                 } else if (actionUrl.search('options=cart') != -1) {
-                                    // do nothing
+                                    // Set case if the selected product is bundle or custom options product
+                                    var bundleProduct = productDetailSelector.find('.price-final_price .price-from');
+                                    if(bundleProduct.length) {
+                                        window.location.href = actionUrl.replace('?options=cart','');
+                                    }
                                 } else {
                                     return;
                                 }
@@ -202,6 +265,11 @@ define([
                         success: function (res) {
                             if (self.isLoaderEnabled()) {
                                 $('body').trigger(self.options.ajaxSuite.processStop);
+                            }
+
+                            if (res.product_url) {
+                                window.location.href = res.product_url;
+                                return;
                             }
 
                             if (res.html_popup) {

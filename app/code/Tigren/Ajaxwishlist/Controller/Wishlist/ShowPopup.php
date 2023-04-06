@@ -13,7 +13,6 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -59,8 +58,7 @@ class ShowPopup extends Action
         Data $ajaxSuiteHelper,
         ProductRepositoryInterface $productRepository,
         Registry $registry
-    )
-    {
+    ) {
         parent::__construct($context);
         $this->_ajaxWishlistHelper = $ajaxWishlistHelper;
         $this->_productRepository = $productRepository;
@@ -78,20 +76,10 @@ class ShowPopup extends Action
         $params = $this->_request->getParams();
         $isLoggedIn = $this->_ajaxSuiteHelper->getLoggedCustomer();
 
-        if ($isLoggedIn == true) {
+        if ($isLoggedIn) {
             try {
-                $product = $this->_initProduct();
-                if ($product->getTypeId() != "simple" && $product->getTypeId() != "mageworx_giftcards") {
-                    $this->_coreRegistry->register('product', $product);
-                    $this->_coreRegistry->register('current_product', $product);
-                    $htmlPopup = $this->_ajaxWishlistHelper->getOptionsPopupHtml($product);
-                    $result['success'] = true;
-                    $result['html_popup'] = $htmlPopup;
-                } else {
-                    $this->_forward('add', 'index', 'wishlist', $params);
-                    return;
-                }
-
+                $this->_forward('add', 'index', 'wishlist', $params);
+                return;
             } catch (Exception $e) {
                 $this->messageManager->addException($e, __('You can\'t login right now.'));
                 $this->_objectManager->get('Psr\Log\LoggerInterface')->critical($e);

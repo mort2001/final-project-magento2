@@ -83,18 +83,18 @@ class ShowPopup extends AbstractIndex
     private $optionFactory;
 
     /**
-     * @param                                          Action\Context                $context
-     * @param                                          WishlistProviderInterface     $wishlistProvider
-     * @param                                          LocaleQuantityProcessor       $quantityProcessor
-     * @param                                          ItemFactory                   $itemFactory
-     * @param                                          \Magento\Checkout\Model\Cart  $cart
-     * @param                                          OptionFactory                 $optionFactory
-     * @param                                          Product                       $productHelper
-     * @param                                          Escaper                       $escaper
-     * @param                                          \Magento\Wishlist\Helper\Data $helper
-     * @param                                          Cart                          $cartHelper
-     * @param                                          Registry                      $registry
-     * @param                                          Data                          $ajaxcartData
+     * @param Action\Context $context
+     * @param WishlistProviderInterface $wishlistProvider
+     * @param LocaleQuantityProcessor $quantityProcessor
+     * @param ItemFactory $itemFactory
+     * @param \Magento\Checkout\Model\Cart $cart
+     * @param OptionFactory $optionFactory
+     * @param Product $productHelper
+     * @param Escaper $escaper
+     * @param \Magento\Wishlist\Helper\Data $helper
+     * @param Cart $cartHelper
+     * @param Registry $registry
+     * @param Data $ajaxcartData
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -208,8 +208,8 @@ class ShowPopup extends AbstractIndex
                     $this->getRequest()->getParams(),
                     ['current_config' => $item->getBuyRequest()]
                 );
-                $supperAttribute = $item->getBuyRequest()->getData('super_attribute');
-                if (!empty($supperAttribute)) {
+
+                if ($params['has_options_detail']) {
                     $item->mergeBuyRequest($buyRequest);
                     $item->addToCart($this->cart, true);
                     $this->cart->save()->getQuote()->collectTotals();
@@ -227,8 +227,17 @@ class ShowPopup extends AbstractIndex
                     $this->getResponse()->representJson(
                         $this->_objectManager->get('Magento\Framework\Json\Helper\Data')->jsonEncode($result)
                     );
+
                     return;
                 } else {
+                    if ($product->getTypeId() === 'bundle') {
+                        $result['product_url'] = $product->getProductUrl();
+
+                        return $this->getResponse()->representJson(
+                            $this->_objectManager->get('Magento\Framework\Json\Helper\Data')->jsonEncode($result)
+                        );
+                    }
+
                     $this->_coreRegistry->register('product', $product);
                     $this->_coreRegistry->register('current_product', $product);
 

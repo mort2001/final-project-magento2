@@ -26,7 +26,7 @@ define([
                 btnCancelSelector: '#ajaxwishlist_btn_cancel',
                 btnToLoginSelector: '#ajaxwishlist_btn_to_login',
                 loginUrl: null,
-                customerId: null,
+                customerId: null
             }
         },
 
@@ -77,25 +77,69 @@ define([
                 e.stopPropagation();
                 var params = $(this).data('post').data;
                 params['isWishlist'] = true;
-                if ($(this).hasClass('added-in-wishlist')) {
-                    self.removeFromWishlist(this);
-                    return;
-                }
+                // if ($(this).hasClass('added-in-wishlist')) {
+                //     self.removeFromWishlist(this);
+                //     return;
+                // }
 
+                var productDetailSelector = $(this).closest('.product-item-details');
                 var colorId = null, sizeId = null;
-                var selectedColor = $(this).closest('.product-item-details').find('.swatch-attribute.color .swatch-option.color.selected');
+                var selectedColor = productDetailSelector.find('.swatch-attribute.color .swatch-option.color.selected');
                 if (selectedColor.length == 0) {
-                    selectedColor = $(this).closest('.product-info-main').find('.swatch-attribute.color .swatch-option.color.selected');
+                    selectedColor = $(this).
+                        closest('.product-info-main').
+                        find('.swatch-attribute.color .swatch-option.color.selected');
                 }
                 if (selectedColor.length > 0) {
-                    colorId = selectedColor.attr('option-id');
+                    colorId = selectedColor.attr('data-option-id');
+                    var color = productDetailSelector.find('.swatch-attribute.color');
+                    var colorDataAttribute = color.attr('data-attribute-id');
+                    var superAttributeColor = 'super_attribute\[' + colorDataAttribute + '\]';
+                    params[superAttributeColor] = parseInt(colorId);
                 }
-                var selectedSize = $(this).closest('.product-item-details').find('.swatch-attribute.size .swatch-option.text.selected');
+                var selectedSize = productDetailSelector.find('.swatch-attribute.size .swatch-option.text.selected');
                 if (selectedSize.length == 0) {
-                    selectedSize = $(this).closest('.product-info-main').find('.swatch-attribute.size .swatch-option.text.selected');
+                    selectedSize = $(this).
+                        closest('.product-info-main').
+                        find('.swatch-attribute.size .swatch-option.text.selected');
                 }
                 if (selectedSize.length > 0) {
-                    sizeId = selectedSize.attr('option-id');
+                    sizeId = selectedSize.attr('data-option-id');
+                    var size = productDetailSelector.find('.swatch-attribute.size');
+                    var sizeDataAttribute = size.attr('data-attribute-id');
+                    var superAttributeSize = 'super_attribute\[' + sizeDataAttribute + '\]';
+                    params[superAttributeSize] = parseInt(sizeId);
+                }
+
+                var selectedProduct = productDetailSelector.find('div.price-box');
+                var optionsSize = productDetailSelector.find('div.swatch-attribute.size');
+                var optionsColor = productDetailSelector.find('div.swatch-attribute.color');
+                var proId = selectedProduct.attr('data-product-id');
+
+                if (productDetailSelector.length) {
+                    // Case to divide that it's for configurable product or not
+                    if (productDetailSelector.find('.swatch-opt-' + proId).length) {
+                        if (optionsSize.find('div#super_attribute-error').length ||
+                            optionsColor.find('div#super_attribute-error').length) {
+                            optionsSize.find('div#super_attribute-error').remove();
+                            optionsColor.find('div#super_attribute-error').remove();
+                        }
+
+                        if (sizeId === null || colorId === null) {
+                            e.preventDefault();
+                            if (sizeId === null) {
+                                optionsSize.append(
+                                    '<div id="super_attribute-error" class="mage-error" style="color: orange">This is a required field.</div>');
+                            }
+
+                            if (colorId === null) {
+                                optionsColor.append(
+                                    '<div id="super_attribute-error" class="mage-error" style="color: orange; padding-bottom: 15px;">This is a required field.</div>');
+                            }
+
+                            return;
+                        }
+                    }
                 }
                 self.closePopup();
                 self.showWishlistPopup(params, colorId, sizeId);
@@ -127,27 +171,31 @@ define([
                         self.showElement(self.options.ajaxWishlist.wishlistWrapperSelector, 'swatch');
                         self.autoClosePopup(self.options.wishlistWrapper);
                         var wishListSelector = $(self.options.ajaxWishlist.wishlistBtnSelector);
-                        if (res.check_add_class){
+                        if (res.check_add_class) {
                             $.each($(wishListSelector), function (k, v) {
                                 if ($(v).data('post').data.product === params.product) {
-                                    $(this).addClass("added-in-wishlist");
+                                    $(this).addClass('added-in-wishlist');
                                 }
                             });
                         }
                         $('body').trigger('contentUpdated');
                         if (colorId) {
                             var wishlistColorInterval = setInterval(function () {
-                                if (self.options.wishlistWrapper.find('.swatch-option.color[option-id=\"' + colorId + '\"]').length > 0) {
+                                if (self.options.wishlistWrapper.find(
+                                    '.swatch-option.color[option-id=\"' + colorId + '\"]').length > 0) {
                                     clearInterval(wishlistColorInterval);
-                                    self.options.wishlistWrapper.find('.swatch-option.color[option-id=\"' + colorId + '\"]').click();
+                                    self.options.wishlistWrapper.find(
+                                        '.swatch-option.color[option-id=\"' + colorId + '\"]').click();
                                 }
                             }, 500);
                         }
                         if (sizeId) {
                             var wishlistSizeInterval = setInterval(function () {
-                                if (self.options.wishlistWrapper.find('.swatch-option.text[option-id=\"' + sizeId + '\"]').length > 0) {
+                                if (self.options.wishlistWrapper.find(
+                                    '.swatch-option.text[option-id=\"' + sizeId + '\"]').length > 0) {
                                     clearInterval(wishlistSizeInterval);
-                                    self.options.wishlistWrapper.find('.swatch-option.text[option-id=\"' + sizeId + '\"]').click();
+                                    self.options.wishlistWrapper.find(
+                                        '.swatch-option.text[option-id=\"' + sizeId + '\"]').click();
                                 }
                             }, 500);
                         }
@@ -157,11 +205,14 @@ define([
                             'float': 'none',
                             'width': '100%'
                         });
-                        self.options.wishlistWrapper.find('.product-add-form .product-options-wrapper .product-options-bottom').css({
+                        self.options.wishlistWrapper.find(
+                            '.product-add-form .product-options-wrapper .product-options-bottom').css({
                             'float': 'none',
                             'width': '100%'
                         });
-                        self.options.wishlistWrapper.find('.product-add-form .product-options-wrapper .product-options-bottom .field.qty').css('display', 'block');
+                        self.options.wishlistWrapper.find(
+                            '.product-add-form .product-options-wrapper .product-options-bottom .field.qty').
+                            css('display', 'block');
                     } else {
                         alert('No response from server');
                     }
@@ -191,14 +242,18 @@ define([
 
             var data = form.serialize();
             data += '&isWishlistSubmit=true';
-            var sizeId = self.options.wishlistWrapper.find('.swatch-attribute.size .swatch-option.text.selected').attr('option-id');
+            var sizeId = self.options.wishlistWrapper.find('.swatch-attribute.size .swatch-option.text.selected').
+                attr('option-id');
             if (sizeId) {
-                var sizeLabel = self.options.wishlistWrapper.find('.swatch-attribute.size .swatch-option.text.selected').text();
+                var sizeLabel = self.options.wishlistWrapper.find(
+                    '.swatch-attribute.size .swatch-option.text.selected').text();
                 data += '&size=' + sizeId + '&sizeLabel=' + sizeLabel;
             }
-            var colorId = self.options.wishlistWrapper.find('.swatch-attribute.color .swatch-option.color.selected').attr('option-id');
+            var colorId = self.options.wishlistWrapper.find('.swatch-attribute.color .swatch-option.color.selected').
+                attr('option-id');
             if (colorId) {
-                var colorLabel = self.options.wishlistWrapper.find('.swatch-attribute.color .swatch-option.color.selected').attr('option-label');
+                var colorLabel = self.options.wishlistWrapper.find(
+                    '.swatch-attribute.color .swatch-option.color.selected').attr('option-label');
                 data += '&color=' + colorId + '&colorLabel=' + colorLabel;
             }
             $.ajax({
@@ -223,9 +278,10 @@ define([
                         self.autoClosePopup(self.options.wishlistWrapper);
                         var wishListSelector = $(self.options.ajaxWishlist.wishlistBtnSelector);
                         $.each($(wishListSelector), function (k, v) {
-                            var productInfor = JSON.parse('{"' + decodeURI(data.replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
+                            var productInfor = JSON.parse(
+                                '{"' + decodeURI(data.replace(/&/g, '","').replace(/=/g, '":"')) + '"}');
                             if ($(v).data('post').data.product === productInfor.product) {
-                                $(this).addClass("added-in-wishlist");
+                                $(this).addClass('added-in-wishlist');
                             }
                         });
 
@@ -253,7 +309,8 @@ define([
                 if (afterloadElm == 'swatch') {
                     if (self.options.wishlistWrapper.find('.swatch-opt-conf').length > 0) {
                         var wishlistCenterInterval = setInterval(function () {
-                            if (self.options.wishlistWrapper.find('.swatch-attribute.color').length > 0 && self.options.wishlistWrapper.find('.swatch-attribute.size').length > 0) {
+                            if (self.options.wishlistWrapper.find('.swatch-attribute.color').length > 0 &&
+                                self.options.wishlistWrapper.find('.swatch-attribute.size').length > 0) {
                                 clearInterval(wishlistCenterInterval);
                                 self.animationPopup();
                             }
@@ -294,7 +351,7 @@ define([
                         var checkIds = parseInt(postData.data.product);
 
                         if ($.inArray(checkIds, productIds) !== -1) {
-                            $(this).addClass("added-in-wishlist");
+                            $(this).addClass('added-in-wishlist');
                         }
                     }
                 });
@@ -305,7 +362,7 @@ define([
             $(WishlistSelector).removeClass('added-in-wishlist');
             var data, url, self = this, btnWishlist;
             btnWishlist = $(WishlistSelector).data('post');
-            url = btnWishlist.action.replace("wishlist/index/add/", "ajaxwishlist/Wishlist/Delete/");
+            url = btnWishlist.action.replace('wishlist/index/add/', 'ajaxwishlist/Wishlist/Delete/');
             data = btnWishlist.data;
             data.customerId = self.options.ajaxWishlist.customerId;
             data.isRemoveSubmit = true;
@@ -339,7 +396,7 @@ define([
                     alert($t('Error in sending ajax request'));
                 }
             });
-        },
+        }
     });
 
     return $.tigren.ajaxWishlist;

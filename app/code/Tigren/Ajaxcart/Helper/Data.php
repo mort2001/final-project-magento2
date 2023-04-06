@@ -1,14 +1,18 @@
 <?php
-/**
+/*
  * @author    Tigren Solutions <info@tigren.com>
- * @copyright Copyright (c) 2019 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @copyright Copyright (c) 2023 Tigren Solutions <https://www.tigren.com>. All rights reserved.
  * @license   Open Software License ("OSL") v. 3.0
  */
 
 namespace Tigren\Ajaxcart\Helper;
 
+use Magento\Bundle\Api\ProductOptionRepositoryInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Helper\Image;
 use Magento\CatalogInventory\Api\StockStateInterface;
+use Magento\CatalogInventory\Model\Stock\StockItemRepository;
+use Magento\Checkout\Block\Cart;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
@@ -18,6 +22,7 @@ use Magento\Framework\Json\EncoderInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\LayoutFactory;
+use Magento\InventorySalesAdminUi\Model\GetSalableQuantityDataBySku;
 use Magento\Store\Model\ScopeInterface;
 
 /**
@@ -28,6 +33,26 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Data extends AbstractHelper
 {
+    /**
+     * @var Cart
+     */
+    protected $_cartItems;
+    /**
+     * @var ProductOptionRepositoryInterface
+     */
+    protected $_productOptions;
+    /**
+     * @var GetSalableQuantityDataBySku
+     */
+    protected $_salableQuantity;
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $_productRepository;
+    /**
+     * @var StockItemRepository
+     */
+    protected $_stockQuantity;
     /**
      * Currently selected store ID if applicable
      *
@@ -89,13 +114,13 @@ class Data extends AbstractHelper
     /**
      * Data constructor.
      *
-     * @param Context                       $context
-     * @param CustomerSession               $customerSession
-     * @param LayoutFactory                 $layoutFactory
-     * @param EncoderInterface              $jsonEncoder
-     * @param DecoderInterface              $jsonDecoder
-     * @param ObjectManagerInterface        $objectManager
-     * @param Image                         $imageHelper
+     * @param Context $context
+     * @param CustomerSession $customerSession
+     * @param LayoutFactory $layoutFactory
+     * @param EncoderInterface $jsonEncoder
+     * @param DecoderInterface $jsonDecoder
+     * @param ObjectManagerInterface $objectManager
+     * @param Image $imageHelper
      * @param \Tigren\Ajaxsuite\Helper\Data $ajaxsuiteHelper
      */
     public function __construct(
@@ -107,7 +132,12 @@ class Data extends AbstractHelper
         ObjectManagerInterface $objectManager,
         Image $imageHelper,
         StockStateInterface $_stockState,
-        \Tigren\Ajaxsuite\Helper\Data $ajaxsuiteHelper
+        \Tigren\Ajaxsuite\Helper\Data $ajaxsuiteHelper,
+        StockItemRepository $stockItemRepository,
+        ProductRepositoryInterface $productRepository,
+        GetSalableQuantityDataBySku $salableQuantity,
+        ProductOptionRepositoryInterface $productOptions,
+        Cart $cart
     ) {
         $this->_customerSession = $customerSession;
         $this->_layoutFactory = $layoutFactory;
@@ -117,6 +147,11 @@ class Data extends AbstractHelper
         $this->prdImageHelper = $imageHelper;
         $this->_stockState = $_stockState;
         $this->_ajaxsuiteHelper = $ajaxsuiteHelper;
+        $this->_stockQuantity = $stockItemRepository;
+        $this->_productRepository = $productRepository;
+        $this->_salableQuantity = $salableQuantity;
+        $this->_productOptions = $productOptions;
+        $this->_cartItems = $cart;
         parent::__construct($context);
     }
 
@@ -335,7 +370,42 @@ class Data extends AbstractHelper
      */
     public function getStockState($product)
     {
-        return $this->_stockState->getStockQty($product->getId(), $product->getStore()->getWebsiteId());
+        $remainingQuantity = 0;
+        $allItems = $this->_cartItems->getItems();
+        foreach ($allItems as $allItem) {
+            if ($product->getId() == $allItem['product_id']) {
+                $product = $allItem;
+            }
+        }
+        $productType = $product->getProductType();
+
+        if ($productType == "simple") {
+            $realSku = $this->_productRepository->getById($product->getProductId())->getSku();
+            $salableQty = $this->_salableQuantity->execute($realSku);
+            $remainingQuantity = $salableQty[0]['qty'];
+        } elseif ($productType == "configurable" || $productType == "simple" || $productType == "grouped"
+            || $productType == "virtual" || $productType == "event") {
+            $salableQty = $this->_salableQuantity->execute($product->getSku());
+            $remainingQuantity = $salableQty[0]['qty'];
+        } elseif ($productType == "bundle") {
+            $skusItemInBundle = [];
+            $salableItemInBundle = [];
+            $itemsInBundle = $product->getQtyOptions();
+
+            foreach ($itemsInBundle as $itemInBundle) {
+                $item = $itemInBundle->getProduct();
+                $skusItemInBundle[] = $item['sku'];
+            }
+
+            foreach ($skusItemInBundle as $skuItemInBundle) {
+                $salableQty = $this->_salableQuantity->execute($skuItemInBundle);
+                $salableItemInBundle[] = $salableQty[0]['qty'];
+            }
+
+            $remainingQuantity = min($salableItemInBundle);
+        }
+
+        return $remainingQuantity;
     }
 
     /**
