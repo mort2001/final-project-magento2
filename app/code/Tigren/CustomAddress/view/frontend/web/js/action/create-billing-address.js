@@ -23,7 +23,8 @@ define([
                 return false;
             });
 
-        if (quote.isMoveBilling() && !quote.isVirtual()) {
+        if (quote.isMoveBilling() && !quote.isVirtual() && isCustomerLoggedIn === true
+            && window.checkoutConfig.customerData.default_shipping != null) {
             address['isBillingAddress'] = true;
         }
 

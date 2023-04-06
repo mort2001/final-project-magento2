@@ -1,10 +1,4 @@
-<!--
-  ~ @author    Tigren Solutions <info@tigren.com>
-  ~ @copyright Copyright (c) 2023 Tigren Solutions <https://www.tigren.com>. All rights reserved.
-  ~ @license   Open Software License ("OSL") v. 3.0
-  -->
-
-<div class="billing-address-form" data-bind="if: !currentBillingAddress()">
+<div class="billing-address-form">
     <!-- ko foreach: getRegion('before-fields') -->
     <!-- ko template: getTemplate() --><!-- /ko -->
     <!--/ko-->
@@ -22,7 +16,6 @@
                 </label>
             </div>
             <!-- /ko -->
-            <render args="actionsTemplate"></render>
         </fieldset>
     </form>
 </div>
