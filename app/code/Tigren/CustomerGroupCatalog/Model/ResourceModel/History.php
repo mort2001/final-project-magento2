@@ -11,7 +11,7 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
 /**
  * Class Post
- * @package Tigren\Question\Model\ResourceModel
+ * @package Tigren\CustomerGroupCatalog\Model\ResourceModel
  */
 class History extends AbstractDb
 {

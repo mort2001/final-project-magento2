@@ -18,7 +18,7 @@ use Tigren\CustomerGroupCatalog\Model\ResourceModel\Rule\CollectionFactory;
 
 /**
  * Class Delete
- * @package Tigren\Question\Controller\Adminhtml\Create
+ * @package Tigren\CustomerGroupCatalog\Controller\Adminhtml\Create
  */
 class Delete extends Action
 {

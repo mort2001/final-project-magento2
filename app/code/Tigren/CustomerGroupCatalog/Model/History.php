@@ -11,7 +11,7 @@ use Magento\Framework\Model\AbstractModel;
 
 /**
  * Class Post
- * @package Tigren\Question\Model
+ * @package Tigren\CustomerGroupCatalog\Model
  */
 class History extends AbstractModel
 {

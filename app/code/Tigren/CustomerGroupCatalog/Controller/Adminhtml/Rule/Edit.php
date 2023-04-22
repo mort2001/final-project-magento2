@@ -14,7 +14,7 @@ use Magento\Framework\View\Result\Page;
 
 /**
  * Class Form
- * @package Tigren\Question\Controller\Adminhtml\Create
+ * @package Tigren\CustomerGroupCatalog\Controller\Adminhtml\Create
  */
 class Edit extends Action
 {

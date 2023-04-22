@@ -25,7 +25,7 @@ class Data extends AbstractHelper
     /**
      * @var CollectionFactory
      */
-    private $collectionFactory;
+    public $collectionFactory;
 
     /**
      * @var Session
@@ -73,13 +73,18 @@ class Data extends AbstractHelper
     public function getRules()
     {
         $group_id = $this->_session->getCustomerGroupId();
-        $ruleCollection = $this->collectionFactory->create()
-            ->addFieldToFilter('customer_group_ids', ['like' => '%' . $group_id . '%'])
-            ->addFieldToFilter('from_date', ['lt' => date('Y-m-d')])
-            ->addFieldToFilter('to_date', ['gt' => date('Y-m-d')])
-            ->setOrder('priority', 'ASC');
+        if ($group_id) {
+            $collection = $this->collectionFactory->create()
+                ->addFieldToFilter('customer_group_ids', ['like' => '%' . $group_id . '%'])
+                ->addFieldToFilter('from_date', ['lt' => date('Y-m-d')])
+                ->addFieldToFilter('to_date', ['gt' => date('Y-m-d')])
+                ->setOrder('priority', 'ASC');
+            $ruleCollection = $collection->GetItems();
+        } else {
+            $ruleCollection = false;
+        }
 
-        return $ruleCollection->getData();
+        return $ruleCollection;
     }
 
     /**

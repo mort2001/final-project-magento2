@@ -66,7 +66,7 @@ define([
             }
 
             /*fix issue with hover on product grid*/
-            $('.product-item-info').css('zIndex', '2000');
+            $('.product-item-info').css('zIndex', '100');
 
             /*get default image size*/
             if (this.imageLoaded(this.image)) {
