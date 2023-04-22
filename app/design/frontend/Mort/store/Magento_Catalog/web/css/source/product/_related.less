@@ -1,0 +1,87 @@
+//
+//  Related product
+//  ---------------------------------------------
+
+& when (@media-target = 'mobile'){
+    .block.related{
+        .order(5);
+        flex-basis: 100%;
+        overflow: hidden;
+        padding-left: 20px;
+        padding-right: 20px;
+        max-width: 100%;
+
+        .block-actions .select{
+            padding: 0;
+            background: transparent;
+            color: @color-primary;
+            &:hover{
+                color: @color-text-light;
+            }
+        }
+    }
+
+    .products-grid.products-related {
+        margin: 24px 0 0;
+        padding: 0;
+        .product-item-photo {
+            margin-bottom: 15px;
+        }
+        .owl-carousel .product-item {
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .product-items {
+            margin: 0 -10px;
+            padding: 0;
+            width: ~'calc(100% + 20px)';
+            .product-item {
+                padding: 0;
+                margin-top: 0;
+                .product-item-info {
+                    .product-item-photo:before {
+                        display: none;
+                    }
+                    .product-item-actions {
+                        position: static;
+                        visibility: visible;
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            }
+        }
+
+        .owl-carousel .owl-stage {
+            display: block;
+        }
+
+        .owl-item {
+            .product-item {
+                padding: 0 10px;
+            }
+        }
+
+        &.grid .product-item-info {
+            .product-item-details {
+                position: static;
+                visibility: visible;
+                opacity: 1;
+                transform: translate(0);
+                display: block;
+                text-align: center;
+            }
+            .price-box,
+            .product-item-actions {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .price-box {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

@@ -1,0 +1,353 @@
+//
+//  Rating summary
+//  ---------------------------------------------------
+
+& when (@media-target = 'mobile') {
+  .rating-summary {
+    .make-flex();
+
+    .label {
+      margin-right: 8px;
+    }
+    div.rating-result > span:before {
+      color: @color-review-star;
+    }
+    .rating-result__stars {
+      span[class^="rating-star__"] {
+        color: @color-review-star;
+        display: inline-block;
+        font-size: 12px;
+        line-height: 1;
+        padding: 0 2px;
+        position: relative;
+        &:before,
+        &:after {
+          font-family: @default-icon-family;
+          font-size: 12px;
+          line-height: 1;
+        }
+        &:before {
+          content: '\ea85';
+          color: @color-text-lightest;
+        }
+        &:after {
+          color: @color-review-star;
+          position: absolute;
+          top: 0;
+          left: 2px;
+        }
+
+        &.rating-star__full:after {
+          content: '\ea85';
+        }
+        &.rating-star__half:after {
+          content: '\ee9c';
+        }
+      }
+    }
+
+    .rating-result__text {
+      display: none;
+    }
+  }
+
+  .items.review-items .rating-result__stars {
+    padding-top: 3px;
+  }
+}
+
+//
+//  Review List
+//  ---------------------------------------------------
+
+& when (@media-target = 'mobile') {
+  .review-list {
+    .block-title {
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: 700;
+      color: @color-primary;
+      margin-bottom: 32px;
+    }
+
+    .review-title {
+      font-size: 16px;
+      line-height: 18px;
+      color: @color-text-light;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .review-item {
+      margin-bottom: 30px;
+    }
+
+    //Rating
+    .review-ratings {
+      margin-bottom: 8px;
+    }
+    .rating-summary {
+      .make-flex();
+    }
+    .rating-label {
+      margin-right: 24px;
+    }
+    .rating-result {
+      display: inline-block;
+    }
+
+    //Details
+    .review-details {
+      .make-flex();
+
+      p + p {
+        margin-left: 4px;
+      }
+      p > * {
+        display: inline-block;
+      }
+
+      .review-author .review-details-value {
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+//
+//  Review Form
+//  ---------------------------------------------------
+
+& when (@media-target = 'mobile') {
+  .review-add {
+    .block-title {
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: 700;
+      color: @color-primary;
+      margin-bottom: 32px;
+    }
+    .review-legend {
+      padding: 12px 24px;
+      background: @color-bg-dark;
+      font-size: 16px;
+      line-height: 18px;
+      margin-bottom: 32px;
+      width: 100%;;
+
+      span {
+        float: left;
+        margin-right: 10px;
+        font-weight: 700;
+        color: @color-text-light;
+      }
+    }
+
+    .review-form {
+      max-width: none;
+
+      .fieldset {
+        margin-bottom: 0;
+      }
+    }
+
+    form .actions-toolbar, .column:not(.sidebar-additional) form .actions-toolbar {
+      margin-left: 0 !important;
+    }
+
+    .fieldset .review-legend.legend {
+      padding-left: 0;
+      text-transform: uppercase;
+      background: transparent;
+    }
+
+    .fieldset.review-fieldset > div.field[class*=review-field] {
+      margin-bottom: 8px;
+      max-width: 900px;
+
+      label.label {
+        max-width: 100px;
+        margin-bottom: 10px;
+      }
+
+      .control {
+        float: none;
+      }
+
+      &:last-child {
+        margin-bottom: 24px;
+      }
+    }
+
+    .review-field-text textarea {
+      min-height: 100px;
+
+      @media (min-width: @screen__m) {
+        min-height: 200px;
+      }
+    }
+  }
+
+  .review-field-ratings {
+    margin-bottom: 4px;
+
+    .review-field-rating {
+      .make-flex();
+    }
+
+    .field {
+      padding: 0;
+    }
+
+    > .label {
+      color: @color-text-light;
+      font-size: 15px;
+      line-height: 16px;
+      font-weight: 700;
+      margin-right: 24px;
+    }
+
+    [id="Rating_rating_label"] {
+      display: none;
+    }
+  }
+  .review-control-vote {
+    height: 20px;
+    min-width: 150px;
+    &:before {
+      content: '\ea85' '\ea85' '\ea85' '\ea85' '\ea85';
+      color: @color-text-lightest;
+      font-family: @default-icon-family;
+      font-size: 16px;
+      line-height: 24px;
+      height: 20px;
+      letter-spacing: 10px;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .rating-1,
+    .rating-2,
+    .rating-3,
+    .rating-4,
+    .rating-5 {
+      &:before {
+        color: @color-review-star;
+        font-family: @default-icon-family;
+      }
+    }
+
+    .rating-1 {
+      z-index: 6;
+      &:before {
+        content: '\ea85';
+      }
+    }
+    .rating-2 {
+      z-index: 5;
+      &:before {
+        content: '\ea85' '\ea85';
+      }
+    }
+    .rating-3 {
+      z-index: 4;
+      &:before {
+        content: '\ea85' '\ea85' '\ea85';
+      }
+    }
+    .rating-4 {
+      z-index: 3;
+      &:before {
+        content: '\ea85' '\ea85' '\ea85' '\ea85';
+      }
+    }
+    .rating-5 {
+      z-index: 2;
+      &:before {
+        content: '\ea85' '\ea85' '\ea85' '\ea85' '\ea85';
+      }
+    }
+
+    label {
+      cursor: pointer;
+      display: block;
+      position: absolute;
+      &:before {
+        opacity: 0;
+        font-size: 16px;
+        line-height: 24px;
+        height: 20px;
+        letter-spacing: 10px;
+      }
+
+      span {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+      }
+    }
+
+    input[type="radio"] {
+      border: 0;
+      clip: rect(0, 0, 0, 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+      &:focus,
+      &:checked,
+      &:hover {
+        + label:before {
+          opacity: 1;
+        }
+      }
+    }
+
+    .radio {
+      display: none;
+    }
+  }
+}
+
+// Customer reviews history
+//-----------------------------------
+
+& when (@media-target = 'mobile') {
+  .my-reviews-table__wrapper {
+    .table-title {
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .pager {
+      .make-flex();
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .toolbar-amount,
+      .limiter {
+        flex-basis: auto;
+      }
+
+      .field {
+        padding: 0;
+      }
+    }
+
+    .table-wrapper.reviews {
+      margin-bottom: 26px;
+      caption {
+        display: none;
+      }
+    }
+  }
+}

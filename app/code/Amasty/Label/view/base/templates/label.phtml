@@ -1,0 +1,44 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Label
+ */
+?>
+<?php
+/** @var \Amasty\Label\Model\Labels  $label */
+/** @var \Amasty\Label\Block\Label  $block */
+$label = $block->getLabel();
+$productId = (int)$label->getProduct()->getId();
+$labelFor = $label->getParentProduct() ? $label->getParentProduct()->getId() : $productId;
+$key = $label->getId() . '-' . $label->getProduct()->getId() . '-' . $label->getMode();
+$text = $label->getText();
+$nativeText = strip_tags($text);
+$labelSelector = '.amasty-label-container-' .  $key;
+?>
+<div class="amasty-label-container
+            amasty-label-container-<?= $block->escapeHtml($key); ?>
+            amasty-label-for-<?= $block->escapeHtml($labelFor) ?>"
+     style="display: none; <?= $block->escapeHtml($label->getStyle());?>">
+    <div class="amasty-label-text" style="<?= $block->escapeHtml($label->getValue('text_style'));?>">
+        <?= /* @noEscape */ strip_tags($text, '<br>,<a>,<b>'); ?>
+    </div>
+    <?php if ($block->getImageScr()) :?>
+       <img class="amasty-label-image"
+            id="amasty-label-image-<?= $block->escapeHtml($key); ?>"
+            src="<?= $block->escapeUrl($block->getImageScr());?>"
+            style="opacity: 1 !important;vertical-align: top;"
+            title="<?= $block->escapeHtml($nativeText) ?>"
+            alt="<?= $block->escapeHtml($nativeText ? $nativeText : $label->getProduct()->getName()) ?>"
+       >
+    <?php endif;?>
+</div>
+<script>
+   require([
+      'jquery',
+      'Amasty_Label/js/label',
+       'domReady!'
+   ], function ($) {
+       $("<?= $block->escapeHtml($labelSelector) ?>").amShowLabel(<?= /* @noEscape */ $block->getJsonConfig()?>);
+   });
+</script>

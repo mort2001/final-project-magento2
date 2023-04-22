@@ -1,0 +1,22 @@
+
+& when (@media-target = 'mobile'){
+    .bundle-options-container{
+        .order(3);
+
+        .block-bundle-summary{
+            background: transparent;
+            border-top: 1px solid @color-border-color;
+        }
+    }
+
+    .product-details .box-tocart .fieldset{
+        .price-box();
+    }
+}
+
+& when (@media-target = 'desktop') {
+    .bundle-options-container .block-bundle-summary{
+        border-top: none;
+        border-left: 1px solid @color-border-color;
+    }
+}

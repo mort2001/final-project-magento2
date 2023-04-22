@@ -1,0 +1,95 @@
+//
+//  Zemez theme variables
+//  _____________________________________________
+
+//
+//  Grid system
+//  ---------------------------------------------
+
+@column__count: 12;
+@column__width: 76px;
+@gutter__width: 40px;
+
+@container__xxs: @screen__xs - @gutter__width;
+@container__xs: @screen__s - @gutter__width;
+@container__s: @screen__m - @gutter__width;
+@container__m: @screen__l - @gutter__width;
+@container__l: @screen__xl - @gutter__width;
+@container__xl: @column__width*@column__count + @gutter__width*(@column__count);
+
+@screen__names: xs, m, l, xl;
+
+//
+//  Typography
+//  ---------------------------------------------
+
+//  Fonts
+@font-family-name__base: 'Ubuntu', sans-serif;;
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+
+@default-font-family: @font-family-name__base;
+@default-font-weight: 400;
+@default-font-size: 13px;
+@default-line-height: 1.5em;
+
+//
+//  Sidebar
+//  ---------------------------------------------
+
+@sidebar__background-color: @color-white-smoke;
+
+//
+//  Icons
+//  ---------------------------------------------
+
+@mini-icon-family: 'Nucleo Mini';
+@outline-icon-family: 'Nucleo Outline';
+@material-icon-family: 'Material Icons';
+@default-icon-family: @mini-icon-family;
+@fa: 'FontAwesome';
+
+//
+//  Colors
+//  ---------------------------------------------
+
+@color-white: #fff;
+@color-black: #000;
+@color-default: #777777;
+
+@color-allow: #3bb141;
+@color-denied: #ff5555;
+@color-attention: #ff5555;
+
+@color-bg-light: #f0f0f0;
+@color-bg-dark: #f2f2f2;
+
+@color-primary: #ff4132;
+@color-accent: #333333;
+@color-text-dark: #191919;
+@color-text-light: #333333;
+@color-text-lightest: #c7c8c8;
+@color-unactive: #999999;
+
+
+@default-header-shadow: 0 3px 10px 0 fade(@color-black, 9%);
+
+@color-review-star: #ffb503;
+@color-border-color: #ececec;
+@color-input-bg-color: @color-white;
+@form-element-input__border-color: @color-border-color;
+
+//
+//  Smart header
+//  ---------------------------------------------
+
+@sm-header-main-color: @color-primary;
+@sm-header-contrast-color: @color-white;
+@sm-header-text-color: @color-text-light;
+@sm-header-hover-color: @color-primary;
+@sm-header-panel-height: 56px;
+@sm-header-item-fontsize: 14px;
+@sm-header-item-lineheight: 16px;
+@sm-header-item-padding: 17px;
+@sm-header-item-border: 1px solid @color-border-color;
+@sm-header-item-bg-1: #f1f1f1;
+@sm-header-item-bg-2: #e7e7e7;

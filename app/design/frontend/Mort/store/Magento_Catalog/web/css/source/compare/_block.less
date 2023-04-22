@@ -1,0 +1,72 @@
+//
+//  Compare products block in sidebar
+//  ---------------------------------------------
+
+& when (@media-target = 'mobile'){
+    .sidebar .block-compare{
+        .compare-counter{
+            margin-bottom: 16px;
+
+            .counter{
+                color: @color-primary;
+                font-weight: 700;
+                font-size: 1rem;
+            }
+        }
+
+        .product-items{
+            margin-bottom: 12px;
+        }
+        .product-item-name{
+            display: block;
+            padding-right: 20px;
+
+            a{
+                color: @color-text-dark;
+                &:hover{
+                    color: @color-primary;
+                }
+            }
+        }
+        .product-item{
+            position: relative;
+            margin-bottom: 12px;
+
+            .action.delete:before {
+                transition: .3s all ease;
+            }
+
+            &:hover {
+                .product-item-name .product-item-link, .action.delete:before {
+                    color: @color-primary;
+                }
+            }
+        }
+        .action.delete{
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .actions-toolbar{
+            .make-flex();
+            flex-direction: column-reverse;
+            align-items: stretch;
+
+            a.compare{
+                width: 100%;
+                text-align: center;
+                padding: 14px 33px;
+
+                @media (min-width: @screen__xs) and (max-width: (@screen__l - 1)){
+                    width: auto;
+                }
+            }
+            .secondary{
+                margin-bottom: 16px;
+            }
+        }
+    }
+}

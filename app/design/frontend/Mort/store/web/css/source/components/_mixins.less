@@ -1,0 +1,211 @@
+//
+//  Include theme variables
+//  =============================================
+
+//
+//  Box tocart
+//  ---------------------------------------------
+.price-box( @_box-tocart__color: @color-text-dark,
+            @_box-tocart_special-price__color: @color-attention,
+            @_box-tocart_old-price__color: @color-unactive) {
+  color: @_box-tocart__color;
+  .make-flex();
+  .flex-direction(row);
+  align-items: center;
+  margin-top: 0;
+  font-weight: 500;
+  .price,
+  .price-container {
+    font-weight: inherit;
+    font-size: inherit;
+  }
+
+  .price-label {
+    display: none;
+  }
+
+  .special-price {
+    color: @_box-tocart_special-price__color;
+    margin: 0;
+  }
+
+  .old-price {
+    text-decoration: line-through;
+    color: @_box-tocart_old-price__color;
+
+    &.map-old-price {
+      display: inline-block;
+      width: 100%;
+    }
+  }
+}
+
+//
+//  Icons
+//  ---------------------------------------------
+
+.font-icon(@_font-icon_icon:'\ea18', @_font-icon_font-family: @default-icon-family) {
+  line-height: inherit;
+  &:before {
+    content: @_font-icon_icon;
+    display: inline-block;
+    font-family: @_font-icon_font-family;
+    font-weight: 400;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+  }
+}
+
+.font-icon__pseudo(@_font-icon_pseudo_icon:'\ea18', @_font-icon_pseudo_font-family: @default-icon-family) {
+  content: @_font-icon_pseudo_icon;
+  display: inline-block;
+  font-family: @_font-icon_pseudo_font-family;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  transform: translate(0, 0);
+}
+
+.font-icon_edit {
+  .font-icon('\edc3');
+}
+
+.font-icon_delete {
+  .font-icon('\ea5d');
+}
+
+//
+//  Icons rotation
+//  ---------------------------------------------
+.toggle-icons-via-rotation(@_size: 48px, @_font-family: 'Nucleo Mini', @_font-size: 24px, @_color: @color-primary, @_icon-before: '\e9b2', @_icon-after: '\ea5c', @_trigger-class: active) {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  width: @_size;
+  height: @_size;
+  &:before,
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @_size;
+    height: @_size;
+    font-family: @_font-family;
+    color: @_color;
+    font-size: @_font-size;
+    line-height: @_size;
+    transition: .3s ease;
+  }
+
+  &:before {
+    content: @_icon-before;
+    opacity: 1;
+    visibility: visible;
+    transform: rotate(0deg) scale(1);
+  }
+
+  &:after {
+    content: @_icon-after;
+    opacity: 0;
+    visibility: hidden;
+    transform: rotate(-90deg) scale(0);
+  }
+
+  &.@{_trigger-class} {
+    &:before {
+      opacity: 0;
+      visibility: hidden;
+      transform: rotate(90deg) scale(0);
+    }
+
+    &:after {
+      opacity: 1;
+      visibility: visible;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+}
+
+//
+//  Triangle
+//  ---------------------------------------------
+.triangle-base() {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  -moz-transform: scale(.9999);
+}
+
+.triangle(@direction, @size, @color) {
+  .triangle(@direction, @size * 2, @size, @color);
+}
+
+.triangle(@direction, @width, @height, @color) when (@direction = up) {
+  .triangle-base();
+  border-left: (@width / 2) solid transparent;
+  border-right: (@width / 2) solid transparent;
+  border-bottom: @height solid @color;
+}
+
+.triangle(@direction, @width, @height, @color) when (@direction = down) {
+  .triangle-base();
+  border-left: (@width / 2) solid transparent;
+  border-right: (@width / 2) solid transparent;
+  border-top: @height solid @color;
+}
+
+.triangle(@direction, @width, @height, @color) when (@direction = left) {
+  .triangle-base();
+  border-top: (@width / 2) solid transparent;
+  border-bottom: (@width / 2) solid transparent;
+  border-right: @height solid @color;
+}
+
+.triangle(@direction, @width, @height, @color) when (@direction = right) {
+  .triangle-base();
+  border-top: (@width / 2) solid transparent;
+  border-bottom: (@width / 2) solid transparent;
+  border-left: @height solid @color;
+}
+
+//
+//  Flex
+//  ---------------------------------------------
+.make-flex() {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex(@grow-shrink-basis) {
+  -ms-flex: @grow-shrink-basis;
+  -webkit-flex: @grow-shrink-basis;
+  flex: @grow-shrink-basis;
+}
+
+.flex-direction(@direction) {
+  -webkit-flex-direction: @direction;
+  -ms-flex-direction: @direction;
+  flex-direction: @direction;
+}
+
+.flex-wrap(@wrap) {
+  -webkit-flex-wrap: @wrap;
+  -ms-flex-wrap: @wrap;
+  flex-wrap: @wrap;
+}
+
+.flex-grow(@grow) {
+  -webkit-flex-grow: @grow;
+  -ms-flex-positive: @grow;
+  flex-grow: @grow;
+}
+
+.order(@order) {
+  -webkit-order: @order;
+  -ms-flex-order: @order;
+  order: @order
+}

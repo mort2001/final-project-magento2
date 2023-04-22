@@ -1,0 +1,63 @@
+//
+//  Upsell products
+//  ---------------------------------------------
+
+& when (@media-target = 'mobile'){
+    .block.upsell{
+        flex-basis: 100%;
+        overflow: hidden;
+
+        .block-actions button.action.select {
+            color: @color-primary;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .products-grid.products-upsell{
+        margin: 2rem 0 0;
+        padding: 0;
+
+        .owl-carousel .product-item {
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .product-items{
+            margin: 0 -15px;
+            padding: 0;
+        }
+        .product-item{
+            flex-basis: 100%;
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .owl-carousel .owl-stage {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .owl-item{
+            padding: 0 3px;
+        }
+
+        &.grid .product-item-info {
+            .product-item-details {
+                position: static;
+                visibility: visible;
+                opacity: 1;
+                transform: translate(0);
+                display: block;
+                text-align: center;
+            }
+            .price-box,
+            .product-item-actions {
+                justify-content: center;
+                margin-top: 5px;
+            }
+        }
+    }
+}

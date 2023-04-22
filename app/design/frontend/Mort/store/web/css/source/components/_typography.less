@@ -1,0 +1,109 @@
+/*
+* @subsection   Typography
+*/
+
+.headings-styles(@i: 1) when (@i =< 6) {
+  h@{i},
+  .heading-@{i} {
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: .5em;
+    font-weight: 500;
+  }
+  .headings-styles(@i + 1);
+}
+
+.headings-styles();
+
+h1,
+.heading-1 {
+  font-size: ~'calc(2.1vw + 12px)';
+  @media (min-width: @screen__s) {
+    font-size: ~'calc(2.1vw + 10px)';
+  }
+  @media (min-width: @screen__xl) {
+    font-size: 40px;
+  }
+}
+
+h2,
+.heading-2 {
+  font-size: ~'calc(1.25vw + 12px)';
+  @media (min-width: @screen__s) {
+    font-size: ~'calc(1.25vw + 10px)';
+  }
+  @media (min-width: @screen__xl) {
+    font-size: 28px;
+  }
+}
+
+h3,
+.heading-3 {
+  font-size: ~'calc(1.1vw + 12px)';
+  @media (min-width: @screen__s) {
+    font-size: ~'calc(1.1vw + 10px)';
+  }
+  @media (min-width: @screen__xl) {
+    font-size: 22px;
+  }
+}
+
+h4,
+.heading-4 {
+
+}
+
+h5,
+.heading-5 {
+  font-weight: 400;
+}
+
+h6,
+.heading-6 {
+  color: @color-default;
+  font-weight: 400;
+}
+
+.page-title,
+.section-title {
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+a {
+  transition: .3s ease;
+}
+
+p {
+  margin-bottom: 8px;
+}
+
+mark {
+  color: @color-white;
+  background: @color-primary;
+}
+
+em {
+  color: @color-primary;
+}
+
+small {
+  font-size: .8em;
+}
+
+pre {
+  white-space: normal;
+}
+
+dl {
+  dt {
+    font-weight: 700;
+  }
+  dd {
+    font-style: italic;
+    padding-left: 8px;
+  }
+}

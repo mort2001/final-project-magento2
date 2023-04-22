@@ -1,0 +1,301 @@
+//
+//  Filters
+//  __________________________________________________
+
+& when (@media-target = 'mobile'){
+    .filter-wrapper{
+        *,
+        *:before,
+        &:after{
+            box-sizing: border-box;
+        }
+    }
+
+    .sidebar .filter-wrapper .filter-subtitle{
+        font-size: 18px;
+        color: @color-primary;
+        margin-bottom: 16px;
+    }
+
+    #layered-filter-block .modal-slide._show{
+        background-color: transparent;
+
+        a,
+        a > span{
+            transition: color .3s ease;
+        }
+    }
+
+    //Current filters
+    .filter-current--wrapper{
+        margin-bottom: 32px;
+        background: @color-bg-dark;
+        padding: 24px 30px;
+        border-radius: 4px;
+
+        [role="tablist"] .filter-current-subtitle[role="tab"]{
+            .font-icon('\e929');
+            color: @color-text-dark;
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 700;
+            margin-bottom: 0;
+            display: inline-block;
+            padding-right: 26px;
+            position: relative;
+            cursor: pointer;
+            width: 100%;
+            &:before{
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 26px;
+                height: 26px;
+                border-radius: 2px;
+                text-align: center;
+                font-size: 14px;
+                line-height: 1;
+                padding: 6px 0;
+                border: 1px solid @color-border-color;
+            }
+
+            &[aria-expanded="false"]:before{
+                content: '\e926';
+            }
+        }
+
+        .filter-current{
+            .items{
+                padding: 8px 0;
+                display: none;
+            }
+            &.active .items{
+                display: block;
+            }
+
+            .item{
+                position: relative;
+                padding: 4px 0;
+                display: block;
+                justify-content: space-between;
+                align-items: center;
+
+                .action.remove {
+                    position: absolute;
+                    top: 3px;
+                    right: 0;
+                }
+            }
+            .filter-label:after{
+                content: ':';
+            }
+            .filter-value{
+                padding-left: 4px;
+            }
+            .remove{
+                .font-icon('\ea5d');
+                margin-left: auto;
+                padding-right: 5px;
+
+                span{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+//Filter options
+
+& when (@media-target = 'mobile'){
+    .filter-options{
+        @media (min-width: @screen__m){
+            border: 1px solid @color-border-color;
+            border-radius: 2px;
+        }
+
+        .filter-options-item{
+            padding: 20px 0;
+            border-bottom: 1px solid @color-border-color;
+
+            &:last-child{
+                border-bottom: none;
+            }
+
+            @media (min-width: @screen__m){
+                padding: 15px 25px;
+            }
+        }
+
+        .filter-options-title{
+            .font-icon('\e929');
+            color: @color-text-light;
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 700;
+            margin-bottom: 0;
+            padding-right: 30px;
+            position: relative;
+            cursor: pointer;
+            width: 100%;
+            &:before{
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 26px;
+                height: 26px;
+                border-radius: 2px;
+                text-align: center;
+                font-size: 14px;
+                line-height: 1;
+                padding: 6px 0;
+                border: 1px solid @color-border-color;
+            }
+
+            &[role="tab"] {
+                margin-bottom: 0;
+
+                &:before {
+                    top: 0;
+                }
+            }
+
+            &[aria-expanded="false"]:before{
+                content: '\e926';
+            }
+        }
+
+        .filter-options-content{
+            display: none;
+            padding: 12px 0 2px;
+            margin-bottom: 0;
+
+            .item{
+                .make-flex();
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+                padding: 4px 0;
+
+                a{
+                    text-transform: capitalize;
+                    color: @color-default;
+                    &:hover{
+                        color: @color-primary;
+                    }
+
+                    &:first-child{
+                        flex: 0 1 auto;
+                        padding-right: 8px;
+                        box-sizing: border-box;
+                    }
+                    &:last-child{
+                        flex: 1 0 auto;
+                        text-align: right;
+                    }
+                }
+            }
+            .count{
+                color: @color-primary;
+                padding-left: 4px;
+            }
+            a:hover .count{
+                color: @color-text-dark;
+            }
+        }
+
+        .price-slider .slider-fields a.action{
+            margin-top: 8px;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l){
+    & when (@media-target = 'desktop'){
+        .filter-options {
+            border: 1px solid @color-border-color;
+            border-radius: 2px;
+        }
+    }
+}
+
+& when (@media-target = 'mobile'){
+    button.action.filter-toggle{
+        .order(0);
+        flex-basis: ~'calc(100% - 150px)';
+        .font-icon('\ea86');
+        font-size: 14px;
+        line-height: 16px;
+        padding: 17px 10px;
+        height: 50px;
+        margin: 8px 16px 0 0;
+        text-align: center;
+        min-width: 80px;
+        max-width: 300px;
+
+        span {
+            padding-left: 5px;
+        }
+
+        @media (min-width: @screen__l) {
+            min-width: 150px;
+            flex-basis: auto;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l){
+    & when (@media-target = 'desktop'){
+        button.action.filter-toggle{
+            display: none;
+        }
+    }
+}
+
+& when (@media-target = 'mobile'){
+    .tollbar-bottom button.action.filter-toggle{
+        display: none !important;
+    }
+}
+
+// Price Slider
+& when (@media-target = 'mobile'){
+    .sidebar .price-slider{
+        .slider-fields{
+            .slider-input{
+                margin-top: 8px;
+            }
+            label{
+                color: @color-text-light;
+                font-weight: 700;
+                text-transform: capitalize;
+            }
+        }
+
+        .ui-slider-handle{
+            background: @color-primary;
+            width: 20px;
+            height: 20px;
+            border-radius: 20px;
+            margin-left: -10px;
+            margin-top: -5px;
+            transition: none;
+            &:after{
+                content: '';
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 16px;
+                height: 16px;
+                border-radius: 16px;
+                background: @color-white;
+            }
+        }
+        .ui-slider-range{
+            position: absolute;
+            height: 100%;
+            background: @color-primary;
+        }
+    }
+}

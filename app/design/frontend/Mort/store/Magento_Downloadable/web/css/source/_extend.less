@@ -1,0 +1,101 @@
+
+& when (@media-target = 'mobile'){
+//
+// Account table
+//-----------------------------------
+
+
+    .custome-downloadable-products__wrapper{
+        .table-title{
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .pager{
+            .make-flex();
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .toolbar-amount,
+            .limiter{
+                flex-basis: auto;
+            }
+
+            .field{
+                padding: 0;
+            }
+        }
+
+        .table-downloadable-products{
+            margin-bottom: 26px;
+            caption{
+                display: none;
+            }
+
+            .col.title a.download:before{
+                .font-icon__pseudo('\e916');
+                padding: 0 4px 0 8px;
+            }
+        }
+    }
+
+//
+// Product page
+//-----------------------------------
+
+    .page-product-downloadable{
+        .product-options-wrapper{
+            padding-top: 10px;
+            border-top: 1px solid @color-border-color;
+
+            @media (min-width: @screen__m){
+                padding-top: 32px;
+            }
+
+            .legend{
+                font-size: 18px;
+                line-height: 20px;
+                font-weight: 700;
+                color: @color-primary;
+            }
+
+            .fieldset > .field{
+                margin-bottom: 0;
+            }
+        }
+        .product-options-bottom{
+            .price-box{
+                font-size: 20px;
+                line-height: 20px;
+                border-bottom: 1px solid @color-border-color;
+                padding-bottom: 10px;
+
+                @media (min-width: @screen__m){
+                    padding-bottom: 32px;
+                }
+            }
+        }
+
+        .samples{
+            padding-top: 10px;
+            border-top: 1px solid @color-border-color;
+
+            @media (min-width: @screen__m){
+                padding-top: 32px;
+            }
+
+            .samples-item-title{
+                color: @color-text-light;
+                font-weight: 700;
+                display: inline-block;
+                margin-bottom: 8px;
+            }
+
+            dd{
+                font-style: normal;
+                padding-left: 0;
+            }
+        }
+    }
+}

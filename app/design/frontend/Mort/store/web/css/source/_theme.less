@@ -1,0 +1,92 @@
+
+@import 'components/_variables.less';
+
+// Layouts
+
+@layout-column__left-width: 100%;
+@layout-column__right-width: 100%;
+@layout-column-main__sidebar-offset: 0;
+
+// Button
+@button__font-family: @font-family__base;
+@button__font-size: @font-size__base;
+@button__font-weight: 700;
+@button__border-radius: 0;
+@button__border: 2px solid @color-primary;
+@button__color: @color-white;
+@button__background: @color-primary;
+@button__shadow: none;
+@button__padding: 6px 20px;
+@button__hover__color: @color-accent;
+@button__hover__background: transparent;
+@button__hover__border: 2px solid @color-accent;
+
+@button-primary__color: @color-accent;
+@button-primary__background: transparent;
+@button-primary__border: 2px solid @color-accent;
+@button-primary__hover__background: @color-accent;
+@button-primary__hover__border: 2px solid @color-accent;
+@button-primary__hover__color: @color-white;
+
+@button__active__color: @color-white;
+@button__active__background: @color-accent;
+@button__active__border: 2px solid @color-accent;
+
+@button-primary__active__color: @color-white;
+@button-primary__active__background: @color-accent;
+
+@button__font-size__l: @button__font-size * 1.2;
+@button__line-height__l: 20px;
+@button__padding__l: @button__padding;
+
+.lib-button(){
+    line-height: @default-line-height;
+    text-transform: uppercase;
+    @media (min-width: @screen__m){
+        padding: 8px 28px;
+    }
+}
+.lib-button-l(){
+    @media (min-width: @screen__m){
+        padding: 8px 28px;
+    }
+}
+
+.lib-button-primary(){
+    text-transform: uppercase;
+    @media (min-width: @screen__m){
+        padding: 8px 28px;
+    }
+};
+
+// Links variables
+
+@link__color: @color-accent;
+@link__hover__color: @color-primary;
+@link__hover__text-decoration: none;
+@link__active__text-decoration: none;
+
+// Base font`s settings
+
+@font-size__base: 1rem;
+@base__line-height: 1.5em;
+
+// Heading
+
+@heading__color__base: @color-text-light;
+@heading__line-height__base: 1.1;
+@heading__font-weight__base: @font-weight__bold;
+
+// Inputs
+@form-element-input__height: auto;
+@focus__box-shadow: none;
+
+// Menu
+@navigation-level0-item__font-size: 1rem;
+@navigation-level0-item__border: 1px solid @color-border-color;
+@navigation-level0-item__padding: @sm-header-item-padding;
+@navigation-level0-item__text-transform: none;
+
+@navigation-level0-item__active__border-color: @color-primary;
+@submenu-desktop-item__active__border-color: @color-primary;
+@submenu-item__active__border-color: @color-primary;

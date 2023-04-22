@@ -1,0 +1,55 @@
+//
+//  Sidebar
+//  ---------------------------------------------
+
+& when (@media-target = 'mobile') {
+  .sidebar {
+    [role="tablist"] [role="tabpanel"] {
+      margin-bottom: 0;
+    }
+    .collapsible-block,
+    .filter-wrapper {
+      position: relative;
+      margin-bottom: 0;
+      max-width: 500px;
+      @media (min-width: @screen__l) {
+        margin-bottom: 68px;
+      }
+    }
+    .collapsible-block {
+      .block-title {
+        margin-bottom: 30px;
+      }
+      .opener {
+        .font-icon('\e929');
+        display: block;
+        box-sizing: border-box;
+        position: relative;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid @color-border-color;
+        margin-bottom: 20px;
+        cursor: pointer;
+        line-height: 26px;
+        &:before {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 26px;
+          height: 26px;
+          border-radius: 2px;
+          box-sizing: border-box;
+          text-align: center;
+          font-size: 14px;
+          line-height: 1;
+          padding: 6px 0;
+          border: 1px solid @color-border-color;
+        }
+
+        &[aria-expanded="false"]:before {
+          content: '\e926';
+        }
+      }
+    }
+  }
+}

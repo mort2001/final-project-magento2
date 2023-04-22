@@ -1,0 +1,115 @@
+
+& when (@media-target = 'mobile') {
+  .block.newsletter .content {
+    form.subscribe {
+      .make-flex();
+      justify-content: center;
+      align-items: stretch;
+      .flex-direction(column);
+      text-align: center;
+    }
+    .label {
+      flex-basis: 100%;
+      display: block;
+      line-height: 21px;
+      margin-bottom: 22px;
+    }
+    .field {
+      padding: 0;
+      margin-bottom: 18px;
+
+      .control:before {
+        display: none;
+      }
+
+      input {
+        box-sizing: border-box;
+        background: transparent;
+        margin-bottom: 0;
+        padding-left: 18px;
+        font-size: 12px;
+        color: @color-default;
+        transition: margin-bottom .3s ease;
+      }
+    }
+    .actions {
+      width: auto;
+      padding-left: 4px;
+
+      .action.subscribe {
+        height: 100%;
+        margin: 0;
+        padding: 10px 25px;
+        line-height: 1.2;
+        border-radius: @button__border-radius;
+        background: @color-primary;
+        border-color: @color-primary;
+        color: @color-white;
+        &:hover {
+          background: transparent;
+          border-color: @color-accent;
+          color: @color-accent;
+        }
+      }
+    }
+
+    #newsletter-error {
+      position: absolute;
+      top: ~'calc(100% - 7px)';
+      left: 0;
+      padding: 0 2px;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: left;
+      background: @color-white;
+
+      @media (max-width: 1023px) {
+        position: static;
+      }
+      @media (max-width: 767px) {
+        position: absolute;
+      }
+      @media (max-width: 479px) {
+        position: static;
+      }
+    }
+
+    @media (min-width: @screen__xs) {
+      form.subscribe {
+        .flex-direction(row);
+
+        .field {
+          margin-right: 5px;
+          margin-bottom: 0;
+          flex-basis: 219px;
+        }
+      }
+    }
+    @media (min-width: @screen__m) and (max-width: (@screen__l - 1)) {
+      .form.subscribe {
+        .flex-direction(column);
+
+        .field {
+          flex-basis: initial;
+          margin-right: 0;
+          margin-bottom: 18px;
+        }
+
+        .actions {
+          padding-left: 0;
+        }
+      }
+    }
+  }
+}
+
+& when (@media-target = 'desktop') {
+  .block.newsletter {
+    width: auto;
+    text-align: center;
+  }
+
+  button.subscribe {
+    padding: 14px 33px;
+  }
+}
