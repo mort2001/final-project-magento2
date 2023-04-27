@@ -1,0 +1,131 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+/**
+ * @var Tigren\Question\Helper\Data $helper
+ */
+$helper = $this->helper(Tigren\Question\Helper\Data::class);
+$question = $helper->getListQues();
+if ($question->count()) {
+    ?>
+    <style>
+        .text {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-size: 25px;
+            font-family: monospace;
+            font-weight: bold;
+            color: #0a820b;
+        }
+    </style>
+
+    <button class="action submit primary"><a href="<?= $block->getUrl('*/*/index') ?>">
+            <?php echo __('Create Question') ?></a></button>
+    <br>
+    <p>List Questions</p>
+    <hr>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table" border="2">
+            <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id text"><?php echo __('ID') ?></th>
+                <th scope="col" class="col name text"><?php echo __('Title') ?></th>
+                <th scope="col" class="col email text"><?php echo __('Content') ?></th>
+                <th scope="col" class="col createat text"><?php echo __('Created At') ?></th>
+                <th scope="col" class="col author_id text"><?php echo __('Author ID') ?></th>
+                <th scope="col" colspan="2" class="col actions text"><?php echo __('Actions') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($question as $item): ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('ID')) ?>" class="col entityid" id="question_id">
+                        <?php echo $item['entity_id'] ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Title')) ?>" class="col title">
+                        <?php echo $item['title'] ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Content')) ?>" class="col content">
+                        <?php echo $item['content'] ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Created At')) ?>"
+                        class="col title"><?php echo date('Y-m-d', strtotime($item->getCreatedAt())); ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Author ID')) ?>" class="col author id">
+                        <?php echo $item['author_id'] ?></td>
+                    <td>
+                        <button id="button-edit"><a href="<?= $block->getUrl("*/*/edit") ?>?id=<?= $item['entity_id'] ?>">Edit</a>
+                        </button>
+                        <button title="<?php echo __('Delete') ?>"
+                                data-question-id="<?= $item['entity_id'] ?>"
+                                class="action submit delete_btn" onclick="return deleteQuestion(this)">
+                            <span><?php echo __('Delete') ?></span>
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+} else {
+    ?>
+    <div style="color: red; text-align: center;">
+        <b>You have no question(s) created!!! Please create question first!!!</b>
+        <br><br>
+        <button class="action submit primary"><a href="<?= $block->getUrl('*/*/index') ?>">
+                <?php echo __('Create Question') ?></a></button>
+    </div>
+    <?php
+}
+?>
+<script>
+    function deleteQuestion(e) {
+        const questionId = e.getAttribute('data-question-id');
+    require(
+        [
+            'jquery',
+            'mage/translate',
+            'mage/storage',
+            'ko',
+            'Tigren_Question/js/model/url-builder'
+        ], function (
+            $,
+            $t,
+            storage,
+            ko,
+            urlBuilder
+        ) {
+                storage.delete(
+                    urlBuilder.createUrl('/tigren_question/delete/'+ questionId, {}),
+                    JSON.stringify({
+                        id: questionId,
+                    }),
+                ).done(function (data) {
+                    if (data === true) {
+                        console.log(data);
+                        alert('Delete success!!!');
+                        window.location.href = '/question/create/listquestion'
+                    }
+                }).fail(
+                    function (response) {
+                        console.log(response);
+                        alert("Sai cmnr");
+                    }
+                );
+        });
+    }
+</script>
+

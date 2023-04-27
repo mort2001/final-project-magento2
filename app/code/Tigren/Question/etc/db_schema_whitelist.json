@@ -1,0 +1,17 @@
+{
+    "tigren_customer_question": {
+        "column": {
+            "entity_id": true,
+            "title": true,
+            "content": true,
+            "created_at": true,
+            "author_id": true
+        },
+        "index": {
+            "TIGREN_CUSTOMER_QUESTION_TITLE_CONTENT": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

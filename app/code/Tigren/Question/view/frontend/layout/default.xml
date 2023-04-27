@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+
+<page xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="top.links">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customs-header-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Create Question</argument>
+                    <argument name="path" xsi:type="string" translate="true">question/create/index</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="top.links">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="custom-header-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">List Questions</argument>
+                    <argument name="path" xsi:type="string" translate="true">question/create/listquestion</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

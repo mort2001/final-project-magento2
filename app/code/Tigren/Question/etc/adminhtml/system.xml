@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+  ~ @author    Tigren Solutions <info@tigren.com>
+  ~ @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+  ~ @license   Open Software License ("OSL") v. 3.0
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="tigren" sortOrder="2001">
+            <label>Tigren</label>
+        </tab>
+        <section id="tigren_question" translate="label" type="text" sortOrder="100" showInDefault="1"
+                 showInWebsite="1" showInStore="0">
+            <label>Question</label>
+            <tab>tigren</tab>
+            <resource>Tigren_Question::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="tigren_collect" translate="label comment" type="button" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <frontend_model>Tigren\Question\Block\System\Config\Collect</frontend_model>
+                    <label>Collect all available data (in separate table)</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,85 @@
+<?php
+/*
+ * @author    Tigren Solutions <info@tigren.com>
+ * @copyright Copyright (c) 2022 Tigren Solutions <https://www.tigren.com>. All rights reserved.
+ * @license   Open Software License ("OSL") v. 3.0
+ */
+
+?>
+<div id="custom_form form-validate ">
+    <form class="form form-edit-account"
+          id="questionForm"
+          enctype="multipart/form-data"
+          data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+          autocomplete="off">
+        <button class="action submit primary"><a href="<?= $block->getUrl('*/*/listquestion') ?>">
+                <?php echo __('View All Questions') ?></a></button>
+        <fieldset class="fieldset info">
+            <legend style="text-align: center; font-size: 25px; font-family: monospace; color: #0a820b" class="legend">
+                <b><span><?= $block->escapeHtml(__('Create Question')) ?></span></b></legend>
+            <div class="field title required">
+                <label class="label" for="title"><span><?php echo __('Title') ?></span></label>
+                <div class="control">
+                    <input name="title" id="title" title="<?php echo __('Title') ?>" class="input-text"
+                           type="text"
+                           required/>
+                </div>
+            </div>
+            <div class="field content required">
+                <label class="label" for="content"><span><?php echo __('Content') ?></span></label>
+                <div class="control">
+                    <textarea name="content" id="content"
+                              title="<?php echo __('What do you think?') ?>"
+                              class="input-text form_data_content" cols="5" rows="3" data-validate="{required:true}"
+                              placeholder="Show me what do you want to talk?" required></textarea>
+                </div>
+            </div>
+            <button type="submit" title="<?php echo __('Submit') ?>" class="action submit primary"
+                    id="submit_form_btn">
+                <span><?php echo __('Submit') ?></span>
+        </fieldset>
+    </form>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'mage/translate',
+            'mage/storage',
+            'ko',
+            'Tigren_Question/js/model/url-builder'
+        ], function (
+            $,
+            $t,
+            storage,
+            ko,
+            urlBuilder
+        ) {
+            $('#submit_form_btn').on('click', function (event) {
+                var title = $('#title').val();
+                var content = $('#content').val();
+                if (title && content) {
+                    event.preventDefault();
+                    storage.post(
+                        urlBuilder.createUrl('/tigren_question/save/', {}),
+                        JSON.stringify({
+                            title: title,
+                            content: content,
+                        }),
+                    ).done(function (data) {
+                            if (data === true) {
+                                console.log(data);
+                                alert('Submit Question Successfully!!!');
+                                window.location.href = '/question/create/listquestion'
+                            }
+                        }
+                    ).fail(
+                        function (response) {
+                            alert("Sai cmnr");
+                        }
+                    );
+                }
+            });
+        })
+</script>
